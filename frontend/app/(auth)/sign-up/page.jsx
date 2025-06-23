@@ -45,9 +45,9 @@ function Page() {
   }, [success]);
 
   return (
-    <div className="container bg-gradient-to-r from-slate-900 to-white w-screen h-screen overflow-hidden  flex items-center justify-center">
-      <div className="w-4/5 h-4/5 bg-white flex rounded-2xl shadow-md overflow-hidden ">
-        <div className="left-section w-1/2 text-black relative">
+    <div className="container bg-gradient-to-r from-slate-900 to-white w-screen md:h-screen md:overflow-hidden  flex items-center justify-center">
+      <div className=" md:w-4/5 md:h-4/5 bg-white flex flex-col-reverse md:flex-row md:rounded-2xl shadow-md md:overflow-hidden ">
+        <div className="left-section md:w-1/2 text-black relative">
           <Image
             src={logo}
             alt="bg-image"
@@ -59,7 +59,7 @@ function Page() {
               <FaPhone className="text-teal-500 mt-1" />
               <div>
                 <p className="font-semibold">Phone</p>
-                <p>+123-456-7890</p>
+                <a>+123-456-7890</a>
               </div>
             </div>
 
@@ -68,7 +68,7 @@ function Page() {
               <FaRegEnvelope className="text-teal-500 mt-1" />
               <div>
                 <p className="font-semibold">E-Mail</p>
-                <p>hello@example.com</p>
+                <a>hello@example.com</a>
               </div>
             </div>
 
@@ -77,7 +77,7 @@ function Page() {
               <IoIosGlobe className="text-teal-500 mt-1" />
               <div>
                 <p className="font-semibold">Website</p>
-                <p>www.example.com</p>
+                <a>www.example.com</a>
               </div>
             </div>
 
@@ -92,7 +92,7 @@ function Page() {
           </div>
         </div>
 
-        <div className="right-section w-1/2 text-white bg-blue-300 ">
+        <div className="right-section md:w-1/2 text-white bg-blue-300 ">
           <div className=" flex items-center justify-center bg-[#d6f5f7] h-full">
             <div className="w-full mx-8 px-3 ">
               {/* Header */}
@@ -101,7 +101,7 @@ function Page() {
                   PLECOS
                 </h1>
 
-                <span className="text-2xl text-amber-300 cursor-pointer">
+                <span className="text-2xl cursor-pointer">
                   <Image src={logo} alt="Logo" width={45} height={45}/>
                 </span>
                 {/* Replace with icon */}
@@ -192,7 +192,7 @@ function Page() {
               <p className="mt-1 text-center text-sm text-black">
                 Already have an account?{" "}
                 <a
-                  href="#"
+                  href="sign-in"
                   className="text-teal-600 font-semibold hover:underline"
                 >
                   Login now
