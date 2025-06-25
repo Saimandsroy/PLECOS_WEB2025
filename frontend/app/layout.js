@@ -8,7 +8,10 @@ const manrope = Manrope({
 
 export const metadata = {
   title: "Plecos",
-  description: "A learning plateform.",
+  description: "A learning platform.",
+  icons: {
+    icon: "/favicon.png",
+  }
 };
 
 export default function RootLayout({ children }) {
