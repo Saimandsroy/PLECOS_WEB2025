@@ -1,14 +1,8 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Tabs from "../../components/Tabs";
-import { Manrope } from "next/font/google";
-import "./globals.css";
 import "./layout.css";
 import { HomeIcon, BookmarkFilledIcon, VideoIcon, StarIcon, LineHeightIcon, GridIcon } from '@radix-ui/react-icons'
-
-const manrope = Manrope({
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Plecos",
@@ -27,19 +21,13 @@ const sidebarLinks = [
 export default function InstructorLayout({ children }) {
   const buttonLink = '/';
   return (
-    <html lang="en">
-      <body
-        className={`${manrope.variable} antialiased`}
-      >
-        <div className="le-m">
-          <Header title="Instructor Dashboard" buttonTitle="Switch to Learner" buttonLink={buttonLink} />
-          <div className="le-c">
-            <Tabs sidebarLinks={sidebarLinks} />
-            <main className="le-mc">{children}</main>
-          </div>
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <div className="le-m">
+      <Header title="Instructor Dashboard" buttonTitle="Switch to Learner" buttonLink={buttonLink} />
+      <div className="le-c">
+        <Tabs sidebarLinks={sidebarLinks} />
+        <main className="le-mc">{children}</main>
+      </div>
+      <Footer />
+    </div>
   );
 }
