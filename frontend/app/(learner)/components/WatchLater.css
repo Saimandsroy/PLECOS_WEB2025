@@ -1,0 +1,47 @@
+.watch-later-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.watch-later-list {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.watch-later-card {
+  min-width: 220px;
+  max-width: 260px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(30,41,59,0.06);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.watch-later-card-header {
+  background: #475569;
+  color: #fff;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.watch-later-card-body {
+  padding: 14px;
+}
+
+.watch-later-card-title {
+  font-weight: 600;
+}
+
+.watch-later-card-meta {
+  color: #64748b;
+  font-size: 13px;
+}

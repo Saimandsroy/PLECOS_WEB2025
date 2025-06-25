@@ -1,5 +1,4 @@
 "use client";
-
 import InputField from "@/components/InputField";
 import AuthButton from "@/components/AuthButton";
 import { Eye, EyeOff } from "lucide-react";
@@ -18,7 +17,7 @@ export default function LoginPage() {
         LOGIN TO YOUR ACCOUNT
       </h2>
       <form
-        onSubmit={()=>router.push("/")}
+        onSubmit={() => router.push("/")}
         className="space-y-4"
       >
         <InputField
@@ -54,7 +53,7 @@ export default function LoginPage() {
       <p className="mt-2 text-center text-sm text-black">
         Don't have an account?{" "}
         <a
-          href="/sign-up"
+          href="/auth/sign-up"
           className="text-teal-600 font-semibold hover:underline"
         >
           Sign Up now

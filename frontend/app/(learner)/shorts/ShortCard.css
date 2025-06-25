@@ -1,0 +1,71 @@
+.short-card {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  height: 540px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(30, 41, 59, 0.06);
+  margin: 0 auto;
+  border: 1px solid #d1d5db;
+  transition: height 0.3s, width 0.3s;
+}
+@media (max-width: 900px) {
+  .short-card {
+    height: 400px;
+  }
+}
+@media (max-width: 700px) {
+  .short-card {
+    height: 320px;
+  }
+}
+
+.short-card-preview {
+  flex: 1.5;
+  background: #cfd4db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f3f4f6;
+  font-size: 20px;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.short-card-sidebar {
+  flex: 0.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 1.5rem 0 1.5rem 0;
+  gap: 1.5rem;
+}
+
+.short-card-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #1e293b;
+  font-size: 15px;
+  gap: 0.25rem;
+}
+
+.short-card-action--bottom {
+  margin-top: auto;
+}
+
+.short-card-more {
+  background: #111827;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
