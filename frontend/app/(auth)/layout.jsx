@@ -10,8 +10,7 @@ export default function Layout({ children }) {
           <Image
             src={logo}
             alt="logo"
-            className="opacity-20 absolute w-full h-full object-cover" 
-            priority
+            className="opacity-20 absolute w-full h-full object-cover"
           />
           <ContactInfo />
         </div>
@@ -26,8 +25,7 @@ export default function Layout({ children }) {
                   alt="Logo"
                   width={45}
                   height={45}
-                  className="drop-shadow-lg/60 rounded" 
-                  priority
+                  className="drop-shadow-lg/60 rounded"
                 />
               </div>
               {children}
