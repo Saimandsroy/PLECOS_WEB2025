@@ -1,15 +1,13 @@
-/* AreasOfInterestSelector.css */
-
-.areas-selector-container {
+.codomain-container {
   min-height: 100vh;
   background-color: #f5f5f5;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 20px
+  padding: 40px 20px;
 }
 
-.areas-selector-card {
+.codomain-card {
   background-color: white;
   border-radius: 12px;
   padding: 40px;
@@ -19,14 +17,14 @@
 }
 
 /* Header Section */
-.areas-selector-header {
+.codomain-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
 }
 
-.areas-selector-breadcrumb {
+.codomain-breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -34,7 +32,7 @@
   font-size: 14px;
 }
 
-.areas-selector-change-btn {
+.codomain-change-btn {
   background: none;
   border: none;
   color: #6b9fff;
@@ -45,13 +43,13 @@
   margin-left: 8px;
 }
 
-.areas-selector-search {
+.codomain-search {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.areas-selector-search input {
+.codomain-search input {
   padding: 8px 12px 8px 36px;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
@@ -60,11 +58,11 @@
   outline: none;
 }
 
-.areas-selector-search input:focus {
+.codomain-search input:focus {
   border-color: #6b9fff;
 }
 
-.areas-selector-search svg {
+.codomain-search svg {
   position: absolute;
   left: 12px;
   color: #999;
@@ -72,7 +70,7 @@
 }
 
 /* Title and Subtitle */
-.areas-selector-title {
+.codomain-title {
   font-size: 28px;
   font-weight: 600;
   color: #333;
@@ -80,7 +78,7 @@
   margin: 0 0 8px 0;
 }
 
-.areas-selector-subtitle {
+.codomain-subtitle {
   font-size: 16px;
   color: #666;
   text-align: center;
@@ -89,14 +87,14 @@
 }
 
 /* Filter Tabs */
-.areas-selector-filters {
+.codomain-filters {
   display: flex;
   gap: 8px;
   margin-bottom: 32px;
   justify-content: center;
 }
 
-.areas-selector-filter {
+.codomain-filter {
   padding: 8px 16px;
   border: none;
   border-radius: 20px;
@@ -108,28 +106,28 @@
   transition: all 0.2s ease;
 }
 
-.areas-selector-filter:hover {
+.codomain-filter:hover {
   background-color: #e0e0e0;
 }
 
-.areas-selector-filter-active {
+.codomain-filter-active {
   background-color: #6b9fff;
   color: white;
 }
 
-.areas-selector-filter-active:hover {
+.codomain-filter-active:hover {
   background-color: #5a8cff;
 }
 
 /* Areas Grid */
-.areas-selector-grid {
+.codomain-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
   margin-bottom: 32px;
 }
 
-.areas-selector-area {
+.codomain-area {
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   padding: 20px;
@@ -140,37 +138,20 @@
   position: relative;
 }
 
-.areas-selector-area:hover {
+.codomain-area:hover {
   border-color: #b0b0b0;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.areas-selector-area-selected {
+.codomain-area-selected {
   border-color: #6b9fff !important;
   background-color: #f8faff;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(107, 159, 255, 0.2);
 }
 
-.areas-selector-area-selected::after {
-  content: '✓';
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 20px;
-  height: 20px;
-  background-color: #6b9fff;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.areas-selector-area-icon {
+.codomain-area-icon {
   width: 48px;
   height: 48px;
   border-radius: 8px;
@@ -183,19 +164,19 @@
   color: #666;
 }
 
-.areas-selector-area-selected .areas-selector-area-icon {
+.codomain-area-selected .codomain-area-icon {
   background-color: #6b9fff;
   color: white;
 }
 
-.areas-selector-area-title {
+.codomain-area-title {
   font-size: 16px;
   font-weight: 600;
   color: #333;
   margin: 0 0 8px 0;
 }
 
-.areas-selector-area-description {
+.codomain-area-description {
   font-size: 13px;
   color: #666;
   line-height: 1.4;
@@ -203,7 +184,7 @@
 }
 
 /* Navigation */
-.areas-selector-navigation {
+.codomain-navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -211,7 +192,7 @@
   border-top: 1px solid #e0e0e0;
 }
 
-.areas-selector-back-button {
+.codomain-back-button {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -226,18 +207,18 @@
   transition: all 0.2s ease;
 }
 
-.areas-selector-back-button:hover {
+.codomain-back-button:hover {
   border-color: #b0b0b0;
   background-color: #f9f9f9;
 }
 
-.areas-selector-selected-count {
+.codomain-selected-count {
   font-size: 14px;
   color: #666;
   font-weight: 500;
 }
 
-.areas-selector-continue-button {
+.codomain-continue-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -253,75 +234,75 @@
   color: #999;
 }
 
-.areas-selector-continue-button:disabled {
+.codomain-continue-button:disabled {
   cursor: not-allowed;
 }
 
-.areas-selector-continue-button-active {
+.codomain-continue-button-active {
   background-color: #6b9fff;
   color: white;
 }
 
-.areas-selector-continue-button-active:hover {
+.codomain-continue-button-active:hover {
   background-color: #5a8cff;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(107, 159, 255, 0.3);
 }
 
-.areas-selector-button-icon {
+.codomain-button-icon {
   transition: transform 0.2s ease;
 }
 
-.areas-selector-continue-button-active:hover .areas-selector-button-icon {
+.codomain-continue-button-active:hover .codomain-button-icon {
   transform: translateX(2px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .areas-selector-container {
+  .codomain-container {
     padding: 16px;
   }
-  
-  .areas-selector-card {
+
+  .codomain-card {
     padding: 24px;
   }
-  
-  .areas-selector-header {
+
+  .codomain-header {
     flex-direction: column;
     gap: 16px;
     align-items: stretch;
   }
-  
-  .areas-selector-search input {
+
+  .codomain-search input {
     width: 100%;
   }
-  
-  .areas-selector-title {
+
+  .codomain-title {
     font-size: 24px;
   }
-  
-  .areas-selector-grid {
+
+  .codomain-grid {
     grid-template-columns: 1fr;
   }
-  
-  .areas-selector-navigation {
+
+  .codomain-navigation {
     flex-direction: column;
     gap: 16px;
     align-items: stretch;
   }
-  
-  .areas-selector-selected-count {
+
+  .codomain-selected-count {
     text-align: center;
     order: -1;
   }
 }
 
 @media (max-width: 480px) {
-  .areas-selector-filters {
+  .codomain-filters {
     flex-wrap: wrap;
   }
-  
-  .areas-selector-area {
+
+  .codomain-area {
     padding: 16px;
   }
 }

@@ -1,34 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from 'react';
-import { Play, BookOpen, Zap, ArrowRight } from 'lucide-react';
-import './SkillLevel.css';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import "./SkillLevel.css";
+import { useRouter } from "next/navigation";
+import { skillLevels } from "../data/skill-level";
 
 const SkillLevel = () => {
-  const router = useRouter()
-  const [selectedLevel, setSelectedLevel] = useState('');
-
-  const skillLevels = [
-    {
-      id: 'beginner',
-      title: 'Beginner',
-      description: 'Perfect for those starting from scratch. We\'ll cover all the basics step by step.',
-      icon: Play
-    },
-    {
-      id: 'intermediate',
-      title: 'Intermediate',
-      description: 'For those with some experience. We\'ll build on your existing knowledge.',
-      icon: BookOpen
-    },
-    {
-      id: 'advanced',
-      title: 'Advanced',
-      description: 'For experienced learners ready to master complex concepts and techniques.',
-      icon: Zap
-    }
-  ];
+  const router = useRouter();
+  const [selectedLevel, setSelectedLevel] = useState("");
 
   const handleLevelSelect = (levelId) => {
     setSelectedLevel(levelId);
@@ -36,8 +16,8 @@ const SkillLevel = () => {
 
   const handleContinue = () => {
     if (selectedLevel) {
-      router.push("/")
-      return
+      router.push("/");
+      return;
     }
   };
 
@@ -45,15 +25,21 @@ const SkillLevel = () => {
     <div className="skill-selector-container">
       <div className="skill-selector-card">
         <h1 className="skill-selector-title">Choose Your Skill Level</h1>
-        <p className="skill-selector-subtitle">Select the level that best matches your current expertise</p>
-        
+        <p className="skill-selector-subtitle">
+          Select the level that best matches your current expertise
+        </p>
+
         <div className="skill-selector-options-container">
           {skillLevels.map((level) => {
             const IconComponent = level.icon;
             return (
               <div
                 key={level.id}
-                className={`skill-selector-option ${selectedLevel === level.id ? 'skill-selector-option-selected' : ''}`}
+                className={`skill-selector-option ${
+                  selectedLevel === level.id
+                    ? "skill-selector-option-selected"
+                    : ""
+                }`}
                 onClick={() => handleLevelSelect(level.id)}
               >
                 <div className="skill-selector-option-header">
@@ -62,14 +48,18 @@ const SkillLevel = () => {
                   </div>
                   <h3 className="skill-selector-option-title">{level.title}</h3>
                 </div>
-                <p className="skill-selector-option-description">{level.description}</p>
+                <p className="skill-selector-option-description">
+                  {level.description}
+                </p>
               </div>
             );
           })}
         </div>
-        
+
         <button
-          className={`skill-selector-continue-button ${selectedLevel ? 'skill-selector-continue-button-active' : ''}`}
+          className={`skill-selector-continue-button ${
+            selectedLevel ? "skill-selector-continue-button-active" : ""
+          }`}
           onClick={handleContinue}
           disabled={!selectedLevel}
         >
