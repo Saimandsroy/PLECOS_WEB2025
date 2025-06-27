@@ -41,3 +41,20 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  /* Styles for tablets and smaller devices */
+  .le-tabs {
+    align-items: center;
+    max-width: 50px;
+   
+    padding: 0rem 0rem;
+   
+  }
+  .le-tabs-nav {
+    height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+}

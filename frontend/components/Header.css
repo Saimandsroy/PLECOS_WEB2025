@@ -48,3 +48,15 @@
   height: 36px;
   border-radius: 50%;
 }
+
+@media (max-width: 768px) {
+  .header {
+font-size: small;
+padding: 5px;
+}
+.header__title {
+  font-size: 18px;
+}
+.header__switch-btn {
+  border: 1px solid #b9bbbf;}
+}
