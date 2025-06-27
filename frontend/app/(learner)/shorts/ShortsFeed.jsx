@@ -1,103 +1,88 @@
-"use client"
-import React, { useState, useRef } from 'react'
-import ShortCard from './ShortCard'
-import { ChevronUpIcon, ChevronDownIcon } from '@radix-ui/react-icons'
-import CommentSection from './CommentSection'
-import './ShortsFeed.css'
+'use client';
 
-const shortsData = [
-  { id: 1, likes: 98, comments: 19, views: 850 },
-  { id: 2, likes: 120, comments: 25, views: 1200 },
-  { id: 3, likes: 45, comments: 8, views: 400 },
-]
+import './ShortsFeed.css';
+import React, { useState, useRef, useEffect } from 'react';
+import ShortVideo from './ShortVideo.jsx';
+import NavigationDots from './NavigationDots.jsx';
+import { shortsData as mock } from './shortsData.js';
 
-const ShortsFeed = () => {
-  const [current, setCurrent] = useState(0)
-  const [showComments, setShowComments] = useState(false)
-  const [animDir, setAnimDir] = useState(null)
-  const scrollTimeout = useRef(null)
+import { formatNumber } from './utils';
 
-  // Handle wheel scroll (up/down)
-  const handleWheel = (e) => {
-    if (scrollTimeout.current || showComments) return
-    if (e.deltaY > 0 && current < shortsData.length - 1) {
-      animateScroll(1)
-    } else if (e.deltaY < 0 && current > 0) {
-      animateScroll(-1)
-    }
-  }
+export default function ShortsFeed() {
+  /* ─────────── State & Refs ─────────── */
+  const [current, setCurrent] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true);
+  const [data, setData] = useState([]);
+  const [activeComment, setActiveComment] = useState(null);
 
-  // Animate scroll
-  const animateScroll = (dir) => {
-    setAnimDir(dir > 0 ? 'down' : 'up')
-    setTimeout(() => {
-      setCurrent(c => c + dir)
-      setAnimDir(null)
-    }, 350)
-    scrollTimeout.current = setTimeout(() => {
-      scrollTimeout.current = null
-    }, 400)
-  }
+  const containerRef = useRef(null);
+  const videoRefs   = useRef([]);
 
-  // Optional: handle arrow keys
-  React.useEffect(() => {
-    const onKeyDown = (e) => {
-      if (showComments) return
-      if (e.key === 'ArrowDown' && current < shortsData.length - 1) {
-        animateScroll(1)
+  /* ─────────── Lifecycle ─────────── */
+  useEffect(() => setData(mock), []);
+
+  /* Scroll snapping → active index */
+  useEffect(() => {
+    const handler = () => {
+      const el   = containerRef.current;
+      const h    = el.clientHeight;
+      const next = Math.round(el.scrollTop / h);
+      if (next !== current && next >= 0 && next < data.length) {
+        setCurrent(next);
+        setActiveComment(null);
       }
-      if (e.key === 'ArrowUp' && current > 0) {
-        animateScroll(-1)
-      }
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [current, showComments])
+    };
+    containerRef.current?.addEventListener('scroll', handler);
+    return () => containerRef.current?.removeEventListener('scroll', handler);
+  }, [current, data.length]);
 
-  // Handle comment icon click
-  const handleCommentClick = () => setShowComments(true)
-  const handleCloseComments = () => setShowComments(false)
+  /* Play / pause & mute logic */
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return;
+      i === current && playing ? v.play().catch(console.error) : v.pause();
+      v.muted = muted;
+    });
+  }, [current, playing, muted]);
 
+  /* ─────────── Handlers passed down ─────────── */
+  const like   = id    => setData(d => d.map(v => v.id === id ? { ...v, isLiked: !v.isLiked, likes: v.isLiked ? v.likes - 1 : v.likes + 1 } : v));
+  const follow = id    => setData(d => d.map(v => v.id === id ? { ...v, isFollowing: !v.isFollowing } : v));
+  const togglePlay  = () => setPlaying(p => !p);
+  const toggleMute  = () => setMuted(m => !m);
+  const toggleCmnt  = idx => setActiveComment(c => (c === idx ? null : idx));
+  const scrollTo    = idx => containerRef.current?.scrollTo({ top: idx * containerRef.current.clientHeight, behavior: 'smooth' });
+
+  /* ─────────── Render ─────────── */
   return (
-    <div
-      className="shorts-feed-root"
-      onWheel={handleWheel}
-      tabIndex={0}
-    >
-      <div className="shorts-feed-center">
-        <div className={`shorts-card-anim ${animDir ? `anim-${animDir}` : ''} ${showComments ? 'shorts-card-shrink' : ''}`}>
-          <ShortCard
-            short={shortsData[current]}
-            onCommentClick={handleCommentClick}
+    <div className="shorts-container">
+      <div className="shorts-feed" ref={containerRef}>
+        {data.map((video, i) => (
+          <ShortVideo
+            key={video.id}
+            ref={el => (videoRefs.current[i] = el)}
+            video={video}
+            index={i}
+            isActive={i === current}
+            isPlaying={playing}
+            isMuted={muted}
+            like={() => like(video.id)}
+            follow={() => follow(video.id)}
+            togglePlay={togglePlay}
+            toggleMute={toggleMute}
+            showComments={activeComment === i}
+            toggleComments={() => toggleCmnt(i)}
+            formatNumber={formatNumber}
           />
-        </div>
-        {/* Comment Section Overlay/Slide-in */}
-        {showComments && (
-          <CommentSection
-            shortId={shortsData[current].id}
-            onClose={handleCloseComments}
-          />
-        )}
+        ))}
       </div>
-      {/* Arrows fixed on right */}
-      <div className="shorts-arrows-fixed">
-        <button
-          className="shorts-arrow"
-          disabled={current === 0 || showComments}
-          onClick={() => animateScroll(-1)}
-        >
-          <ChevronUpIcon width={28} height={28} />
-        </button>
-        <button
-          className="shorts-arrow"
-          disabled={current === shortsData.length - 1 || showComments}
-          onClick={() => animateScroll(1)}
-        >
-          <ChevronDownIcon width={28} height={28} />
-        </button>
-      </div>
-    </div>
-  )
-}
 
-export default ShortsFeed
+      <NavigationDots
+        total={data.length}
+        current={current}
+        onDotClick={scrollTo}
+      />
+    </div>
+  );
+}
