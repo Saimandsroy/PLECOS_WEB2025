@@ -15,8 +15,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0 1.2rem 1.5rem;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 1rem 1rem 1.5rem;
+
+  border-bottom: 1px solid #b6b8bb;
+  border-right: 1px solid #b6b8bb;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  border-bottom-right-radius: 20px;
 }
 
 .instructor-shorts-header h2 {
@@ -45,7 +49,7 @@
 .instructor-shorts-grid-container {
   flex: 1;
   overflow-y: auto;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 0rem 1.5rem;
 }
 
 .instructor-shorts-grid {
@@ -74,7 +78,8 @@
 .instructor-short-thumb {
   background: #232b36;
   color: #fff;
-  height: 120px;
+  height: 400px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,6 +105,8 @@
   bottom: 0;
   background: rgba(30, 41, 59, 0.18);
   z-index: 1000;
+  backdrop-filter: blur(5px); /* The magic */
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,7 +125,7 @@
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 8px 40px rgba(30, 41, 59, 0.18);
-  width: 420px;
+  width: 320px;
   max-width: 96vw;
   padding: 0 0 1.5rem 0;
   position: relative;
@@ -149,7 +156,8 @@
 .short-modal-video {
   background: #232b36;
   color: #fff;
-  height: 180px;
+  height: 568px;
+
   border-radius: 16px 16px 0 0;
   display: flex;
   align-items: center;
@@ -220,5 +228,15 @@
   .short-modal-video {
     height: 120px;
     font-size: 16px;
+  }
+
+  .instructor-shorts-header {
+    font-size: small;
+  }
+  .short-modal-video {
+    height: 568px;
+  }
+  .instructor-shorts-header h2 {
+    font-size: 20px;
   }
 }

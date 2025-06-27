@@ -24,7 +24,7 @@ export default function InstructorLayout({ children }) {
     <div className="le-m">
       <Header title="Instructor Dashboard" buttonTitle="Switch to Learner" buttonLink={buttonLink} />
       <div className="le-c">
-        <Tabs sidebarLinks={sidebarLinks} />
+        <Tabs sidebarLinks={sidebarLinks}/>
         <main className="le-mc">{children}</main>
       </div>
       <Footer />
