@@ -1,0 +1,47 @@
+.explore-filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.explore-filters__button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #666;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.explore-filters__button--active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.explore-filters__button:not(.explore-filters__button--active):hover {
+  background: rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.explore-filters__button:not(.explore-filters__button--active) {
+  transform: translateY(0);
+}
+
+.explore-filters__count {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.explore-filters__button--active .explore-filters__count {
+  background: rgba(255, 255, 255, 0.2);
+}

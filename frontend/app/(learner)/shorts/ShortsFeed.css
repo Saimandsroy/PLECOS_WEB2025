@@ -1,5 +1,5 @@
 .le-mc{
-  padding: 0;
+  padding: 0 2rem;
 }
 .shorts-container {
           position: relative;
@@ -33,11 +33,11 @@
 
         .short-video-wrapper {
           position: relative;
-          width: 100%;
+          width: fit-content;
           max-width: 400px;
           height: 100%;
           background: #000;
-
+          border-radius: 1rem;
           
           overflow: hidden;
         }
