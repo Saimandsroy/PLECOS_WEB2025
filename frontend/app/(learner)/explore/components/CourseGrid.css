@@ -1,0 +1,141 @@
+.explore-courses {
+  margin-top: 3rem;
+}
+
+.explore-courses__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.explore-courses__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.explore-courses__card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+}
+
+.explore-courses__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.explore-courses__banner {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+}
+
+.explore-courses__thumbnail {
+  font-size: 4rem;
+}
+
+.explore-courses__price {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.explore-courses__info {
+  padding: 2rem;
+}
+
+.explore-courses__tags {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.explore-courses__category {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.explore-courses__level {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.explore-courses__level--beginner {
+  background: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+.explore-courses__level--intermediate {
+  background: rgba(241, 196, 15, 0.1);
+  color: #f1c40f;
+}
+
+.explore-courses__level--advanced {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+.explore-courses__name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.explore-courses__instructor {
+  color: #666;
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+}
+
+.explore-courses__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.explore-courses__details {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.explore-courses__icon-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.explore-courses__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}

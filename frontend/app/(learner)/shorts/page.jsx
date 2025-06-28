@@ -1,8 +1,6 @@
-import React from 'react'
-import ShortsFeed from './ShortsFeed'
+import ShortsFeed from './ShortsFeed.jsx';
 
-const ShortsTab = () => {
-    return <ShortsFeed />
+
+export default function Page() {
+  return <ShortsFeed />;
 }
-
-export default ShortsTab
