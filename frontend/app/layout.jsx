@@ -14,7 +14,7 @@ const RootLayout = ({ children }) => {
     return (
         <html lang="en">
             <body
-                style={{ height: "100vh", overflow: "hidden" }}
+                style={{ height: "100vh" }}
                 className={`${manrope.variable} antialiased`}
             >
                 {children}
