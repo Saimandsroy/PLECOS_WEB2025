@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
 
   return (
     <div className="le-m">
-      <Header title={title} rightElement={<RoleSwitcherWrapper />} />
+      <Header title={title} roleTarget="/instructor" />
       <div className="le-c">
         <Tabs sidebarLinks={sidebarLinks} />
         <main className="le-mc">{children}</main>

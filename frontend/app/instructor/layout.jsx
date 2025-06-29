@@ -30,7 +30,7 @@ const sidebarLinks = [
 export default function InstructorLayout({ children }) {
   return (
     <div className="le-m">
-      <Header title="Instructor Dashboard" rightElement={<RoleSwitcherWrapper />} />
+      <Header title="Instructor Dashboard" roleTarget="/" />
       <div className="le-c">
         <Tabs sidebarLinks={sidebarLinks} />
         <main className="le-mc">{children}</main>
