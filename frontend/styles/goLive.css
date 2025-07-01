@@ -1,0 +1,1347 @@
+.golive-root {
+  display: flex;
+  min-height: 100vh;
+  background: #f9fafb;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.golive-sidebar {
+  width: 240px;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 0 0 0;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+.golive-logo {
+  margin-left: 32px;
+  margin-bottom: 12px;
+}
+
+.golive-sidebar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  margin-left: 32px;
+  margin-bottom: 32px;
+}
+
+.golive-nav {
+  width: 100%;
+}
+
+.golive-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.golive-nav-item {
+  padding: 12px 32px;
+  font-size: 1rem;
+  color: #374151;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.golive-nav-item:hover,
+.golive-nav-active {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.golive-nav-active {
+  border-left: 4px solid #6366f1;
+  font-weight: 600;
+  background: #eef2ff;
+}
+
+.golive-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.golive-main-content {
+  width: 100%;
+  min-height: 100vh;
+  background: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 32px 0;
+}
+
+.golive-main-content.live-meet-layout {
+  width: 100vw;
+  min-height: 100vh;
+  background: #18181b;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.golive-session-row {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  max-width: 1400px;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.golive-screen-section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.golive-screen-box {
+  width: 100%;
+  height: 340px;
+  background: #e5e7eb;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  position: relative;
+  flex-direction: column;
+}
+
+.golive-screen-placeholder {
+  color: #6b7280;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 60px;
+}
+
+.golive-video-icons-row {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.golive-video-icon {
+  background: none;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.golive-video-icon:active,
+.golive-video-icon:focus {
+  background: #f3f4f6;
+}
+
+.golive-topbar {
+  height: 64px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.golive-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.golive-bell {
+  background: none;
+  border: none;
+  position: relative;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.golive-bell-dot {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #6366f1;
+  color: #fff;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  padding: 2px 6px;
+  font-weight: 600;
+}
+
+.golive-profile-dropdown {
+  position: relative;
+}
+
+.golive-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #222;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.golive-profile-btn:hover {
+  background: #f3f4f6;
+}
+
+.golive-profile-img {
+  border-radius: 50%;
+  background: #f3f4f6;
+}
+
+.golive-profile-menu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  min-width: 200px;
+  z-index: 100;
+  padding: 8px 0;
+}
+
+.golive-profile-menu li {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #222;
+  font-size: 1rem;
+  transition: background 0.15s;
+}
+
+.golive-profile-menu li:hover {
+  background: #f3f4f6;
+}
+
+.golive-content {
+  display: flex;
+  flex: 1;
+  padding: 32px;
+  gap: 32px;
+  min-width: 0;
+}
+
+.golive-session {
+  flex: 2;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.golive-session-header {
+  padding: 24px 32px 0 32px;
+}
+
+.golive-session-header.align-with-comment {
+  padding: 0 0 0 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.golive-session-title {
+  font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #4f46e5;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.golive-session-dashboard-title {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.golive-session-dashboard-title.large {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0 32px;
+  letter-spacing: -0.5px;
+  padding-top: 18px;
+  padding-bottom: 8px;
+}
+
+.golive-session-body {
+  display: flex;
+  gap: 24px;
+  padding: 0 32px;
+  min-width: 0;
+}
+
+.golive-session-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.golive-session-presenting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.golive-session-presenting-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.golive-session-presenting-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.golive-session-presenting-desc {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.golive-session-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.golive-session-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.golive-session-controls button:hover {
+  background: #f3f4f6;
+}
+
+.golive-session-mute {
+  background: #222 !important;
+}
+
+.golive-session-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.golive-session-actions button {
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #222;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.golive-session-actions button:hover {
+  background: #6366f1;
+  color: #fff;
+}
+
+.golive-session-pagination {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.golive-session-pagebtn {
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.golive-session-pagebtn:hover {
+  background: #6366f1;
+  color: #fff;
+}
+
+.golive-session-endsession {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 24px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.golive-session-endsession:hover {
+  background: #e11d48;
+}
+
+.golive-participants {
+  flex: 1;
+  background: #f9fafb;
+  border-radius: 12px;
+  margin-top: 32px;
+  padding: 16px 12px;
+  min-width: 180px;
+  max-width: 220px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.golive-participants-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.golive-participants-add {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.golive-participants-add:hover {
+  background: #e5e7eb;
+}
+
+.golive-participants-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.golive-participants-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.golive-participant-host span {
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.golive-chatbox {
+  flex: 1.2;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  max-width: 400px;
+  height: 600px;
+  margin-top: 32px;
+}
+
+.golive-chat-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.golive-chat-tabs button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.15s, border-bottom 0.15s;
+  border-bottom: 2px solid transparent;
+}
+
+.golive-chat-tabs .active {
+  color: #222;
+  border-bottom: 2px solid #6366f1;
+}
+
+.golive-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 20px 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.golive-chat-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.golive-chat-message.self {
+  align-items: flex-end;
+}
+
+.golive-chat-sender {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.golive-chat-message.self .golive-chat-sender {
+  color: #222;
+}
+
+.golive-chat-text {
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  color: #222;
+  margin-top: 2px;
+  max-width: 80%;
+  word-break: break-word;
+}
+
+.golive-chat-message.self .golive-chat-text {
+  background: #6366f1;
+  color: #fff;
+}
+
+.golive-chat-empty {
+  color: #6b7280;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.golive-chat-inputbox {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  padding: 12px 16px;
+  gap: 8px;
+}
+
+.golive-chat-inputbox input {
+  flex: 1;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.golive-chat-sendbtn {
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.golive-chat-sendbtn:hover {
+  background: #222;
+}
+
+.golive-on-screen-icons {
+  display: flex;
+  gap: 18px;
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.golive-comment-section {
+  flex: 1;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  min-width: 320px;
+  max-width: 400px;
+  height: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  position: relative;
+  transition: width 0.2s, min-width 0.2s, max-width 0.2s;
+}
+
+.golive-comment-section.minimized {
+  min-width: 60px;
+  max-width: 60px;
+  width: 60px;
+  overflow: hidden;
+}
+
+.golive-comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 10px 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #222;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.golive-comment-minimize {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.golive-comment-minimize:hover {
+  background: #f3f4f6;
+}
+
+.golive-comment-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 18px 20px 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.golive-comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.golive-comment-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.golive-comment-message.self {
+  align-items: flex-end;
+}
+
+.golive-comment-sender {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.golive-comment-message.self .golive-comment-sender {
+  color: #222;
+}
+
+.golive-comment-text {
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  color: #222;
+  margin-top: 2px;
+  max-width: 80%;
+  word-break: break-word;
+}
+
+.golive-comment-message.self .golive-comment-text {
+  background: #6366f1;
+  color: #fff;
+}
+
+.golive-comment-inputbox {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  padding: 12px 16px;
+  gap: 8px;
+  background: #fff;
+  margin-top: auto;
+}
+
+.golive-comment-inputbox input {
+  flex: 1;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.golive-comment-sendbtn {
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.golive-comment-sendbtn:hover {
+  background: #222;
+}
+
+.comment-participants {
+  margin: 0 0 0 0;
+  border-top: 1px solid #e5e7eb;
+  padding: 12px 16px 12px 16px;
+  background: #f9fafb;
+  border-radius: 0 0 16px 16px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.golive-session-heading-bar {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 18px 0 10px 0;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.golive-session-heading {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 0 32px;
+  letter-spacing: -0.5px;
+}
+
+.golive-participants-togglebar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 16px 0 16px;
+  background: #fff;
+}
+
+.golive-participants-toggle {
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #222;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.golive-participants-toggle:hover {
+  background: #6366f1;
+  color: #fff;
+}
+
+.golive-participants-toggle-icon {
+  display: flex;
+  align-items: center;
+}
+
+.golive-participants.comment-participants.minimized ul {
+  display: none;
+}
+
+.golive-participants-minimize {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 6px;
+  margin-left: 8px;
+  transition: background 0.15s;
+}
+
+.golive-participants-minimize:hover {
+  background: #f3f4f6;
+}
+
+.golive-meet-row {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: calc(100vh - 110px);
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.golive-meet-video-area {
+  flex: 1 1 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transition: width 0.3s;
+  min-width: 0;
+  background: #18181b;
+  border-right: 4px solid #e5e7eb;
+  height: 100%;
+  margin-left: -60px;
+}
+
+.golive-meet-video-area.shrink {
+  flex: 0 0 60vw;
+  max-width: 60vw;
+}
+
+.golive-meet-video-box {
+  width: 98%;
+  height: 92%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  position: relative;
+}
+
+.golive-meet-video-box.with-border {
+  border-right: 4px solid #e5e7eb;
+}
+
+.golive-meet-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-left: 0;
+}
+
+.golive-video-off-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #18181b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 12px;
+}
+
+.golive-video-off-text {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-top: 8px;
+}
+
+.golive-meet-panel {
+  flex: 0 0 0;
+  width: 0;
+  background: #fff;
+  height: 100%;
+  overflow: hidden;
+  transition: width 0.3s;
+  box-shadow: -2px 0 16px rgba(0,0,0,0.08);
+  z-index: 10;
+  position: relative;
+}
+
+.golive-meet-panel.open {
+  flex: 0 0 40vw;
+  width: 40vw;
+  min-width: 340px;
+  max-width: 480px;
+  background: #fff;
+}
+
+.golive-meet-shortcutbar {
+  position: fixed;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 32px;
+  z-index: 100;
+  background: transparent;
+}
+
+.golive-meet-shortcutbar.with-space {
+  bottom: 48px;
+}
+
+.golive-meet-shortcutbtn {
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 1.2rem;
+  outline: none;
+}
+
+.golive-meet-shortcutbtn.danger {
+  background: #e11d48;
+}
+
+.golive-meet-shortcutbtn.danger svg circle {
+  fill: #e11d48;
+}
+
+.golive-meet-shortcutbtn:active,
+.golive-meet-shortcutbtn:focus {
+  background: #f3f4f6;
+}
+
+.golive-emoji-picker {
+  position: fixed;
+  left: 50%;
+  bottom: 120px;
+  transform: translateX(-50%);
+  z-index: 200;
+  background: rgba(0,0,0,0.15);
+  border-radius: 16px;
+  padding: 16px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+.golive-emoji-picker-inner {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 18px;
+}
+
+.golive-meet-shortnav {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #232323;
+  border-bottom: 1px solid #333;
+  padding: 0 0 0 32px;
+  height: 54px;
+  gap: 12px;
+}
+
+.golive-meet-shortnav-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+
+.golive-meet-shortnav-btn.active,
+.golive-meet-shortnav-btn:hover {
+  background: #fff;
+  color: #232323;
+}
+
+.golive-meet-shortnav-label {
+  margin-left: 6px;
+}
+
+.golive-meet-shortnav-btn .golive-meet-nav-count {
+  background: #6366f1;
+  color: #fff;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.golive-meet-shortcutbar.with-space {
+  bottom: 48px;
+}
+
+.golive-meet-shortcutbtn {
+  margin-right: 0 !important;
+}
+
+.golive-meet-shortcutbtn:not(:last-child) {
+  margin-right: 24px !important;
+}
+
+.golive-meet-rightnav {
+  position: fixed;
+  right: 32px;
+  bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 101;
+}
+
+.golive-meet-navbtn {
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.golive-meet-navbtn .golive-meet-nav-count {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #6366f1;
+  color: #fff;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-weight: 600;
+}
+
+.golive-meet-sidebar-float {
+  position: fixed;
+  right: 32px;
+  bottom: 190px;
+  width: 320px;
+  max-width: 90vw;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px;
+  animation: sidebarIn 0.18s;
+}
+
+@keyframes sidebarIn {
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.golive-meet-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 10px 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #222;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+}
+
+.golive-meet-sidebar-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.golive-meet-sidebar-close:hover {
+  background: #f3f4f6;
+}
+
+.golive-meet-chat-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 12px 18px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.golive-meet-chat-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 6px;
+}
+
+.golive-meet-chat-sender {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.golive-meet-chat-text {
+  font-size: 1rem;
+  color: #222;
+}
+
+.golive-meet-chat-inputbox {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  padding: 10px 16px;
+  gap: 8px;
+  background: #fff;
+  margin-top: auto;
+}
+
+.golive-meet-chat-inputbox input {
+  flex: 1;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.golive-meet-chat-sendbtn {
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.golive-meet-chat-sendbtn:hover {
+  background: #222;
+}
+
+.golive-meet-sidebar-participants {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 12px 18px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.golive-meet-sidebar-participant {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.golive-meet-host-badge {
+  background: #6366f1;
+  color: #fff;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 2px 8px;
+  margin-left: 8px;
+}
+
+.instructor-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.instructor-metric-card {
+  flex: 1 1 180px;
+  min-width: 180px;
+  max-width: 260px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30,41,59,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem 1.2rem;
+  gap: 10px;
+}
+
+.bg-metric-1 { background: linear-gradient(135deg, #eef2ff 80%, #6366f1 10%); }
+.bg-metric-2 { background: linear-gradient(135deg, #e0f7fa 80%, #06b6d4 10%); }
+.bg-metric-3 { background: linear-gradient(135deg, #fff7ed 80%, #f59e42 10%); }
+.bg-metric-4 { background: linear-gradient(135deg, #ecfdf5 80%, #22c55e 10%); }
+
+.instructor-metric-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+.instructor-metric-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+.instructor-metric-label {
+  font-size: 1.05rem;
+  color: #64748b;
+}
+
+.instructor-quick-actions-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.instructor-quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #232323;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(30,41,59,0.03);
+  transition: background 0.16s, border 0.16s;
+}
+.instructor-quick-action-btn:hover {
+  background: #f1f5ff;
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.instructor-announcement-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  font-size: 1.07rem;
+  color: #232323;
+  box-shadow: 0 2px 8px rgba(30,41,59,0.04);
+  border-left: 5px solid #6366f1;
+}
+.instructor-announcement-enrollment { border-left-color: #06b6d4; }
+.instructor-announcement-feedback { border-left-color: #f59e42; }
+.instructor-announcement-update { border-left-color: #6366f1; }
+
+.instructor-banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 2.5rem 2rem 1.2rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
