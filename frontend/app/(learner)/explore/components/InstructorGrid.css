@@ -1,11 +1,12 @@
 .explore-instructors {
   margin-top: 3rem;
+  color: var(--text-primary);
 }
 
 .explore-instructors__title {
   font-size: 2rem;
   font-weight: 700;
-  color: black;
+  color: var(--text-primary);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -18,28 +19,32 @@
   gap: 2rem;
 }
 
+/* Glass Card */
 .explore-instructors__card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--background-glass);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 2rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 40px var(--shadow-color);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: relative;
   overflow: hidden;
 }
 
 .explore-instructors__card:hover {
+  background: var(--background-glass-hover);
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 60px var(--shadow-color);
 }
 
 .explore-instructors__badge {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-primary);
   color: white;
   padding: 0.3rem 0.8rem;
   border-radius: 12px;
@@ -60,23 +65,23 @@
 .explore-instructors__name {
   font-size: 1.4rem;
   font-weight: 700;
-  margin: 0 0 0.5rem 0;
-  color: #333;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
 }
 
 .explore-instructors__verified {
-  color: #667eea;
+  color: var(--text-accent);
   margin-left: 0.5rem;
 }
 
 .explore-instructors__title-text {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1rem;
-  margin: 0 0 0.5rem 0;
+  margin-bottom: 0.5rem;
 }
 
 .explore-instructors__specialty {
-  color: #764ba2;
+  color: #764ba2; /* keep brand accent */
   font-size: 0.9rem;
   font-weight: 600;
   margin: 0;
@@ -86,6 +91,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 1.5rem;
 }
 
 .explore-instructors__stat {
@@ -95,10 +101,10 @@
 .explore-instructors__stat-value {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .explore-instructors__stat-label {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--text-secondary);
 }

@@ -1,11 +1,12 @@
 .explore-shorts {
   margin-top: 3rem;
+  color: var(--text-primary);
 }
 
 .explore-shorts__title {
   font-size: 2rem;
   font-weight: 700;
-  color: black;
+  color: var(--text-primary);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -18,24 +19,28 @@
   gap: 1.5rem;
 }
 
+/* Glass card styling */
 .explore-shorts__card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--background-glass);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--shadow-color);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: relative;
 }
 
 .explore-shorts__card:hover {
+  background: var(--background-glass-hover);
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px var(--shadow-color);
 }
 
 .explore-shorts__banner {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-primary);
   padding: 2rem;
   text-align: center;
   position: relative;
@@ -66,6 +71,7 @@
   border-radius: 50%;
   padding: 0.8rem;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .explore-shorts__info {
@@ -89,7 +95,7 @@
 }
 
 .explore-shorts__views {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.8rem;
   display: flex;
   align-items: center;
@@ -100,5 +106,5 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
-  color: #333;
+  color: var(--text-primary);
 }

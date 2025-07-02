@@ -26,6 +26,9 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
   --gradient-primary: linear-gradient(135deg, #1a73e8 0%, #4d9fff 100%);
   --gradient-secondary: linear-gradient(135deg, #ff7f3f 0%, #ff9f6a 100%);
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #cccccc;
+  --scrollbar-thumb-hover: #999999;
 }
 
 .dark {
@@ -60,6 +63,9 @@
     rgba(22, 0, 122, 0.5) 53%,
     rgba(0, 0, 0, 0.1) 100%
   );
+  --scrollbar-track: #1a1a1a;
+  --scrollbar-thumb: #444444;
+  --scrollbar-thumb-hover: #666666;
 }
 
 * {
@@ -112,7 +118,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 4px;
   background: var(--background-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -121,8 +127,8 @@ footer {
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 44px;
-  height: 44px;
+  width: 34px;
+  height: 34px;
 }
 
 .theme-toggle-button:hover {
@@ -140,4 +146,24 @@ footer {
   .glass-card {
     padding: 1.5rem;
   }
+}
+
+::-webkit-scrollbar {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
 }

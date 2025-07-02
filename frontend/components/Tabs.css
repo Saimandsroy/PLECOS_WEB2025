@@ -1,9 +1,14 @@
+
 .le-tabs {
-  max-width: 200px;
-  background: #fff;
-  border-right: 1px solid #e5e7eb;
+  width:13rem ;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   padding: 2rem 0.5rem;
   border-radius: 0 0 0 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
 .le-tabs-nav {
@@ -16,24 +21,24 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   border-radius: 8px;
   background: transparent;
-  color: #222;
+  color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1.2rem;
   transition: background 0.15s, color 0.15s;
 }
 
 .le-tabs-link:hover {
-  background: #f1f5f9;
-  color: #2563eb;
+  background: var(--tab-hover);
+  color: var(--brand-blue);
 }
 
 .le-tabs-link.active {
-  background: #e5e7eb;
-  color: #1d4ed8;
+  background : var(--tab-active);
+  color: var(--brand-orange);
 }
 
 .le-tabs-icon {
