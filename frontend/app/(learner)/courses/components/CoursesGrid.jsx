@@ -1,5 +1,5 @@
-import React from 'react'
-import CourseCard from './CourseCard'
+import React from 'react';
+import CourseCard from './CourseCard';
 
 const courses = [
   {
@@ -30,18 +30,19 @@ const courses = [
     lessons: 15,
     completed: 0
   }
-]
+];
 
 const CoursesGrid = () => (
   <div style={{
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-    gap: 24
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '1.5rem',
+    marginTop: '2rem'
   }}>
     {courses.map((c, i) => (
-      <CourseCard key={i} {...c} />
+      <CourseCard key={i} {...c} idx={i} />
     ))}
   </div>
-)
+);
 
-export default CoursesGrid
+export default CoursesGrid;

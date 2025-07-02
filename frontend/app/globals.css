@@ -1,4 +1,171 @@
 @import "tailwindcss";
+
+:root {
+  --brand-blue   : #1A73E8;                
+  --brand-orange : #FF7F3F; 
+  --bg-header-rgb: 20, 24, 38;
+  --bg-popup-rgb: 30, 30, 50;
+  --bg-glass: rgba(255, 255, 255, 0.2);
+  --background-primary: #fffefef7;
+  --background-secondary: #e8e7e7;
+  --bg-gradient: linear-gradient(
+      135deg,
+      rgba( 26, 115, 232, 0.15), 
+      rgba(255, 127, 63, 0.10)   
+  );
+  --tab-hover: rgba(0, 0, 0, 0.05);
+  --tab-active: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
+
+  --background-glass: rgba(255, 255, 255, 0.889);
+  --background-glass-hover: rgba(255, 255, 255, 0.2);
+  --background: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --text-accent: var(--brand-blue); 
+  --border-color: rgba(255, 255, 255, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --gradient-primary  : linear-gradient(135deg, #1A73E8 0%, #4D9FFF 100%); 
+  --gradient-secondary: linear-gradient(135deg, #FF7F3F 0%, #FF9F6A 100%);  
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #cccccc;
+  --scrollbar-thumb-hover: #999999;
+
+}
+
+.dark {
+  --background-primary: #0a0a0f;
+  --background-secondary: #1a1a2e;
+  --background-glass: rgba(255, 255, 255, 0.05);
+  --background-glass-hover: rgba(255, 255, 255, 0.1);
+  --text-primary: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.08);
+  --text-secondary: #a0a0a0;
+  --text-accent: #4D9FFF; 
+  --bg-gradient: linear-gradient(
+  315deg,
+  #0c111a 0%,       
+  #1a2e40 20%,      
+  #2a3c4e 40%,     
+  #3b2b24 60%,     
+  #1a1a1a 80%      
+);
+
+
+  --border-color: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --gradient-primary  : linear-gradient(135deg, #4D9FFF 0%, #7DB4FF 100%);
+  --gradient-secondary: linear-gradient(135deg, #FF8F50 0%, #FFB073 100%);
+
+  --gradient-cosmic : linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --tab-hover: rgba(255, 255, 255, 0.1);
+  --tab-active: linear-gradient(320deg,rgba(26, 156, 134, 0.5) 0%, rgba(22, 0, 122, 0.5) 53%, rgba(0, 0, 0, 0.1) 100%);
+  --scrollbar-track: #1a1a1a;
+  --scrollbar-thumb: #444444;
+  --scrollbar-thumb-hover: #666666;
+
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 body {
+  background: var(--background-primary);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
   overflow: hidden;
+}
+
+
+.dark main{
+  background: var(--bg-gradient);
+
+}
+header{
+  background: var(--background-secondary);
+}
+
+footer{
+  background: var(--bg-gradient);
+}
+
+/* Glass morphism effects */
+.glass-card {
+  background: var(--background-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: var(--background-glass-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px var(--shadow-color);
+}
+
+/* Theme toggle styles */
+.theme-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: var(--background-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 34px;
+  height: 34px;
+}
+
+.theme-toggle-button:hover {
+  background: var(--background-glass-hover);
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.theme-toggle-button:active {
+  transform: scale(0.95);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 1.5rem;
+  }
+}
+
+
+::-webkit-scrollbar {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track); 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
 }

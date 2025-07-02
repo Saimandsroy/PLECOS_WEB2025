@@ -1,11 +1,12 @@
 .explore-courses {
   margin-top: 3rem;
+  color: var(--text-primary);
 }
 
 .explore-courses__title {
   font-size: 2rem;
   font-weight: 700;
-  color: black;
+  color: var(--text-primary);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -18,23 +19,27 @@
   gap: 2rem;
 }
 
+/* Glass-style card */
 .explore-courses__card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--background-glass);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 40px var(--shadow-color);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .explore-courses__card:hover {
+  background: var(--background-glass-hover);
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 60px var(--shadow-color);
 }
 
 .explore-courses__banner {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-primary);
   padding: 3rem;
   text-align: center;
   position: relative;
@@ -48,12 +53,13 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: var(--background-glass);
+  color: var(--text-primary);
   padding: 0.3rem 0.8rem;
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 600;
+  backdrop-filter: blur(10px);
 }
 
 .explore-courses__info {
@@ -68,8 +74,8 @@
 }
 
 .explore-courses__category {
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text-accent);
   padding: 0.3rem 0.8rem;
   border-radius: 12px;
   font-size: 0.8rem;
@@ -101,14 +107,14 @@
 .explore-courses__name {
   font-size: 1.3rem;
   font-weight: 700;
-  margin: 0 0 1rem 0;
-  color: #333;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
 }
 
 .explore-courses__instructor {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1rem;
-  margin: 0 0 1rem 0;
+  margin-bottom: 1rem;
 }
 
 .explore-courses__meta {
@@ -128,7 +134,7 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .explore-courses__rating {
@@ -137,5 +143,5 @@
   gap: 0.3rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }

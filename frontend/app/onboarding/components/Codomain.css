@@ -1,19 +1,23 @@
 .codomain-container {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background: linear-gradient(145deg, #0f0f1a, #1a1a2e);
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 40px 20px;
+  color: #e0e0e0;
 }
 
 .codomain-card {
-  background-color: white;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 40px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   max-width: 800px;
   width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Header Section */
@@ -28,14 +32,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #666;
+  color: #bbb;
   font-size: 14px;
 }
 
 .codomain-change-btn {
   background: none;
   border: none;
-  color: #6b9fff;
+  color: #82b1ff;
   cursor: pointer;
   font-size: 14px;
   text-decoration: underline;
@@ -51,21 +55,23 @@
 
 .codomain-search input {
   padding: 8px 12px 8px 36px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #333;
   border-radius: 6px;
   font-size: 14px;
   width: 200px;
   outline: none;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #e0e0e0;
 }
 
 .codomain-search input:focus {
-  border-color: #6b9fff;
+  border-color: #82b1ff;
 }
 
 .codomain-search svg {
   position: absolute;
   left: 12px;
-  color: #999;
+  color: #aaa;
   pointer-events: none;
 }
 
@@ -73,16 +79,16 @@
 .codomain-title {
   font-size: 28px;
   font-weight: 600;
-  color: #333;
+  color: #fff;
   text-align: center;
-  margin: 0 0 8px 0;
+  margin-bottom: 8px;
 }
 
 .codomain-subtitle {
   font-size: 16px;
-  color: #666;
+  color: #aaa;
   text-align: center;
-  margin: 0 0 32px 0;
+  margin-bottom: 32px;
   line-height: 1.5;
 }
 
@@ -92,14 +98,15 @@
   gap: 8px;
   margin-bottom: 32px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .codomain-filter {
   padding: 8px 16px;
   border: none;
   border-radius: 20px;
-  background-color: #f0f0f0;
-  color: #666;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #aaa;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -107,7 +114,7 @@
 }
 
 .codomain-filter:hover {
-  background-color: #e0e0e0;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .codomain-filter-active {
@@ -128,25 +135,26 @@
 }
 
 .codomain-area {
-  border: 2px solid #e0e0e0;
+  border: 2px solid rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.03);
   text-align: center;
   position: relative;
+  color: #ddd;
 }
 
 .codomain-area:hover {
-  border-color: #b0b0b0;
+  border-color: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .codomain-area-selected {
   border-color: #6b9fff !important;
-  background-color: #f8faff;
+  background-color: rgba(107, 159, 255, 0.1);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(107, 159, 255, 0.2);
 }
@@ -155,13 +163,13 @@
   width: 48px;
   height: 48px;
   border-radius: 8px;
-  background-color: #f0f0f0;
+  background-color: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 12px;
   transition: all 0.2s ease;
-  color: #666;
+  color: #aaa;
 }
 
 .codomain-area-selected .codomain-area-icon {
@@ -172,13 +180,13 @@
 .codomain-area-title {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 8px 0;
+  color: #fff;
+  margin-bottom: 8px;
 }
 
 .codomain-area-description {
   font-size: 13px;
-  color: #666;
+  color: #bbb;
   line-height: 1.4;
   margin: 0;
 }
@@ -189,7 +197,7 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .codomain-back-button {
@@ -197,10 +205,10 @@
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  background-color: white;
-  color: #666;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #ccc;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -208,13 +216,13 @@
 }
 
 .codomain-back-button:hover {
-  border-color: #b0b0b0;
-  background-color: #f9f9f9;
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.07);
 }
 
 .codomain-selected-count {
   font-size: 14px;
-  color: #666;
+  color: #aaa;
   font-weight: 500;
 }
 
@@ -230,8 +238,8 @@
   font-size: 14px;
   font-weight: 600;
   transition: all 0.2s ease;
-  background-color: #d0d0d0;
-  color: #999;
+  background-color: #444;
+  color: #888;
 }
 
 .codomain-continue-button:disabled {
@@ -294,15 +302,5 @@
   .codomain-selected-count {
     text-align: center;
     order: -1;
-  }
-}
-
-@media (max-width: 480px) {
-  .codomain-filters {
-    flex-wrap: wrap;
-  }
-
-  .codomain-area {
-    padding: 16px;
   }
 }
