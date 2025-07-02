@@ -3,8 +3,8 @@ import Banner from './Banner';
 import ChannelInfo from './ChannelInfo';
 import './ChannelHeader.css';
 
-const ChannelHeader = ({ isLight }) => (
-  <div className={`channel-header ${isLight ? 'light' : 'dark'}`}>
+const ChannelHeader = () => (
+  <div className="channel-header">
     <Banner />
     <div className="channel-main">
       <div className="channel-logo">
@@ -12,7 +12,7 @@ const ChannelHeader = ({ isLight }) => (
           <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Channel Logo" />
         </div>
       </div>
-      <ChannelInfo isLight={isLight} />
+      <ChannelInfo />
     </div>
   </div>
 );

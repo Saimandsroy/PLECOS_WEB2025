@@ -2,14 +2,14 @@ import React from 'react';
 import ChannelMeta from './ChannelMeta';
 import './ChannelInfo.css';
 
-const ChannelInfo = ({ isLight }) => (
+const ChannelInfo = () => (
   <div className="channel-info">
     <div className="channel-title-row">
-      <h1 className={`channel-name ${isLight ? 'light' : 'dark'}`}>Sabit Tamang</h1>
+      <h1 className={`channel-name`}>Sabit Tamang</h1>
       <span className="verified">✔</span>
     </div>
-    <ChannelMeta isLight={isLight} />
-    <div className={`channel-description ${isLight ? 'light' : 'dark'}`}>
+    <ChannelMeta />
+    <div className="channel-description">
       Hit play on life's coolest playlist with me! 🎵 Dive into wild music rides on Monkey App, ...
     </div>
     <div className="channel-links">

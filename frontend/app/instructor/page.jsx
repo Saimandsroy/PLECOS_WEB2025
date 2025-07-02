@@ -13,12 +13,12 @@ const InstructorHome = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className={`instructor-home ${isLight ? 'light' : 'dark'}`}>
-      <ChannelHeader isLight={isLight} />
-      <StickyTabs isLight={isLight} activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab === 0 && <VideosGrid isLight={isLight} />}
-      {activeTab === 1 && <ShortsGrid isLight={isLight} />}
-      {activeTab === 2 && <PostsRow isLight={isLight} />}
+    <div className="instructor-home" >
+      <ChannelHeader />
+      <StickyTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      {activeTab === 0 && <VideosGrid />}
+      {activeTab === 1 && <ShortsGrid />}
+      {activeTab === 2 && <PostsRow />}
     </div>
   );
 }
