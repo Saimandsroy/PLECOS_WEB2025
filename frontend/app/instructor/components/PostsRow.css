@@ -1,0 +1,43 @@
+.posts-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.post-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  min-width: 260px;
+  color: #000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: box-shadow 0.2s;
+}
+
+.post-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
+}
+
+.post-content {
+  font-size: 1.13rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.post-date {
+  font-size: 0.98rem;
+  color: #b0b0b0;
+  margin-bottom: 0.3rem;
+}
+
+.post-engagement {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 1.05rem;
+  color: #011111;
+  align-items: center;
+}

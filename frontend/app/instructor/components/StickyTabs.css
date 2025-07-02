@@ -1,0 +1,46 @@
+.sticky-tabs {
+  position: sticky;
+  top: -30px;
+  z-index: 10;
+  background: var(--tabs-bg, #181818);
+  border-bottom: 1.5px solid #333;
+  display: flex;
+  gap: 2.5rem;
+  padding: 0 2rem;
+  height: 56px;
+  align-items: flex-end;
+}
+.sticky-tabs.light {
+  --tabs-bg: #fff;
+  border-bottom: 1.5px solid #e0e0e0;
+}
+.sticky-tabs.dark {
+  --tabs-bg: #181818;
+}
+
+.sticky-tabs__tab {
+  font-size: 1.1rem;
+  color: #aaa;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: color 0.2s, border-bottom 0.2s;
+}
+.sticky-tabs__tab--active {
+  color: #fff;
+  border-bottom: 3px solid #fff;
+  font-weight: 600;
+}
+.sticky-tabs__tab.light {
+  color: #222;
+}
+.sticky-tabs__tab--active.light {
+  color: #111;
+  border-bottom: 3px solid #111;
+}
+.sticky-tabs__tab:hover:not(.sticky-tabs__tab--active) {
+  color: #1976d2;
+}

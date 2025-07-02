@@ -1,0 +1,10 @@
+.channel-meta {
+  color: #666;
+  font-size: 1.08rem;
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+.channel-meta.light { color: #444; }
+.channel-meta.dark { color: #bbb; }

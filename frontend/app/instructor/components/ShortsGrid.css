@@ -1,0 +1,23 @@
+.shorts-grid {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.short-card {
+    width: 120px;
+    background: #fafafa;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.short-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+.short-title {
+    padding: 0.4rem;
+    font-size: 0.95rem;
+    color: #333;
+}

@@ -1,0 +1,62 @@
+:root {
+  --background-light: #ffffff;
+  --background-dark: #181818;
+  --text-light: #000000;
+  --text-dark: #ffffff;
+  --primary-color: #6200ea;
+  --secondary-color: #03dac6;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.channel-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.channel-description {
+  margin-top: 5px;
+  font-size: 14px;
+  color: var(--secondary-color);
+}
+
+.statistics {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.row {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.row-item {
+  min-width: 200px;
+  margin-right: 15px;
+}
