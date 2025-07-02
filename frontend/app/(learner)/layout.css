@@ -1,17 +1,21 @@
 .le-m {
   height: 100vh;
-  background: #f7f9fa;
+  background: var(--bg-glass);
   display: flex;
   flex-direction: column;
-  border: 1px solid rgb(201, 198, 198);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   margin: 2px;
   overflow: hidden;
 }
 
+.dark .le-m {
+  background: var(--bg-glass);
+}
+
 .le-c {
   display: flex;
-  background: #fff;
+  background: var(--background-primary);
   min-height: 80vh;
   flex: 1;
 }
@@ -19,7 +23,7 @@
 .le-mc {
   flex: 1;
   padding: 2rem 2rem;
-  background: #f7f9fa;
+  background: var(--background-secondary);
   min-height: 0;
   overflow-y: auto;
 }
@@ -29,14 +33,28 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background: #fff;
+  background: var(--background-glass);
   border-radius: 0 0 12px 12px;
-  border-top: 1px solid rgb(201, 198, 198);
+  border-top: 1px solid var(--border-color);
   text-align: center;
   padding: 1rem;
-  color: #888;
-  color: #888;
-  font-size: 14px;
+  color: var(--text-secondary);
   font-size: 14px;
   z-index: 100;
+}
+
+.glass-card {
+  background: var(--background-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: var(--background-glass-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px var(--shadow-color);
 }

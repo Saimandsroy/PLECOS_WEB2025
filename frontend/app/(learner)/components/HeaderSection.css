@@ -1,11 +1,15 @@
 .explore-header {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--background-glass);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 1rem 0;
   position: static;
   top: 0;
   z-index: 100;
   margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 8px 24px var(--shadow-color);
+  transition: all 0.3s ease;
 }
 
 .explore-header__container {
@@ -24,21 +28,22 @@
 .explore-header__title {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0;
   margin-bottom: 0.5rem;
 }
 
 .explore-header__subtitle {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1.1rem;
   margin: 0;
 }
 
 .explore-header__icon-wrapper {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: var(--gradient-primary);
   padding: 1rem;
   border-radius: 50%;
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);

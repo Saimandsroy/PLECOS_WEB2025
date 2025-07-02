@@ -3,10 +3,6 @@
 import React from "react";
 import Link from "next/link";
 
-const instructor = {
-
-};
-
 const metrics = [
   { label: "Active Courses", value: 5 },
   { label: "Enrolled Learners", value: 250 },
@@ -39,72 +35,78 @@ const InstructorHome = () => (
       marginBottom: 24,
       justifyContent: "center"
     }}>
-      <h2 style={{ fontWeight: 700, fontSize: 24, margin: 0 }}>
+      <h2 style={{
+        fontWeight: 700,
+        fontSize: 24,
+        margin: 0,
+        color: "var(--text-accent)"
+      }}>
         Welcome Back 👋
       </h2>
     </div>
+
     {/* Metrics */}
     <div style={{
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
       gap: 20,
       marginBottom: 32
-    }}>
+    }} >
       {metrics.map((m) => (
         <div key={m.label} style={{
-          background: "#fff",
-          borderRadius: 12,
-          boxShadow: "0 2px 12px rgba(30,41,59,0.06)",
-          padding: "1.2rem 1rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: 6,
-          minHeight: 90
-        }}>
+        }} className="glass-card">
           <div style={{ fontWeight: 700, fontSize: 22 }}>{m.value}</div>
-          <div style={{ color: "#64748b", fontSize: 15 }}>{m.label}</div>
+          <div style={{ color: "var(--text-muted)", fontSize: 15 }}>{m.label}</div>
         </div>
       ))}
     </div>
+
     {/* Quick Actions */}
-    <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 32 }}>
+    <div style={{
+      display: "flex",
+      gap: 16,
+      flexWrap: "wrap",
+      marginBottom: 32
+    }}>
       {navLinks.map((link) => (
         <Link
           key={link.label}
           href={link.route}
           style={{
-            background: "#fff",
-            border: "1.5px solid #e5e7eb",
-            borderRadius: 8,
+            background: "var(--background-glass)",
+            border: "1px solid var(--border-color)",
+            borderRadius: "0.5rem",
             padding: "0.8rem 1.3rem",
             fontWeight: 600,
             fontSize: 15,
-            color: "#232323",
+            color: "var(--text-color)",
             cursor: "pointer",
             boxShadow: "0 2px 8px rgba(30,41,59,0.03)",
-            transition: "background 0.16s, border 0.16s",
-            textDecoration: "none",
+            backdropFilter: "blur(14px)",
+            transition: "all 0.2s",
+            textDecoration: "none"
           }}
         >
           {link.label}
         </Link>
       ))}
     </div>
+
     {/* Announcements */}
     <div>
-      <div style={{ fontWeight: 600, fontSize: 18, marginBottom: 10 }}>Announcements & Updates</div>
+      <div style={{
+        fontWeight: 600,
+        fontSize: 18,
+        marginBottom: 10,
+        color: "var(--text-color)"
+      }}>
+        Announcements & Updates
+      </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {announcements.map((a, i) => (
           <div key={i} style={{
-            background: "#fff",
-            borderRadius: 8,
-            padding: "1rem 1.2rem",
-            fontSize: 15,
-            color: "#232323",
-            boxShadow: "0 2px 8px rgba(30,41,59,0.04)",
-            borderLeft: "4px solid #6366f1"
-          }}>
+            borderLeft: "4px solid var(--brand-blue)"
+          }} className="glass-card" >
             {a}
           </div>
         ))}

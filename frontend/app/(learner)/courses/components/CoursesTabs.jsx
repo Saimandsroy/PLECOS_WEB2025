@@ -1,38 +1,51 @@
-import React from 'react'
+import React from 'react';
 
 const tabs = [
   { key: 'structured', label: 'Structured Courses' },
   { key: 'videos', label: 'Videos' },
   { key: 'docs', label: 'Docs' }
-]
+];
 
-const CoursesTabs = ({ tab, setTab }) => (
-  <div style={{
-    display: 'flex',
-    gap: 10,
-    borderBottom: '1px solid #e5e7eb',
-    paddingBottom: 12
-  }}>
-    {tabs.map(t => (
-      <button
-        key={t.key}
-        onClick={() => setTab(t.key)}
-        style={{
-          background: tab === t.key ? '#232b36' : '#fff',
-          color: tab === t.key ? '#fff' : '#232b36',
-          border: '1px solid #e5e7eb',
-          borderRadius: 6,
-          padding: '6px 18px',
-          fontWeight: 600,
-          fontSize: 15,
-          cursor: 'pointer',
-          boxShadow: tab === t.key ? '0 2px 8px rgba(30,41,59,0.06)' : 'none'
-        }}
-      >
-        {t.label}
-      </button>
-    ))}
-  </div>
-)
+const CoursesTabs = ({ tab, setTab }) => {
+  const baseButtonStyle = {
+    borderRadius: 8,
+    padding: '6px 18px',
+    fontWeight: 600,
+    fontSize: 15,
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    border: '1px solid var(--border-color)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+  };
 
-export default CoursesTabs
+  return (
+    <div style={{
+      display: 'flex',
+      gap: 10,
+      borderBottom: '1px solid var(--border-color)',
+      paddingBottom: 12,
+      flexWrap: 'wrap'
+    }}>
+      {tabs.map(t => {
+        const isActive = tab === t.key;
+        return (
+          <button
+            key={t.key}
+            onClick={() => setTab(t.key)}
+            style={{
+              ...baseButtonStyle,
+              background: isActive ? 'var(--text-accent)' : 'var(--background-glass)',
+              color: isActive ? '#fff' : 'var(--text-primary)',
+              boxShadow: isActive ? '0 4px 16px var(--shadow-color)' : 'none',
+            }}
+          >
+            {t.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+};
+
+export default CoursesTabs;

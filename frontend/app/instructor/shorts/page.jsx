@@ -27,7 +27,7 @@ const ShortsPage = () => {
             {/* Sticky Header */}
             <div className="instructor-shorts-header">
                 <h2>Your Shorts</h2>
-                <button className="create-short-btn">
+                <button className="create-short-btn glass-card">
                     <UploadIcon style={{ marginRight: 8 }} />
                     Create New Short
                 </button>
