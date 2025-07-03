@@ -1,0 +1,41 @@
+.channel-header {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.channel-main {
+  display: flex;
+  gap: 2rem;
+  padding: 10px 5px;
+}
+
+.channel-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.channel-logo-div {
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel-logo-div img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}

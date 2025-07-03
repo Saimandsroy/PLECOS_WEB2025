@@ -1,11 +1,10 @@
 "use client";
-
 import React, { useState } from 'react';
-import './Header.css';
 import Image from 'next/image';
 import logo from "@/public/logos/plecos.avif";
 import { useRouter } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
+import './Header.css';
 
 export default function Header({ title, roleTarget }) {
   const [modalOpen, setModalOpen] = useState(false);

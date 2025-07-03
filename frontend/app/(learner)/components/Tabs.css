@@ -1,0 +1,43 @@
+.le-ho-tabs-wrapper {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  position: sticky;
+  z-index: 10;
+  top: -10px;
+  transition: background 0.3s, backdrop-filter 0.3s;
+}
+
+/* Add sticky background style */
+.le-ho-tabs-wrapper.sticky-bg {
+  background: var(--bg-glass);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  border-radius: 10px;
+  padding: 10px 4px;
+  gap: 23px;
+}
+
+.le-ho-tabs-button:hover {
+  background-color: var(--bg-glass-hover);
+  transition: background 0.3s;
+}
+
+.le-ho-tabs-button {
+  background: var(--background-glass);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 10px;
+}
+
+.le-ho-tabs-button.active {
+  border-bottom: 3px solid #1976d2;
+  color: #1976d2;
+  animation: color 3s step-end;
+}
