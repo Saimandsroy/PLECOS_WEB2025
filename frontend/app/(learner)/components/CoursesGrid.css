@@ -1,0 +1,62 @@
+.le-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+.le-course-card {
+  background: var(--bg-glass);
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.le-course-thumb {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: contain;
+  height: 140px;
+}
+.le-course-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+.le-course-desc {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+.le-course-meta {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.le-course-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.le-course-logo {
+  width: 50px; /* 36px * 1.4 ≈ 50px */
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.le-course-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.le-course-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 8px;
+}
