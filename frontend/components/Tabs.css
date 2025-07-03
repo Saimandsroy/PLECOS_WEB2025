@@ -46,16 +46,23 @@
   align-items: center;
   justify-content: center;
 }
-@media (max-width:1240px) {
+@media (min-width:769px) and (max-width:1024px) {
   .le-tabs{
-    width: 4.5rem;
+    width: 4.6rem;
 
   }
   .le-tabs-link{
     padding: 0.75rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
   }
   .le-tabs-text{
-    visibility: hidden;
+    margin-top: 0;
+    font-size: 0.8rem;
+    display: block;
   }
 }
 
