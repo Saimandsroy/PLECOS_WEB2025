@@ -1,29 +1,47 @@
-"use client"
-import React from 'react'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
-import './Tabs.css'
+"use client";
+
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import clsx from "clsx";
+import "./Tabs.css";
 
 const Tabs = ({ sidebarLinks }) => {
-    const pathname = usePathname()
-    console.log('Current Pathname:', pathname)
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
-    return (
-        <aside className='le-tabs'>
-            <nav className='le-tabs-nav'>
-                {sidebarLinks.map(link => (
-                    <Link
-                        key={link.to}
-                        href={link.to}
-                        className={`le-tabs-link${pathname === link.to ? ' active' : ''}`}
-                    >
-                        <span className="le-tabs-icon">{link.icon}</span>
-                        {link.label}
-                    </Link>
-                ))}
-            </nav>
-        </aside>
-    )
-}
+  return (
+    <>
+      <button
+        aria-label="Toggle navigation"
+        onClick={() => setOpen((o) => !o)}
+        className="le-toggle"
+      >
+        {open ? <X size={24} /> : <Menu size={24} />}
+      </button>
 
-export default Tabs
+      {open && <div className="le-overlay" onClick={() => setOpen(false)} />}
+
+      <aside className={clsx("le-tabs", { open })}>
+        <nav className="le-tabs-nav">
+          {sidebarLinks.map((link) => (
+            <Link
+              key={link.to}
+              href={link.to}
+              onClick={() => setOpen(false)}
+              className={clsx("le-tabs-link", {
+                active: pathname === link.to,
+              })}
+            >
+              <span className="le-tabs-icon">{link.icon}</span>
+              <span className="le-tabs-text">{link.label}</span>
+            </Link>
+          ))}
+        </nav>
+      </aside>
+    </>
+  );
+};
+
+export default Tabs;

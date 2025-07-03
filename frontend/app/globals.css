@@ -29,6 +29,7 @@
   --scrollbar-track: #f1f1f1;
   --scrollbar-thumb: #cccccc;
   --scrollbar-thumb-hover: #999999;
+  --bg-toggle:rgba(21, 0, 255, 0.07);
 
 }
 
@@ -63,7 +64,7 @@
   --scrollbar-track: #1a1a1a;
   --scrollbar-thumb: #444444;
   --scrollbar-thumb-hover: #666666;
-
+  --bg-toggle:rgba(255, 255, 255, 0.1);
 
 }
 
@@ -142,10 +143,15 @@ footer{
   transform: scale(0.95);
 }
 
+
 /* Responsive design */
 @media (max-width: 768px) {
   .glass-card {
     padding: 1.5rem;
+  }
+  .theme-toggle-button{
+    width: 30px;
+    height: 30px;
   }
 }
 

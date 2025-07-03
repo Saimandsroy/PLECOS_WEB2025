@@ -1,6 +1,6 @@
 
 .le-tabs {
-  width:13rem ;
+  width:12rem ;
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -45,4 +45,77 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media (max-width:1240px) {
+  .le-tabs{
+    width: 4.5rem;
+
+  }
+  .le-tabs-link{
+    padding: 0.75rem 1.15rem;
+  }
+  .le-tabs-text{
+    visibility: hidden;
+  }
+}
+
+.le-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: var(--bg-glass);
+  backdrop-filter: blur(2px);
+}
+
+
+.le-toggle {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 10000;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-toggle);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+
+@media (min-width: 769px) {
+  .le-toggle {
+    display: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .le-tabs {
+    position: fixed;
+    top: 8vh;
+    left: 0;
+    bottom: 0;
+    width: 12rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 40;
+    margin: 0;
+    padding: 2rem 0.5rem;
+  }
+
+  .le-tabs.open {
+    transform: translateX(0);
+  }
+
+  .le-tabs-link {
+    visibility: visible;
+  }
+
+  .le-tabs-text {
+    visibility: visible;
+  }
 }
