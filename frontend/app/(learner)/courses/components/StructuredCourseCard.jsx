@@ -1,8 +1,13 @@
 'use client';
 
 import styles from './StructuredCourseCard.module.css';
+import {useRouter} from 'next/navigation';
 
 const StructuredCourseCard = ({ course }) => {
+  const router = useRouter();
+  const handleCardClick = () => {
+    router.push(`/courses/${course.id}`);
+  };
   const getCourseTypeColor = (type) => {
     const colors = {
       'Interactive': '#4CAF50',
@@ -46,6 +51,7 @@ const StructuredCourseCard = ({ course }) => {
           <span>Impact Rate: {course.impactRate}%</span>
         </div>
         <button
+          onClick={handleCardClick}
             className={`${styles.actionButton} ${course.enrolled ? styles.continueButton : styles.enrollButton}`}
             style={
               course.enrolled && course.progress

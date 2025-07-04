@@ -138,7 +138,7 @@ const CoursesSection = () => {
     setTimeout(() => {
       setContent(mockData[activeTab]);
       setLoading(false);
-    }, 500);
+    }, 100);
   }, [activeTab]);
 
   const handleFilterChange = (key, value) => {

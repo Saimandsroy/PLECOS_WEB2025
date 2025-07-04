@@ -54,3 +54,7 @@
   border-color: var(--text-accent);
   box-shadow: 0 0 0 3px rgba(77, 159, 255, 0.25);
 }
+.filterSelect option {
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+}
