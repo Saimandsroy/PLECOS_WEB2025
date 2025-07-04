@@ -1,15 +1,13 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import ChannelHeader from '../../components/profile/ChannelHeader';
-import StickyTabs from '../../components/profile/StickyTabs';
-import VideosGrid from '../../components/profile/VideosGrid';
-import ShortsGrid from '../../components/profile/ShortsGrid';
-import PostsRow from '../../components/profile/PostsRow';
+import ChannelHeader from '../../../../components/profile/ChannelHeader';
+import StickyTabs from '../../../../components/profile/StickyTabs';
+import VideosGrid from '../../../../components/profile/VideosGrid';
+import ShortsGrid from '../../../../components/profile/ShortsGrid';
+import PostsRow from '../../../../components/profile/PostsRow';
 import './page.css';
 
-const tabs = ['Videos', 'Shorts', 'Posts'];
-
-const InstructorHome = () => {
+const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
   const sentinelRef = useRef(null);
@@ -35,7 +33,6 @@ const InstructorHome = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         className={isSticky ? 'sticky-bg' : 'transparent-bg'}
-        tabs={tabs}
       />
       {activeTab === 0 && <VideosGrid />}
       {activeTab === 1 && <ShortsGrid />}
@@ -44,4 +41,4 @@ const InstructorHome = () => {
   );
 }
 
-export default InstructorHome;
+export default ProfilePage;

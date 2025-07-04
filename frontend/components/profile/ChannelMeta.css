@@ -1,0 +1,11 @@
+.channel-meta {
+  color: #888;
+  font-size: 1.05rem;
+  display: flex;
+  gap: 0.7rem;
+}
+.channel-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}

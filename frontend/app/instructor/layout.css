@@ -1,27 +1,13 @@
 .le-m {
-  height: 100vh;
-  background: var(--background);
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  margin: 2px;
-  overflow: hidden;
-}
-
-.le-m {
-  height: 100vh;
+  height: 99.5vh;
+  width: 99.5vw;
   background: var(--bg-glass);
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--le-m-border, black);
   border-radius: 12px;
-  margin: 2px;
   overflow: hidden;
-}
-
-.dark .le-m {
-  background: var(--bg-glass);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.171);
 }
 
 .le-c {

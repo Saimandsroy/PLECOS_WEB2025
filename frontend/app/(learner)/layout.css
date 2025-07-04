@@ -1,16 +1,13 @@
 .le-m {
-  height: 100vh;
+  height: 99.5vh;
+  width: 99.5vw;
   background: var(--bg-glass);
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--le-m-border, black);
   border-radius: 12px;
-  margin: 2px;
   overflow: hidden;
-}
-
-.dark .le-m {
-  background: var(--bg-glass);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.171);
 }
 
 .le-c {
@@ -22,7 +19,7 @@
 
 .le-mc {
   flex: 1;
-  padding: 2rem 2rem;
+  padding: 1rem 1rem;
   background: var(--background-secondary);
   min-height: 0;
   overflow-y: auto;
