@@ -1,0 +1,73 @@
+.wl-shorts-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+.wl-short-card {
+  min-width: 180px;
+  max-width: 200px;
+  aspect-ratio: 9/16;
+  background: var(--bg-glass);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.wl-short-thumb {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  height: 120px;
+  flex-grow: 1;
+}
+.wl-short-title {
+  font-weight: 500;
+  font-size: 15px;
+  min-height: 36px;
+}
+.wl-short-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.wl-short-duration {
+  background: var(--background-glass);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  max-width: fit-content;
+}
+
+.wl-short-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.wl-short-logo {
+  width: 39px; /* 28px * 1.4 ≈ 39px */
+  height: 39px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.wl-short-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.wl-short-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 6px;
+}
