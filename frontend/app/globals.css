@@ -26,7 +26,7 @@
   --text-secondary: #6b7280;
   --text-accent: var(--brand-blue);
   --st-tab-primary: #1a1a1a;
-  --border-color: rgb(255, 255, 255);
+  --border-color: rgb(170, 168, 197);
   --shadow-color: rgba(0, 0, 0, 0.1);
   --gradient-primary: linear-gradient(135deg, #1a73e8 0%, #4d9fff 100%);
   --gradient-secondary: linear-gradient(135deg, #ff7f3f 0%, #ff9f6a 100%);

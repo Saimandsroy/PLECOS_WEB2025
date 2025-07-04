@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import styles from './CourseSection.module.css';
+import styles from './CoursesSection.module.css';
+import CourseTabs from './CourseTabs';
+import CourseFilters from './CourseFilters';
+import StructuredCourseCard from './StructuredCourseCard';
+import VideoCard from './VideoCard';
+import DocumentCard from './DocumentCard';
 
 const CoursesSection = () => {
   const [activeTab, setActiveTab] = useState('structured');
@@ -21,11 +26,11 @@ const CoursesSection = () => {
     structured: [
       {
         id: 1,
-        thumbnail: '/api/placeholder/300/200',
+        thumbnail: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnNlfGVufDB8fDB8fHww',
         title: 'Complete JavaScript Fundamentals for Modern Web Development',
         instructor: 'Sarah Johnson',
-        instructorImage: '/api/placeholder/40/40',
-        level: 'Level 1',
+        instructorImage: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+        level: 'Beginner',
         courseType: 'Interactive',
         rating: 4.8,
         viewCount: 15420,
@@ -34,24 +39,25 @@ const CoursesSection = () => {
       },
       {
         id: 2,
-        thumbnail: '/api/placeholder/300/200',
+        thumbnail: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnNlfGVufDB8fDB8fHww',
         title: 'Advanced React Patterns and Performance Optimization',
         instructor: 'Mike Chen',
-        instructorImage: '/api/placeholder/40/40',
-        level: 'Level 3',
+        instructorImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D',
+        level: 'Advanced',
         courseType: 'Project-Based',
         rating: 4.9,
         viewCount: 8930,
         impactRate: 92,
-        enrolled: true
+        enrolled: true,
+        progress: 75
       },
       {
         id: 3,
-        thumbnail: '/api/placeholder/300/200',
+        thumbnail: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnNlfGVufDB8fDB8fHww',
         title: 'Full-Stack Development with Next.js',
         instructor: 'Emma Davis',
-        instructorImage: '/api/placeholder/40/40',
-        level: 'Level 2',
+        instructorImage: 'https://i.pinimg.com/474x/81/76/3e/81763edbda7fa57b57f36bfc0c05840b.jpg',
+        level: 'Intermediate',
         courseType: 'Hands-on',
         rating: 4.7,
         viewCount: 12340,
@@ -60,22 +66,22 @@ const CoursesSection = () => {
       },
       {
         id: 4,
-        thumbnail: '/api/placeholder/300/200',
+        thumbnail: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnNlfGVufDB8fDB8fHww',
         title: 'Database Design and SQL Mastery',
         instructor: 'David Wilson',
-        instructorImage: '/api/placeholder/40/40',
-        level: 'Level 2',
+        instructorImage: 'https://i.pinimg.com/474x/81/76/3e/81763edbda7fa57b57f36bfc0c05840b.jpg',
+        level: 'Intermediate',
         courseType: 'Theory',
         rating: 4.6,
         viewCount: 9870,
         impactRate: 87,
-        enrolled: false
+        enrolled: false,
       }
     ],
     videos: [
       {
         id: 1,
-        thumbnail: '/api/placeholder/300/200',
+        thumbnail: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnNlfGVufDB8fDB8fHww',
         title: 'Introduction to Machine Learning Algorithms',
         instructor: 'Dr. Alex Rodriguez',
         duration: '45:30',
@@ -83,7 +89,7 @@ const CoursesSection = () => {
       },
       {
         id: 2,
-        thumbnail: '/api/placeholder/300/200',
+        thumbnail: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnNlfGVufDB8fDB8fHww',
         title: 'CSS Grid vs Flexbox: When to Use What',
         instructor: 'Lisa Thompson',
         duration: '28:15',
@@ -91,7 +97,7 @@ const CoursesSection = () => {
       },
       {
         id: 3,
-        thumbnail: '/api/placeholder/300/200',
+        thumbnail: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnNlfGVufDB8fDB8fHww',
         title: 'API Design Best Practices',
         instructor: 'James Kumar',
         duration: '52:45',
@@ -127,7 +133,7 @@ const CoursesSection = () => {
   };
 
   useEffect(() => {
-    // Simulate API call
+    
     setLoading(true);
     setTimeout(() => {
       setContent(mockData[activeTab]);
@@ -139,99 +145,16 @@ const CoursesSection = () => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
 
-  const getCourseTypeColor = (type) => {
-    const colors = {
-      'Interactive': '#4CAF50',
-      'Project-Based': '#2196F3',
-      'Hands-on': '#FF9800',
-      'Theory': '#9C27B0'
-    };
-    return colors[type] || '#757575';
-  };
-
-  const formatViewCount = (count) => {
-  if (typeof count !== 'number' || isNaN(count)) return '0';
-  return count >= 1000 ? `${(count / 1000).toFixed(1)}k` : count.toString();
-};
-
-  const renderStructuredCourseCard = (course) => (
-    <div key={course.id} className={styles.card}>
-      <div className={styles.cardThumbnail}>
-        <img src={course.thumbnail} alt={course.title} />
-      </div>
-      <div className={styles.cardContent}>
-        <h3 className={styles.cardTitle}>{course.title}</h3>
-        <div className={styles.instructorInfo}>
-          <img src={course.instructorImage} alt={course.instructor} className={styles.instructorImage} />
-          <span className={styles.instructorName}>{course.instructor}</span>
-        </div>
-        <div className={styles.courseInfo}>
-          <span className={styles.level}>{course.level}</span>
-          <span 
-            className={styles.courseType}
-            style={{ backgroundColor: getCourseTypeColor(course.courseType) }}
-          >
-            {course.courseType}
-          </span>
-        </div>
-        <div className={styles.courseStats}>
-          <span className={styles.rating}>★ {course.rating}</span>
-          <span className={styles.viewCount}>{formatViewCount(course.viewCount)} views</span>
-        </div>
-        <div className={styles.impactRate}>
-          <span>Impact Rate: {course.impactRate}%</span>
-        </div>
-        <button className={`${styles.actionButton} ${course.enrolled ? styles.continueButton : styles.enrollButton}`}>
-          {course.enrolled ? 'Continue' : 'Enroll'}
-        </button>
-      </div>
-    </div>
-  );
-
-  const renderVideoCard = (video) => (
-    <div key={video.id} className={styles.card}>
-      <div className={styles.cardThumbnail}>
-        <img src={video.thumbnail} alt={video.title} />
-        <div className={styles.duration}>{video.duration}</div>
-      </div>
-      <div className={styles.cardContent}>
-        <h3 className={styles.cardTitle}>{video.title}</h3>
-        <div className={styles.instructorInfo}>
-          <span className={styles.instructorName}>{video.instructor}</span>
-        </div>
-        <div className={styles.courseStats}>
-          <span className={styles.viewCount}>{formatViewCount(video.viewCount)} views</span>
-        </div>
-        <button className={styles.actionButton}>Watch</button>
-      </div>
-    </div>
-  );
-
-  const renderDocumentCard = (doc) => (
-    <div key={doc.id} className={styles.documentCard}>
-      <div className={styles.documentInfo}>
-        <h3 className={styles.documentTitle}>{doc.title}</h3>
-        <div className={styles.documentMeta}>
-          <span className={styles.documentType}>{doc.type}</span>
-          <span className={styles.uploadedBy}>by {doc.uploadedBy}</span>
-          <span className={styles.downloads}>{formatViewCount(doc.downloads)} downloads</span>
-        </div>
-      </div>
-      <button className={styles.actionButton}>
-        {doc.type === 'PDF' ? 'Download' : 'View'}
-      </button>
-    </div>
-  );
 
   const renderContent = () => {
-    if (loading) {
-      return <div className={styles.loading}>Loading...</div>;
-    }
+    if (loading) return <div className={styles.loading}>Loading...</div>;
 
     if (activeTab === 'structured') {
       return (
         <div className={styles.grid}>
-          {content.map(renderStructuredCourseCard)}
+          {content.map((course) => (
+            <StructuredCourseCard key={course.id} course={course} />
+          ))}
         </div>
       );
     }
@@ -239,7 +162,9 @@ const CoursesSection = () => {
     if (activeTab === 'videos') {
       return (
         <div className={styles.grid}>
-          {content.map(renderVideoCard)}
+          {content.map((video) => (
+            <VideoCard key={video.id} video={video} />
+          ))}
         </div>
       );
     }
@@ -247,117 +172,23 @@ const CoursesSection = () => {
     if (activeTab === 'docs') {
       return (
         <div className={styles.documentGrid}>
-          {content.map(renderDocumentCard)}
+          {content.map((doc) => (
+            <DocumentCard key={doc.id} doc={doc} />
+          ))}
         </div>
       );
     }
+
+    return null;
   };
 
   return (
     <div className={styles.coursesSection}>
-      {/* Tabs */}
-      <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${activeTab === 'structured' ? styles.activeTab : ''}`}
-          onClick={() => setActiveTab('structured')}
-        >
-          📘 Structured Courses
-        </button>
-        <button
-          className={`${styles.tab} ${activeTab === 'videos' ? styles.activeTab : ''}`}
-          onClick={() => setActiveTab('videos')}
-        >
-          🎞️ Videos
-        </button>
-        <button
-          className={`${styles.tab} ${activeTab === 'docs' ? styles.activeTab : ''}`}
-          onClick={() => setActiveTab('docs')}
-        >
-          📄 Docs & Notes
-        </button>
-      </div>
-
-      {/* Filters */}
-      <div className={styles.filtersBar}>
-        <div className={styles.searchContainer}>
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={filters.search}
-            onChange={(e) => handleFilterChange('search', e.target.value)}
-            className={styles.searchInput}
-          />
-        </div>
-        
-        <div className={styles.filtersRow}>
-          <select
-            value={filters.domain}
-            onChange={(e) => handleFilterChange('domain', e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="">All Domains</option>
-            <option value="web-development">Web Development</option>
-            <option value="data-science">Data Science</option>
-            <option value="mobile-development">Mobile Development</option>
-            <option value="devops">DevOps</option>
-          </select>
-
-          <select
-            value={filters.subdomain}
-            onChange={(e) => handleFilterChange('subdomain', e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="">All Subdomains</option>
-            <option value="frontend">Frontend</option>
-            <option value="backend">Backend</option>
-            <option value="fullstack">Full Stack</option>
-            <option value="databases">Databases</option>
-          </select>
-
-          <select
-            value={filters.level}
-            onChange={(e) => handleFilterChange('level', e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="">All Levels</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
-
-          {activeTab === 'structured' && (
-            <select
-              value={filters.courseType}
-              onChange={(e) => handleFilterChange('courseType', e.target.value)}
-              className={styles.filterSelect}
-            >
-              <option value="">All Types</option>
-              <option value="interactive">Interactive</option>
-              <option value="project-based">Project-Based</option>
-              <option value="hands-on">Hands-on</option>
-              <option value="theory">Theory</option>
-            </select>
-          )}
-
-          <select
-            value={filters.sortBy}
-            onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-            className={styles.filterSelect}
-          >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-            <option value="popular">Most Popular</option>
-            <option value="rating">Highest Rated</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className={styles.content}>
-        {renderContent()}
-      </div>
+      <CourseTabs activeTab={activeTab} onTabChange={setActiveTab} />
+      <CourseFilters filters={filters} onFilterChange={handleFilterChange} activeTab={activeTab} />
+      <div className={styles.content}>{renderContent()}</div>
     </div>
   );
-};
+}; 
 
 export default CoursesSection;
