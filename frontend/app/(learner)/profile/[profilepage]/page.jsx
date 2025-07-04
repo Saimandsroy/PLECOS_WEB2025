@@ -7,6 +7,7 @@ import ShortsGrid from '../../../../components/profile/ShortsGrid';
 import PostsRow from '../../../../components/profile/PostsRow';
 import './page.css';
 
+const tabs = ['Videos', 'Shorts', 'Posts'];
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
@@ -33,6 +34,7 @@ const ProfilePage = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         className={isSticky ? 'sticky-bg' : 'transparent-bg'}
+        tabs={tabs}
       />
       {activeTab === 0 && <VideosGrid />}
       {activeTab === 1 && <ShortsGrid />}
