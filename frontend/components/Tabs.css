@@ -1,18 +1,12 @@
-
 .le-tabs {
-  /* layout */
-  width: 12rem;
-  position: static;          
-  padding: 2rem 0.5rem;
-
-
+  position: static;
+  padding: 1rem;
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-
 
   transform: none;
   transition: none;
@@ -28,13 +22,13 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 2rem;
+  padding: 0.5rem 9px;
   border-radius: 8px;
   background: transparent;
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   transition: background 0.15s, color 0.15s;
 }
 
@@ -54,10 +48,37 @@
   justify-content: center;
 }
 
+.le-tabs-link-last {
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background: var(--tab-active);
+  transition: background 0.15s, color 0.15s;
+}
 
+.le-tabs-link-last.active {
+  background: var(--brand-orange);
+  color: #fff;
+}
+
+.le-tabs-icon-last {
+  font-size: 2.2rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .le-tabs { width: 4.6rem; }
+  .le-tabs {
+    width: 4.6rem;
+  }
 
   .le-tabs-link {
     padding: 0.75rem 1.15rem;
@@ -72,9 +93,7 @@
   }
 }
 
-
-
-.le-overlay {
+.le-overlay-navigate {
   position: fixed;
   inset: 0;
   z-index: 30;
@@ -99,8 +118,6 @@
   -webkit-backdrop-filter: blur(20px);
 }
 
-
-
 @media (min-width: 769px) {
   .le-tabs {
     /* be absolutely sure no mobile transform survives */
@@ -108,11 +125,13 @@
     transition: none !important;
   }
 
-  .le-overlay { display: none !important; }
-  .le-toggle  { display: none; }
+  .le-overlay-navigate {
+    display: none !important;
+  }
+  .le-toggle {
+    display: none;
+  }
 }
-
-
 
 @media (max-width: 768px) {
   .le-tabs {
@@ -125,13 +144,11 @@
     padding: 2rem 0.5rem;
     z-index: 40;
 
-    
     transform: translateX(-100%);
     transition: none;
   }
 
   .le-tabs.open {
-    
     transform: translateX(0);
     transition: transform 0.3s ease;
   }

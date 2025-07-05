@@ -1,18 +1,20 @@
 .le-tabs-create-dropdown {
   position: absolute;
-  top: 250px;
-  left: 102%;
-  background: var(--background-glass-hover);
+  top: 50%; /* adjust to match your sidebar */
+  left: 10%; /* adjust to match your sidebar */
+  background: var(--bg-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 24px var(--shadow-color, rgba(0, 0, 0, 0.12));
   border: 1px solid var(--border-color);
   min-width: 180px;
-  z-index: 100;
+  z-index: 99999;
   padding: 0.5rem 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  z-index: 10000;
+  pointer-events: auto;
 }
 
 .le-tabs-create-link {
@@ -26,6 +28,6 @@
 }
 
 .le-tabs-create-link:hover {
-  background: var(--tab-hover);
+  background: var(--background-secondary);
   color: var(--brand-blue);
 }
