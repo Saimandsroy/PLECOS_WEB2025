@@ -9,41 +9,47 @@ import "./Tabs.css";
 
 const MOBILE_BREAKPOINT = 768;
 
-export default function Tabs({ sidebarLinks }) {
+const Tabs = ({ sidebarLinks }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
   
   useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth > MOBILE_BREAKPOINT) setOpen(false);
-    }
+    const handleResize = () => {
+      if (window.innerWidth > MOBILE_BREAKPOINT) {
+        setOpen(false);
+      }
+    };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <>
+      
       <button
         aria-label="Toggle navigation"
+        onClick={() => setOpen((prev) => !prev)}
         className="le-toggle"
-        onClick={() => setOpen(!open)}
       >
         {open ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-    
+      
       {open && <div className="le-overlay" onClick={() => setOpen(false)} />}
 
+      {/* Sidebar */}
       <aside className={clsx("le-tabs", { open })}>
         <nav className="le-tabs-nav">
           {sidebarLinks.map((link) => (
             <Link
               key={link.to}
               href={link.to}
+              onClick={() => setOpen(false)}
               className={clsx("le-tabs-link", {
                 active: pathname === link.to,
               })}
-              onClick={() => setOpen(false)}
             >
               <span className="le-tabs-icon">{link.icon}</span>
               <span className="le-tabs-text">{link.label}</span>
@@ -53,4 +59,6 @@ export default function Tabs({ sidebarLinks }) {
       </aside>
     </>
   );
-}
+};
+
+export default Tabs;

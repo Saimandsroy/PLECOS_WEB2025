@@ -2,8 +2,6 @@
 import React, { forwardRef } from 'react';
 import './StickyTabs.css';
 
-const tabs = ['Videos', 'Shorts', 'Posts'];
-
 const StickyTabs = forwardRef(({ activeTab, setActiveTab, className, tabs }, ref) => (
     <div ref={ref} className={`sticky-tabs ${className || ''}`}>
         {tabs.map((tab, idx) => (
