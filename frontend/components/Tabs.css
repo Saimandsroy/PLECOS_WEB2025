@@ -1,12 +1,21 @@
+
 .le-tabs {
-  width: 10rem;
+  /* layout */
+  width: 12rem;
+  position: static;          
+  padding: 2rem 0.5rem;
+
+
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2rem 0.5rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+
+
+  transform: none;
+  transition: none;
 }
 
 .le-tabs-nav {
@@ -25,7 +34,7 @@
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: background 0.15s, color 0.15s;
 }
 
@@ -45,38 +54,85 @@
   justify-content: center;
 }
 
-.le-tabs-link-last {
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .le-tabs { width: 4.6rem; }
+
+  .le-tabs-link {
+    padding: 0.75rem 1.15rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .le-tabs-text {
+    font-size: 0.8rem;
+    margin-top: 0;
+  }
+}
+
+
+
+.le-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
   background: var(--bg-glass);
-  transition: background 0.15s, color 0.15s;
-  border: skyblue 2px solid;
+  backdrop-filter: blur(2px);
 }
 
-.le-tabs-link-last.active {
-  background: var(--tab-active);
-}
-
-.le-tabs-link-last:active .le-tabs-icon-last {
-  color: var(--brand-orange);
-}
-
-.le-tabs-icon-last {
-  font-size: 2rem;
-  width: 2rem;
-  height: 2rem;
+.le-toggle {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 10000;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-toggle);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-/* Optionally, adjust icon color for contrast */
-.le-tabs-link-last .le-tabs-icon-last {
-  color: var(--brand-blue);
+
+
+@media (min-width: 769px) {
+  .le-tabs {
+    /* be absolutely sure no mobile transform survives */
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .le-overlay { display: none !important; }
+  .le-toggle  { display: none; }
+}
+
+
+
+@media (max-width: 768px) {
+  .le-tabs {
+    position: fixed;
+    top: 8vh;
+    left: 0;
+    bottom: 0;
+    width: 12rem;
+    margin: 0;
+    padding: 2rem 0.5rem;
+    z-index: 40;
+
+    
+    transform: translateX(-100%);
+    transition: none;
+  }
+
+  .le-tabs.open {
+    
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
 }
