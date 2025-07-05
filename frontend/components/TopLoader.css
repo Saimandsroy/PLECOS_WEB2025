@@ -1,0 +1,11 @@
+/* Add to globals.css */
+#nprogress .bar {
+  background: var(--brand-blue) !important;
+  height: 3px;
+}
+#nprogress {
+  pointer-events: none;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--brand-blue), 0 0 5px var(--brand-blue);
+}

@@ -19,6 +19,17 @@ const VideoMetaStep1 = ({
 }) => (
     <form className="video-meta-step1" onSubmit={e => { e.preventDefault(); onNext(); }}>
         <div>
+            <label>Video Title</label>
+            <input
+                type="text"
+                value={title}
+                onChange={e => setTitle(e.target.value)}
+                required
+                maxLength={100}
+                placeholder="Enter video title"
+            />
+        </div>
+        <div>
             <label>Category</label>
             <select
                 value={category}
@@ -29,17 +40,6 @@ const VideoMetaStep1 = ({
                     <option value={cat} key={cat}>{cat}</option>
                 ))}
             </select>
-        </div>
-        <div>
-            <label>Title</label>
-            <input
-                type="text"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-                required
-                maxLength={100}
-                placeholder="Enter video title"
-            />
         </div>
         <ThumbnailUpload
             thumbnailURL={thumbnailURL}
