@@ -1,53 +1,64 @@
-"use client"
-import React, { useState } from 'react'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
-import './Tabs.css'
-import CreateModel from './create/CreateModel'
+"use client";
 
-const Tabs = ({ sidebarLinks, iFier }) => {
-    const pathname = usePathname()
-    const [open, setOpen] = useState(false);
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import clsx from "clsx";
+import "./Tabs.css";
 
-    const lastElement = sidebarLinks[sidebarLinks.length - 1];
-    return (
-        <aside className='le-tabs'>
-            <nav className='le-tabs-nav'>
-                {((iFier && iFier.identifier === "edu") ? sidebarLinks.slice(0, -1) : sidebarLinks).map(link => (
-                    <Link
-                        key={link.to}
-                        href={link.to}
-                        className={`le-tabs-link${pathname === link.to ? ' active' : ''}`}
-                    >
-                        <span className="le-tabs-icon">{link.icon}</span>
-                        {link.label}
-                    </Link>
-                ))}
-                {iFier && iFier.identifier === "edu" && (
-                    <>
-                        {/* <Link
-                            key={lastElement.to}
-                            href={lastElement.to}
-                            className={`le-tabs-link le-tabs-link-last${pathname === lastElement.to ? ' active' : ''}`}
-                        >
-                            <span className="le-tabs-icon le-tabs-icon-last">{lastElement.icon}</span>
+const MOBILE_BREAKPOINT = 768;
 
-                        </Link> */}
-                        <button
-                            className={`le-tabs-link le-tabs-link-last${pathname === lastElement.to ? ' active' : ''}`}
+const Tabs = ({ sidebarLinks }) => {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
-                            onClick={() => setOpen((v) => !v)}
-                            aria-label="Open create menu"
-                        >
-                            <span className="le-tabs-icon le-tabs-icon-last">{lastElement.icon}</span>
+  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > MOBILE_BREAKPOINT) {
+        setOpen(false);
+      }
+    };
 
-                        </button>
-                        <CreateModel links={iFier.model} open={open} setOpen={setOpen} />
-                    </>
-                )}
-            </nav>
-        </aside>
-    )
-}
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-export default Tabs
+  return (
+    <>
+      
+      <button
+        aria-label="Toggle navigation"
+        onClick={() => setOpen((prev) => !prev)}
+        className="le-toggle"
+      >
+        {open ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      
+      {open && <div className="le-overlay" onClick={() => setOpen(false)} />}
+
+      {/* Sidebar */}
+      <aside className={clsx("le-tabs", { open })}>
+        <nav className="le-tabs-nav">
+          {sidebarLinks.map((link) => (
+            <Link
+              key={link.to}
+              href={link.to}
+              onClick={() => setOpen(false)}
+              className={clsx("le-tabs-link", {
+                active: pathname === link.to,
+              })}
+            >
+              <span className="le-tabs-icon">{link.icon}</span>
+              <span className="le-tabs-text">{link.label}</span>
+            </Link>
+          ))}
+        </nav>
+      </aside>
+    </>
+  );
+};
+
+export default Tabs;

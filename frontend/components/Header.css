@@ -33,7 +33,7 @@
 .header__right {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 2rem;
   position: relative;
 }
 
@@ -112,4 +112,23 @@
 
 .header__dropdown-button.outline:hover {
   background: rgba(255, 255, 255, 0.25);
+}
+@media (max-width:768px) {
+  .header{
+    padding: 0.6rem 0.8rem;
+  }
+  .header__left{
+    gap: 0.2rem;
+  }
+  .header__title{
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  .header__right{
+    gap: 0.5rem;
+  }
+  .header__avatar{
+    height: 30px;
+    width: 30px;
+  }
 }

@@ -1,22 +1,9 @@
-"use client"
-import React, { useState } from 'react'
-import CoursesTabs from './components/CoursesTabs'
-import CoursesGrid from './components/CoursesGrid'
+import CoursesSection from './components/CoursesSection';
 
-const CoursesPage = () => {
-  const [tab, setTab] = useState('structured')
-
+export default function CoursesPage() {
   return (
-    <div style={{ padding: '2rem 0' }}>
-      <h2 style={{ fontWeight: 600, fontSize: 24, marginBottom: 16 }}>Courses</h2>
-      <CoursesTabs tab={tab} setTab={setTab} />
-      <div style={{ marginTop: 24 }}>
-        {tab === 'structured' && <CoursesGrid />}
-        {tab === 'videos' && <div>Videos content here</div>}
-        {tab === 'docs' && <div>Docs content here</div>}
-      </div>
+    <div>
+      <CoursesSection />
     </div>
-  )
+  );
 }
-
-export default CoursesPage

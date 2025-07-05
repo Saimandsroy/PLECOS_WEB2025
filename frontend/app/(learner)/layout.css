@@ -55,3 +55,14 @@
   transform: translateY(-5px);
   box-shadow: 0 20px 40px var(--shadow-color);
 }
+@media (max-width:768px) {
+  .le-c{
+    min-height: 90vh;
+  }
+  .le-footer{
+    visibility: hidden;
+    width: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
