@@ -1,0 +1,93 @@
+.instructor-card {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border-radius: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+  gap: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease-in-out;
+}
+
+/* ✅ Light theme */
+.instructor-card.light {
+  background-color: #f9fafb;
+  color: #1e293b;
+}
+
+.instructor-card.light .instructor-name {
+  color: #1e293b;
+}
+
+.instructor-card.light .instructor-role,
+.instructor-card.light .instructor-bio {
+  color: #475569;
+}
+
+/* ✅ Dark theme */
+.instructor-card.dark {
+  background: linear-gradient(to bottom right, #0f172a, #1e293b);
+  color: #e2e8f0;
+}
+
+.instructor-card.dark .instructor-name {
+  color: #e2e8f0;
+}
+
+.instructor-card.dark .instructor-role,
+.instructor-card.dark .instructor-bio {
+  color: #94a3b8;
+}
+
+/* Shared styles (unchanged) */
+.instructor-image {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #FF7F3F;
+  box-shadow: 0 0 16px rgba(197, 121, 34, 0.2);
+  align-self: center;
+}
+
+.section-heading {
+  color: #FF7F3F;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.instructor-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.instructor-role {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.instructor-bio {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .instructor-card {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .instructor-info {
+    flex: 1;
+    margin-left: 24px;
+  }
+
+  .instructor-image {
+    align-self: flex-start;
+  }
+}
