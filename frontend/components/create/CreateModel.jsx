@@ -1,50 +1,44 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import "./CreateModel.css";
+import Link from "next/link";
 
 const CreateModel = ({ links, open, setOpen }) => {
     const dropdownRef = useRef(null);
 
     useEffect(() => {
         if (!open) return;
-
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        const handleClick = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
                 setOpen(false);
             }
         };
-
-        const handleResize = () => setOpen(false);
-
-        document.addEventListener("mousedown", handleClickOutside);
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-            window.removeEventListener("resize", handleResize);
-        };
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
     }, [open, setOpen]);
 
-    if (!Array.isArray(links)) return null;
+    if (!open || !Array.isArray(links)) return null;
 
-    return (
-        <>
-            {open && (
-                <div className="le-tabs-create-dropdown" ref={dropdownRef}>
-                    {links.map((link) => (
-                        <Link
-                            key={link.to}
-                            href={link.to}
-                            className="le-tabs-create-link"
-                            onClick={() => setOpen(false)}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-                </div>
-            )}
-        </>
+    // Render in portal
+    return createPortal(
+        <div
+            ref={dropdownRef}
+            className="le-tabs-create-dropdown"
+        >
+            {links.map((link) => (
+                <Link
+                    key={link.to}
+                    href={link.to}
+                    className="le-tabs-create-link"
+                    onClick={() => setOpen(false)}
+                >
+                    {link.icon && <span style={{ marginRight: 8 }}>{link.icon}</span>}
+                    {link.label}
+                </Link>
+            ))}
+        </div>,
+        document.body
     );
 };
 

@@ -3,8 +3,6 @@ import Footer from "../../components/Footer";
 import Tabs from "../../components/Tabs";
 import "./layout.css";
 import { HomeIcon, BookmarkFilledIcon, VideoIcon, StarIcon, ArchiveIcon } from '@radix-ui/react-icons'
-import RoleSwitcher from "@/components/RoleSwitcher";
-import RoleSwitcherWrapper from "@/components/RoleSwitcherWrapper";
 export const metadata = {
   title: "Plecos",
   description: "A learning plateform.",
@@ -23,7 +21,7 @@ export default function RootLayout({ children }) {
 
   return (
     <div className="le-m">
-      <Header title={title} roleTarget="/instructor" />
+      <Header title={title} roleTarget="/educator" />
       <div className="le-c">
         <Tabs sidebarLinks={sidebarLinks} />
         <main className="le-mc">{children}</main>
