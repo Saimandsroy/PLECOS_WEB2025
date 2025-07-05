@@ -19,6 +19,7 @@
   position: relative;
   overflow: hidden;
   transition: border-color 0.2s;
+  margin-top: 15px;
 }
 .thumb-placeholder {
   display: flex;

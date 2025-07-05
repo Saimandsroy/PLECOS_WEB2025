@@ -2,6 +2,8 @@
 import React, { useRef, useState } from "react";
 import VideoSelect from "./components/VideoSelect";
 import VideoMetaForm from "./components/VideoMetaForm";
+import UploadSectionHeader from "./components/UploadSectionHeader";
+import "./page.css"
 
 const UploadVideoPage = () => {
     const [step, setStep] = useState(1);
@@ -31,7 +33,8 @@ const UploadVideoPage = () => {
     };
 
     return (
-        <div style={{ maxWidth: 540, margin: "40px auto", padding: 24 }}>
+        <div className="upload-video-page-xyz">
+            <UploadSectionHeader identifier="video" />
             {step === 1 && (
                 <VideoSelect
                     videoFile={videoFile}

@@ -19,7 +19,6 @@
 .video-meta-step2 textarea,
 .video-meta-step2 input {
   width: 100%;
-  margin-top: 6px;
   padding: 10px 12px;
   border-radius: 8px;
   border: 1.5px solid var(--le-m-border, #bdbdbd);
@@ -77,7 +76,7 @@
   flex: 1;
 }
 .video-meta-addtag {
-  padding: 8px 18px;
+  padding: 4px;
   border-radius: 8px;
   border: none;
   background: var(--background-secondary);
@@ -86,6 +85,7 @@
   font-size: 15px;
   cursor: pointer;
   transition: background 0.2s;
+  border-radius: 50%;
 }
 .video-meta-addtag:disabled {
   background: #eee;

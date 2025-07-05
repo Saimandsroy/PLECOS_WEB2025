@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./VideoMetaStep2.css";
+import { PlusIcon } from "@radix-ui/react-icons";
 
 const hashtagSuggestions = [
     "React", "JavaScript", "WebDev", "Coding", "Tutorial", "Frontend", "NextJS"
@@ -55,7 +56,7 @@ const VideoMetaStep2 = ({
                         onClick={() => addTag(tagInput.trim().replace(/^#/, ""))}
                         disabled={!tagInput.trim()}
                     >
-                        Add
+                        <PlusIcon width={38} height={24} />
                     </button>
                 </div>
                 <div className="video-meta-tags-list">

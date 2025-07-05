@@ -1,6 +1,7 @@
 import React from 'react'
 import { Manrope } from "next/font/google";
 import "./globals.css";
+import TopLoader from '@/components/TopLoader';
 
 const manrope = Manrope({
     subsets: ["latin"],
@@ -16,6 +17,7 @@ const RootLayout = ({ children }) => {
             <body
                 className={`${manrope.variable} antialiased`}
             >
+                <TopLoader />
                 {children}
             </body>
         </html>
