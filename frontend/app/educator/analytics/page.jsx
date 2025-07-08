@@ -1,12 +1,13 @@
+"use client"
 import React from "react";
 import "./analytics.css";
 import AnalyticsStat from "./components/AnalyticsStat";
 import AnalyticsAudience from "./components/AnalyticsAudience";
 import AnalyticsEngagement from "./components/AnalyticsEngagement";
 import AnalyticsTopCourses from "./components/AnalyticsTopCourses";
-import AnalyticsComments from "./components/AnalyticsComments";
-import AnalyticsRevenue from "./components/AnalyticsRevenue";
-import AnalyticsRatings from "./components/AnalyticsRatings";
+// import AnalyticsComments from "./components/AnalyticsComments";
+// import AnalyticsRevenue from "./components/AnalyticsRevenue";
+// import AnalyticsRatings from "./components/AnalyticsRatings";
 
 const stats = [
     { label: "Total Enrollments", value: "4,278", sub: "+12.8% vs pr 28 days" },
@@ -40,12 +41,12 @@ const AnalyticsPage = () => (
             </div>
             <div className="analytics-side">
                 <AnalyticsTopCourses courses={topCourses} />
-                <AnalyticsComments comments={comments} />
+                {/* <AnalyticsComments comments={comments} /> */}
             </div>
-            <div className="analytics-side">
+            {/* <div className="analytics-side">
                 <AnalyticsRevenue />
                 <AnalyticsRatings />
-            </div>
+            </div> */}
         </div>
     </div>
 );

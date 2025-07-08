@@ -35,9 +35,8 @@ const MySecActions = () => (
     }}
   >
     {actions.map((a) => (
-      <Link href={a.href || ""}>
+      <Link href={a.href || ""} key={a.label}>
         <div
-          key={a.label}
           className="glass-card"
           style={{
             padding: "2rem 0",
