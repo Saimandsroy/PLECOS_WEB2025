@@ -1,0 +1,111 @@
+.videoDetails {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background: var(--bg-glass);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--le-m-border);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.videoTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-accent);
+  margin: 0;
+}
+
+.toggleIcon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  scale: 1.4;
+  color: var(--text-secondary);
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.toggleIcon:hover {
+  transform: scale(1.1);
+  color: var(--text-accent);
+}
+
+.instructorInfo {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.instructorMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
+  gap: 1rem;
+}
+
+.instructorNameBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  background-color: var(--tab-hover);
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: var(--text-primary);
+}
+
+.followButton {
+  background: var(--brand-orange);
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+.followButton:hover {
+  background: var(--text-accent);
+}
+
+.videoMeta {
+  margin-top: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.videoDescription {
+  margin-top: 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+}

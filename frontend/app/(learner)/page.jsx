@@ -6,9 +6,11 @@ import CoursesGrid from './components/CoursesGrid';
 import ShortsRow from './components/ShortsRow';
 import PostsList from './components/PostsList';
 import thumb from "@/public/logo.png";
+import { useRouter } from 'next/navigation';
 
 const videoData = [
     {
+        id: '1',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil Sharma Show | Season 2 | Full Episode',
         views: '4.4M',
@@ -16,102 +18,119 @@ const videoData = [
         duration: '1:04:54',
     },
     {
+        id: '2',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil Sharma Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '17',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil Sharma Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '3',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '4',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '5',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '6',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '7',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '8',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '9',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '10',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '11',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '12',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '13',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '14',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '18',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '15',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
         timeAgo: '1 year ago',
         duration: '1:04:54',
     }, {
+        id: '16',
         thumbnail: thumb,
         title: 'Kapil में तुम्हारे लिए आयी हु | The Kapil शर्मा Show | Season 2 | Full Episode',
         views: '4.4M',
@@ -171,19 +190,28 @@ const postsData = [
 
 const HomePage = () => {
     const [activeTab, setActiveTab] = useState('learn');
+    const router = useRouter();
 
     return (
         <div>
             <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
             {activeTab === 'learn' && (
-                <div style={{
+                <div
+                style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
                     gap: 24,
-                }}>
-                    {videoData.map((video, idx) => (
-                        <VideoCard key={idx} {...video} logo={thumb} />
-                    ))}
+                }}
+                >
+                {videoData.map((video, idx) => (
+                    <div
+                    key={video.id}
+                    onClick={() => router.push(`/video/${video.id}`)}
+                    style={{ cursor: 'pointer' }} 
+                    >
+                    <VideoCard {...video} logo={thumb} />
+                    </div>
+                ))}
                 </div>
             )}
             {activeTab === 'courses' && <CoursesGrid courses={coursesData} logo={thumb} />}

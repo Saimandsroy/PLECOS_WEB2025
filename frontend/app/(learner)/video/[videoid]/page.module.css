@@ -1,0 +1,24 @@
+.videoViewContainer {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.mainContent {
+  flex: 3;
+}
+
+.sidebar {
+  flex: 1;
+}
+@media (max-width: 900px) {
+  .videoViewContainer {
+    flex-direction: column;
+  }
+  .mainContent, .sidebar {
+    flex: none;
+    width: 100%;
+  }
+
+}

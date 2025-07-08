@@ -52,7 +52,7 @@ const Tabs = ({ sidebarLinks, iFier }) => {
               href={link.to}
               onClick={() => setOpen(false)}
               className={clsx("le-tabs-link", {
-                active: pathname === link.to,
+                active: pathname.startsWith(link.to)
               })}
             >
               <span className="le-tabs-icon">{link.icon}</span>
