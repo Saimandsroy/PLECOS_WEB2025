@@ -1,0 +1,61 @@
+
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+
+.ratingGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.starButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  color: var(--text-secondary); 
+}
+
+.starButton:hover {
+  transform: scale(1.15);
+}
+
+.filled {
+  color: var(--brand-orange); 
+}
+
+.ratingValue {
+  margin-left: 0.4rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+
+.iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.iconBtn:hover {
+  color: var(--brand-blue);
+}
