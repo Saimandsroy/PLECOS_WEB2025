@@ -9,7 +9,8 @@ import "./Tabs.css";
 import CreateModel from "@/components/create/CreateModel";
 const MOBILE_BREAKPOINT = 768;
 
-const Tabs = ({ sidebarLinks, iFier }) => {
+const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [] }) => {
+  console.log(homeActivePaths)
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   // Separate state for the model dropdown
@@ -53,11 +54,10 @@ const Tabs = ({ sidebarLinks, iFier }) => {
               onClick={() => setOpen(false)}
               className={clsx("le-tabs-link", {
                 active:
-                  link.to === "/"
-                    ? pathname === "/" ||
-                    pathname.startsWith("/video") ||
-                    pathname.startsWith("/privacy")
-                    : pathname.startsWith(link.to),
+                  link.to === homePath
+                    ? pathname === homePath ||
+                    homeActivePaths.some((p) => pathname.startsWith(p))
+                    : pathname.startsWith(link.to)
               })}
             >
               <span className="le-tabs-icon">{link.icon}</span>
