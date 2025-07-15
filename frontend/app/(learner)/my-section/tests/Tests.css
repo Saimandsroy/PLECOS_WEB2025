@@ -1,0 +1,260 @@
+.myt-container {
+  padding: 2rem;
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+.myt-header {
+  margin-bottom: 2rem;
+}
+
+.myt-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.myt-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+
+
+.myt-content {
+  margin-top: 2rem;
+}
+
+.myt-filter-section {
+  margin-bottom: 2rem;
+}
+
+.myt-filter-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 300px;
+}
+
+.myt-filter-select {
+  appearance: none;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 3rem;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--text-primary);
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.myt-filter-select:focus {
+  outline: none;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.myt-filter-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.myt-table-container {
+  background: var(--background-glass);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+}
+
+.myt-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.myt-table-header {
+  background: var(--background-secondary);
+}
+
+.myt-table-header-cell {
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  font-size: 1rem;
+}
+
+.myt-table-cell {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.myt-table-row {
+  transition: all 0.3s ease;
+}
+
+.myt-table-row:hover {
+  background: var(--background-glass-hover);
+}
+
+.myt-table-row:last-child .myt-table-cell {
+  border-bottom: none;
+}
+
+.myt-test-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.myt-category {
+  color: var(--text-secondary);
+}
+
+.myt-status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  display: inline-block;
+  min-width: 100px;
+}
+
+.myt-status-not-started {
+  background: rgba(107, 114, 128, 0.1);
+  color: var(--text-secondary);
+}
+
+.myt-status-in-progress {
+  background: rgba(255, 127, 63, 0.1);
+  color: var(--brand-orange);
+}
+
+.myt-status-completed {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.myt-action-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  width: 120px;
+  text-align: center;
+}
+
+.myt-action-start {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.myt-action-start:hover {
+  background: var(--brand-blue);
+  transform: translateY(-2px);
+}
+
+.myt-action-continue {
+  background: var(--gradient-secondary);
+  color: white;
+}
+
+.myt-action-continue:hover {
+  background: var(--brand-orange);
+  transform: translateY(-2px);
+}
+
+.myt-action-view {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid #22c55e;
+}
+
+.myt-action-view:hover {
+  background: #22c55e;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.myt-empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .myt-container {
+    padding: 1rem;
+  }
+  
+  .myt-title {
+    font-size: 2rem;
+  }
+  
+  .myt-filter-dropdown {
+    width: 100%;
+  }
+  
+  .myt-table-container {
+    overflow-x: auto;
+  }
+  
+  .myt-table {
+    min-width: 600px;
+  }
+  
+  .myt-tab {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .myt-table-cell {
+    padding: 1rem;
+  }
+  
+  .myt-action-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    min-width: 100px;
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .myt-tabs {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .myt-tab {
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+  }
+  
+  .myt-tab:last-child {
+    border-bottom: none;
+  }
+  
+  .myt-table-cell {
+    padding: 0.8rem;
+    font-size: 0.875rem;
+  }
+  
+  .myt-status {
+    min-width: 80px;
+    padding: 0.4rem 0.8rem;
+  }
+}

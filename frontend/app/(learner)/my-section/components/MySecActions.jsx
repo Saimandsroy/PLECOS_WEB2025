@@ -3,7 +3,6 @@ import {
   ClockIcon,
   ListBulletIcon,
   DownloadIcon,
-  BarChartIcon,
   BadgeIcon,
   DesktopIcon,
 } from "@radix-ui/react-icons";
@@ -15,14 +14,26 @@ const actions = [
     label: "Watch Later",
     href: "/my-section/watch-later",
   },
-  { icon: <ListBulletIcon width={28} height={28} />, label: "Playlist", href: "/my-section/playlists" },
-  { icon: <DownloadIcon width={28} height={28} />, label: "Downloads", href: "/my-section/downloads" },
-  { icon: <BarChartIcon width={28} height={28} />, label: "Trending" },
+  {
+    icon: <ListBulletIcon width={28} height={28} />,
+    label: "Playlist",
+    href: "/my-section/playlists",
+  },
+  {
+    icon: <DownloadIcon width={28} height={28} />,
+    label: "Downloads",
+    href: "/my-section/downloads",
+  },
   {
     icon: <BadgeIcon width={28} height={28} />,
     label: "Badges & Certificates",
+    href: "/my-section/badges-certificates",
   },
-  { icon: <DesktopIcon width={28} height={28} />, label: "My Courses & Tests" },
+  {
+    icon: <DesktopIcon width={28} height={28} />,
+    label: "Tests",
+    href: "/my-section/tests",
+  },
 ];
 
 const MySecActions = () => (
