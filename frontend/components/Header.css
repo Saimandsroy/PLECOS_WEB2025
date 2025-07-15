@@ -49,8 +49,8 @@
 
 .header__dropdown {
   position: absolute;
-  top: 60px;
-  right: 0;
+  top: 45px;
+  right: 7px;
   min-width: 240px;
   padding: 1.5rem 1.5rem;
   border-radius: 16px;
