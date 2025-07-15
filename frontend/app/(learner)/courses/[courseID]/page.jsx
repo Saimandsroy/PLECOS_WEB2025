@@ -2,7 +2,7 @@
 
 import CourseClient from "./CourseClient";
 
-export default function CoursePage({ params }) {
-  const { courseID } = params;
+export default async function CoursePage({ params }) {
+  const { courseID } = await params;
   return <CourseClient courseID={courseID} />;
 }

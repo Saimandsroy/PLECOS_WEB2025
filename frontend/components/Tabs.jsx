@@ -12,6 +12,8 @@ const MOBILE_BREAKPOINT = 768;
 const Tabs = ({ sidebarLinks, iFier }) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const homeActivePaths = ["/", "/videos", "/privacy"];
+
   // Separate state for the model dropdown
   const [modelOpen, setModelOpen] = useState(false);
   console.log(modelOpen)
@@ -52,7 +54,12 @@ const Tabs = ({ sidebarLinks, iFier }) => {
               href={link.to}
               onClick={() => setOpen(false)}
               className={clsx("le-tabs-link", {
-                active: pathname.startsWith(link.to)
+                active:
+                  link.to === "/"
+                    ? pathname === "/" ||
+                    pathname.startsWith("/video") ||
+                    pathname.startsWith("/privacy")
+                    : pathname === link.to || pathname.startsWith(link.to + "/"),
               })}
             >
               <span className="le-tabs-icon">{link.icon}</span>

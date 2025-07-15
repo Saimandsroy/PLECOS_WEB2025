@@ -10,11 +10,9 @@
 }
 
 .card:hover {
-  transform: translateY(-5px);
   box-shadow: 0 8px 25px var(--shadow-color);
   background: var(--background-glass-hover);
 }
-
 
 .cardThumbnail {
   position: relative;
@@ -28,19 +26,17 @@
   object-fit: cover;
 }
 
-
 .duration {
   position: absolute;
   bottom: 0.5rem;
   right: 0.5rem;
-  background: rgba(0, 0, 0, 0.8); 
+  background: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;
   font-weight: 500;
 }
-
 
 .cardContent {
   padding: 1.5rem;
@@ -59,7 +55,6 @@
   overflow: hidden;
 }
 
-
 .instructorInfo {
   margin-bottom: 1rem;
 }
@@ -70,7 +65,6 @@
   font-weight: 500;
 }
 
-
 .courseStats {
   margin-bottom: 1rem;
   font-size: 0.9rem;
@@ -80,7 +74,6 @@
 .viewCount {
   color: var(--text-secondary);
 }
-
 
 .actionButton {
   width: 100%;
@@ -99,7 +92,6 @@
   background: #0056b3;
   transform: translateY(-2px);
 }
-
 
 @media (max-width: 480px) {
   .cardContent {

@@ -29,7 +29,6 @@
 
 .continue-course-card:hover {
   background: var(--background-glass-hover);
-  transform: translateY(-5px);
   box-shadow: 0 20px 40px var(--shadow-color);
 }
 

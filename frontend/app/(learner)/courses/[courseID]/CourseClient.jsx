@@ -6,6 +6,7 @@ import CourseOverview from "./components/CourseOverview";
 import CourseContent from "./components/CourseContent";
 import AboutInstructor from "./components/AboutInstructor";
 import CourseReview from "./components/CourseReview";
+import "./CourseClient.css";
 import "./page.css";
 
 const tabs = [
@@ -40,7 +41,7 @@ const courseData = {
     duration: "18 hours",
     views: "70K",
   },
-  "4":{
+  "4": {
     thumbnail: '/course-thumb.jpg',
     title: 'Machine Learning Basics (Level 0)',
     summary: 'Learn the fundamentals of machine learning including supervised and unsupervised learning.',
@@ -52,14 +53,12 @@ const courseData = {
 
 export default function CourseClient({ courseID }) {
   const [tab, setTab] = useState("overview");
-    const course = courseData[courseID];
-    if(!course) return <h2>Course not found!</h2>;
+  const course = courseData[courseID];
+  if (!course) return <h2>Course not found!</h2>;
   return (
     <div>
-      <CourseTitle title={course.title} />
+      {/* <CourseTitle title={course.title} /> */}
       <CourseBanner course={course} />
-      <h2>Course ID: {courseID}</h2>
-
       <div
         style={{
           display: "flex",

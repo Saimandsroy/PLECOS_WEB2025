@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         <Tabs sidebarLinks={sidebarLinks} />
         <main className="le-mc">{children}</main>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
