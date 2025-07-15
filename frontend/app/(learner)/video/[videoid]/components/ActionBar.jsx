@@ -1,14 +1,7 @@
-'use client';
-import React, { useState } from 'react';
-import {
-  Star,
-  Bookmark,
-  Download,
-  MessageCircle,
-  Flag,
-} from 'lucide-react';
-import styles from './ActionBar.module.css';
-
+"use client";
+import React, { useState } from "react";
+import { Star, Bookmark, Download, MessageCircle, Flag } from "lucide-react";
+import styles from "./ActionBar.module.css";
 
 const FilledStar = ({ size = 18, ...props }) => (
   <svg
@@ -23,10 +16,7 @@ const FilledStar = ({ size = 18, ...props }) => (
   </svg>
 );
 
-const ActionBar = ({
-  rating = 0,        
-  ratingCount = 0,   
-}) => {
+const ActionBar = ({ rating = 0, ratingCount = 0 }) => {
   const [userRating, setUserRating] = useState(0);
 
   const handleRate = (value) => {
@@ -42,8 +32,8 @@ const ActionBar = ({
         <button
           key={value}
           onClick={() => handleRate(value)}
-          className={`${styles.starButton} ${filled ? styles.filled : ''}`}
-          aria-label={`Rate ${value} star${value > 1 ? 's' : ''}`}
+          className={`${styles.starButton} ${filled ? styles.filled : ""}`}
+          aria-label={`Rate ${value} star${value > 1 ? "s" : ""}`}
         >
           {filled ? <FilledStar /> : <Star size={18} />}
         </button>
@@ -56,7 +46,7 @@ const ActionBar = ({
         {renderStars()}
         <span className={styles.ratingValue}>
           {(userRating || rating).toFixed(1)}
-          {ratingCount ? ` (${ratingCount})` : ''}
+          {ratingCount ? ` (${ratingCount})` : ""}
         </span>
       </div>
 
@@ -68,10 +58,10 @@ const ActionBar = ({
         <Download size={18} />
         <span>Download</span>
       </button>
-      <button className={styles.iconBtn}>
+      {/* <button className={styles.iconBtn}>
         <MessageCircle size={18} />
         <span>Discuss</span>
-      </button>
+      </button> */}
       <button className={styles.iconBtn}>
         <Flag size={18} />
         <span>Report</span>

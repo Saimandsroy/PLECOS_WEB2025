@@ -15,6 +15,7 @@
 @media (max-width: 900px) {
   .videoViewContainer {
     flex-direction: column;
+    padding: 0;
   }
   .mainContent, .sidebar {
     flex: none;

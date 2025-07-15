@@ -1,0 +1,29 @@
+.player__watermark {
+  position: absolute;
+  width: 55px;
+  opacity: 0.6;
+  z-index: 50;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+/* Optional corners for reference */
+.watermark-top-left {
+  top: 8px;
+  left: 8px;
+}
+
+.watermark-top-right {
+  top: 8px;
+  right: 8px;
+}
+
+.watermark-bottom-left {
+  bottom: 8px;
+  left: 8px;
+}
+
+.watermark-bottom-right {
+  bottom: 8px;
+  right: 8px;
+}
