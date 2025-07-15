@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import logo from "@/public/logos/plecos.avif";
 import { useRouter } from 'next/navigation';
@@ -8,7 +8,20 @@ import './Header.css';
 
 export default function Header({ title, roleTarget }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const router = useRouter();
+
+  // Close modal when clicking outside
+  useEffect(() => {
+    if (!modalOpen) return;
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setModalOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [modalOpen]);
 
   const user = {
     name: "Alex Doe",
@@ -41,7 +54,11 @@ export default function Header({ title, roleTarget }) {
             onClick={() => setModalOpen(!modalOpen)}
           />
           {modalOpen && (
-            <div className="header__dropdown" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="header__dropdown"
+              ref={dropdownRef}
+              onClick={(e) => e.stopPropagation()}
+            >
               <img
                 src={user.avatar}
                 alt="profile"

@@ -38,7 +38,7 @@ export default function educatorLayout({ children }) {
     <div className="le-m">
       <Header title="Educator Dashboard" roleTarget="/" />
       <div className="le-c">
-        <Tabs sidebarLinks={sidebarLinks} iFier={iFier} />
+        <Tabs sidebarLinks={sidebarLinks} iFier={iFier} homePath="/educator" homeActivePaths={["/videos"]} />
         <main className="le-mc">{children}</main>
       </div>
       <Footer />

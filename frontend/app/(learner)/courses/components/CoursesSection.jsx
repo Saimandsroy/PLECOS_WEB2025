@@ -133,7 +133,7 @@ const CoursesSection = () => {
   };
 
   useEffect(() => {
-    
+
     setLoading(true);
     setTimeout(() => {
       setContent(mockData[activeTab]);
@@ -148,47 +148,45 @@ const CoursesSection = () => {
 
   const renderContent = () => {
     if (loading) return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.grid}>
+        {content.map((course) => (
+          <StructuredCourseCard key={course.id} course={course} />
+        ))}
+      </div>
+    );
 
-    if (activeTab === 'structured') {
-      return (
-        <div className={styles.grid}>
-          {content.map((course) => (
-            <StructuredCourseCard key={course.id} course={course} />
-          ))}
-        </div>
-      );
-    }
 
-    if (activeTab === 'videos') {
-      return (
-        <div className={styles.grid}>
-          {content.map((video) => (
-            <VideoCard key={video.id} video={video} />
-          ))}
-        </div>
-      );
-    }
+    // if (activeTab === 'videos') {
+    //   return (
+    //     <div className={styles.grid}>
+    //       {content.map((video) => (
+    //         <VideoCard key={video.id} video={video} />
+    //       ))}
+    //     </div>
+    //   );
+    // }
 
-    if (activeTab === 'docs') {
-      return (
-        <div className={styles.documentGrid}>
-          {content.map((doc) => (
-            <DocumentCard key={doc.id} doc={doc} />
-          ))}
-        </div>
-      );
-    }
+    // if (activeTab === 'docs') {
+    //   return (
+    //     <div className={styles.documentGrid}>
+    //       {content.map((doc) => (
+    //         <DocumentCard key={doc.id} doc={doc} />
+    //       ))}
+    //     </div>
+    //   );
+    // }
 
     return null;
   };
 
   return (
     <div className={styles.coursesSection}>
-      <CourseTabs activeTab={activeTab} onTabChange={setActiveTab} />
+      {/* <CourseTabs activeTab={activeTab} onTabChange={setActiveTab} /> */}
       <CourseFilters filters={filters} onFilterChange={handleFilterChange} activeTab={activeTab} />
       <div className={styles.content}>{renderContent()}</div>
     </div>
   );
-}; 
+};
 
 export default CoursesSection;

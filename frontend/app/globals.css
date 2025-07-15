@@ -33,7 +33,7 @@
   --scrollbar-track: #f1f1f1;
   --scrollbar-thumb: #cccccc;
   --scrollbar-thumb-hover: #999999;
-  --bg-toggle:rgba(21, 0, 255, 0.07);
+  --bg-toggle: rgba(21, 0, 255, 0.07);
 }
 
 .dark {
@@ -74,8 +74,7 @@
   --scrollbar-track: #1a1a1a;
   --scrollbar-thumb: #444444;
   --scrollbar-thumb-hover: #666666;
-  --bg-toggle:rgba(255, 255, 255, 0.1);
-
+  --bg-toggle: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -117,12 +116,11 @@ footer {
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 2rem;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
 }
 
 .glass-card:hover {
   background: var(--background-glass-hover);
-  transform: translateY(-5px);
   box-shadow: 0 20px 40px var(--shadow-color);
 }
 
@@ -154,13 +152,12 @@ footer {
   transform: scale(0.95);
 }
 
-
 /* Responsive design */
 @media (max-width: 768px) {
   .glass-card {
     padding: 1.5rem;
   }
-  .theme-toggle-button{
+  .theme-toggle-button {
     width: 30px;
     height: 30px;
   }

@@ -16,6 +16,7 @@ const sidebarLinks = [
   { to: '/my-section', icon: <ArchiveIcon width={20} height={20} />, label: 'You' },
 ]
 
+const homeActivePaths = ["/profile", "/video"]
 export default function RootLayout({ children }) {
   const title = "Learner Dashboard";
 
@@ -23,10 +24,10 @@ export default function RootLayout({ children }) {
     <div className="le-m">
       <Header title={title} roleTarget="/educator" />
       <div className="le-c">
-        <Tabs sidebarLinks={sidebarLinks} />
+        <Tabs sidebarLinks={sidebarLinks} homePath="/" homeActivePaths={homeActivePaths} />
         <main className="le-mc">{children}</main>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

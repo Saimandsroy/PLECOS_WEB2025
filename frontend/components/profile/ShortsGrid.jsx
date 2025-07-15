@@ -22,7 +22,7 @@ const ShortsGrid = () => (
                         <div className="short-views">{short.views} views</div>
                     </div>
                 </div>
-                <div className="short-actions">
+                <div className="profile-short-actions">
                     <div><FcLike /> <p>{short.likes}</p></div>
                     <div><FaComment /> <p>{short.comments}</p></div>
                     <div><FcShare /> <p>{short.shares}</p></div>
