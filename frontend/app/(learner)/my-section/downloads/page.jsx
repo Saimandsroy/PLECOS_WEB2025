@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Tabs from "./components/Tabs";
 import VideoCard from "./components/VideoCard";
 import ShortsRow from "./components/ShortsRow";
 import thumb from "@/public/logo.png";
 import Link from "next/link";
 import { ArrowLeftIcon } from "lucide-react";
+import Tabs from "./components/Tabs";
 
 const videoData = [
   {
@@ -59,10 +59,11 @@ const Downloads = () => {
         </Link>
         <h2 style={{ fontWeight: 600, fontSize: 24 }}>Downloads</h2>
       </div>
-      <Tabs tab={activeTab} setTab={setActiveTab} />
+      <Tabs active={activeTab} setActive={setActiveTab} />
       {activeTab === "videos" && (
         <div
           style={{
+            marginTop: "2rem",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
             gap: 10,
@@ -73,7 +74,9 @@ const Downloads = () => {
           ))}
         </div>
       )}
-      {activeTab === "shorts" && <ShortsRow shorts={shortsData} logo={thumb} />}
+      <div style={{marginTop: "2rem"}}>
+        {activeTab === "shorts" && <ShortsRow shorts={shortsData} logo={thumb} />}
+      </div>
     </div>
   );
 };

@@ -1,0 +1,27 @@
+.downloads-tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.downloads-tab {
+  padding: 1rem 2rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.downloads-tab:hover {
+  color: var(--text-primary);
+  background: var(--tab-hover);
+}
+
+.downloads-tab-active {
+  color: var(--text-accent);
+  border-bottom-color: var(--brand-blue);
+}
