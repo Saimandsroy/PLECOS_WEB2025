@@ -1,9 +1,32 @@
-import React from 'react'
+import CategoryGrid from './components/CategoryGrid';
+import InstructorGrid from './components/InstructorGrid';
+import CourseGrid from './components/CourseGrid';
+import ShortsGrid from './components/ShortsGrid';
+import './page.css';
+import HeaderWrapper from './components/HeaderWrapper';
+import SearchBarWrapper from './components/SearchBarWrapper';
+import FilterTabWrapper from './components/FilterTabWrapper';
 
-const page = () => {
+export default function ExplorePage() {
+
+    const categories = [
+        { name: 'Programming', icon: '💻', count: '245 courses' },
+        { name: 'Mathematics', icon: '📐', count: '189 courses' },
+        { name: 'Science', icon: '🔬', count: '156 courses' },
+        { name: 'Language', icon: '🗣', count: '134 courses' },
+        { name: 'Business', icon: '💼', count: '98 courses' },
+        { name: 'Design', icon: '🎨', count: '87 courses' }
+    ];
+
+
+
     return (
-        <div>page</div>
-    )
+        <div className="explore-page">
+            <HeaderWrapper />
+            <SearchBarWrapper />
+            <CourseGrid />
+            <InstructorGrid />
+            <ShortsGrid />
+        </div>
+    );
 }
-
-export default page

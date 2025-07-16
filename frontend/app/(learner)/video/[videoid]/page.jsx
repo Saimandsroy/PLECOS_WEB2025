@@ -123,7 +123,6 @@ const VideoView = () => {
           description={videoData.description}
           category={videoData.category}
         />
-
         <ActionBar likes={248} dislikes={3} />
         <CommentsSection />
       </div>

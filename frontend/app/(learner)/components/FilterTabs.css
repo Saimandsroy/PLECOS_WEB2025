@@ -1,0 +1,50 @@
+.explore-filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.explore-filters__button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  background: var(--background-glass);
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+}
+
+.explore-filters__button--active {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3); /* Optional: keep visual highlight */
+}
+
+.explore-filters__button:not(.explore-filters__button--active):hover {
+  background: var(--background-glass-hover);
+  transform: translateY(-2px);
+}
+
+.explore-filters__button:not(.explore-filters__button--active) {
+  transform: translateY(0);
+}
+
+.explore-filters__count {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.1); /* fallback for accent tone */
+}
+
+.explore-filters__button--active .explore-filters__count {
+  background: rgba(255, 255, 255, 0.2);
+}
