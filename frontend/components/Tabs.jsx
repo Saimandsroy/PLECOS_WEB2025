@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import "./Tabs.css";
 import CreateModel from "@/components/create/CreateModel";
+import TabsBottom from "./TabsBottom";
 const MOBILE_BREAKPOINT = 768;
 
 const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [] }) => {
@@ -85,6 +86,8 @@ const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [] }) => 
               />
             </div>
           )}
+
+          <TabsBottom roleTarget="/" />
         </nav>
       </aside>
     </>
