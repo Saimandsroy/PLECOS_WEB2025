@@ -1,0 +1,78 @@
+.light {
+  --card-bg: #ffffff;
+  --text-color: #1e293b;
+  --border-color: #d1d5db;
+}
+
+.dark {
+  --card-bg: #1e1e2f;
+  --text-color: #f8fafc;
+  --border-color: #334155;
+}
+
+/* Light Theme */
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #64748b; /* slate-500 */
+}
+
+/* Dark Theme */
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #cbd5e1; /* slate-300 */
+}
+input::placeholder,
+textarea::placeholder {
+  transition: color 0.3s ease;
+}
+
+
+.container{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.review-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review-card {
+  padding: 1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.review-card:hover {
+  border-color: #FF7F3F;
+  box-shadow: 0 4px 12px rgba(255, 127, 63, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-header h4 {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.review-header span {
+  color: #FF7F3F;
+  font-size: 18px;
+}
+
+.review-card p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-color);
+}
