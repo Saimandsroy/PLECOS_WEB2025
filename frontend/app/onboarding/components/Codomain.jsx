@@ -77,7 +77,7 @@ const Codomain = ({ onNext, onBack }) => {
         </div>
 
         {/* Areas Grid */}
-        <div className="codomain-grid">
+        <div style={{display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center"}}>
           {filteredAreas.map((area) => {
             const IconComponent = area.icon;
             const isSelected = selectedAreas.includes(area.id);

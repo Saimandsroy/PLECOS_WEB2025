@@ -22,7 +22,7 @@ const Domain = ({ onNext }) => {
           You can choose only one domain you want to study.
         </p>
 
-        <div className="domain-grid">
+        <div style={{ display: "flex", gap: "10px" }}>
           {domains.map((domain) => {
             const IconComponent = domain.icon;
             const isSelected = selectedDomain.includes(domain.id);

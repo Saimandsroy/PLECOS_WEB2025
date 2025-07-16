@@ -1,6 +1,5 @@
 .skill-selector-container {
   min-height: 100vh;
-  background: linear-gradient(145deg, #0f0f1a, #1a1a2e);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,28 +8,21 @@
 }
 
 .skill-selector-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 40px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   max-width: 600px;
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .skill-selector-title {
   font-size: 28px;
   font-weight: 600;
-  color: #fff;
+  color: #111;
   text-align: center;
   margin: 0 0 8px 0;
 }
 
 .skill-selector-subtitle {
   font-size: 16px;
-  color: #aaa;
+  color: #444;
   text-align: center;
   margin: 0 0 32px 0;
   line-height: 1.5;
@@ -93,7 +85,7 @@
 .skill-selector-option-title {
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
+  color: #333;
   margin: 0;
 }
 

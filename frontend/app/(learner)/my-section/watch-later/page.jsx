@@ -22,6 +22,48 @@ const videoData = [
     timeAgo: "1 year ago",
     duration: "2:01:00",
   },
+  {
+    thumbnail: thumb,
+    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
+    views: "2.3K",
+    timeAgo: "1 year ago",
+    duration: "2:01:00",
+  },
+  {
+    thumbnail: thumb,
+    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
+    views: "2.3K",
+    timeAgo: "1 year ago",
+    duration: "2:01:00",
+  },
+  {
+    thumbnail: thumb,
+    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
+    views: "2.3K",
+    timeAgo: "1 year ago",
+    duration: "2:01:00",
+  },
+  {
+    thumbnail: thumb,
+    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
+    views: "2.3K",
+    timeAgo: "1 year ago",
+    duration: "2:01:00",
+  },
+  {
+    thumbnail: thumb,
+    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
+    views: "2.3K",
+    timeAgo: "1 year ago",
+    duration: "2:01:00",
+  },
+  {
+    thumbnail: thumb,
+    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
+    views: "2.3K",
+    timeAgo: "1 year ago",
+    duration: "2:01:00",
+  },
 ];
 
 const shortsData = [
