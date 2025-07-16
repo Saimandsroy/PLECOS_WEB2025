@@ -52,7 +52,7 @@
   font-size: 0.95rem;
   color: #ccc;
 }
-.short-actions {
+.profile-short-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -63,16 +63,16 @@
   border-top: 1px solid #232323;
 }
 
-.short-actions div {
+.profile-short-actions div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.short-actions div:hover {
+.profile-short-actions div:hover {
   color: #fff;
 }
 
-.short-actions div p {
+.profile-short-actions div p {
   font-size: 10px !important;
 }
