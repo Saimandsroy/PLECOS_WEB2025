@@ -60,7 +60,7 @@
   color: var(--text-primary);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 6px 40px 6px 12px; /* space for arrow */
+  padding: 6px 40px 6px 12px;
   font-size: 14px;
   outline: none;
   backdrop-filter: blur(12px);
@@ -77,7 +77,7 @@
   color: var(--text-primary);
 }
 
-/* Custom arrow icon using SVG */
+
 .sort-dropdown::after {
   content: '';
   position: absolute;
@@ -93,7 +93,7 @@
   transform: translateY(-50%);
 }
 
-/* Optional: adjust icon for dark mode */
+
 .dark .sort-dropdown::after {
   background-image: url("data:image/svg+xml,%3Csvg fill='white' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
 }

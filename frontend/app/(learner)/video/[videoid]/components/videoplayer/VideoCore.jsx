@@ -1,7 +1,6 @@
-// components/VideoPlayer/VideoCore.jsx
-'use client';
-import React from 'react';
-import './VideoCore.css';
+"use client";
+import React from "react";
+import "./VideoCore.css";
 const VideoCore = ({ videoRef, videoUrl, onClick, showCaptions }) => {
   return (
     <video

@@ -1,6 +1,4 @@
-// components/VideoPlayer/Controls/BottomControls.jsx
-
-import React from 'react';
+import React from "react";
 import {
   Play,
   Pause,
@@ -10,13 +8,13 @@ import {
   Settings,
   Captions,
   Maximize,
-  Minimize
-} from 'lucide-react';
+  Minimize,
+} from "lucide-react";
 
-import VolumeControl from './VolumeControl';
-import TimeDisplay from './TimeDisplay';
+import VolumeControl from "./VolumeControl";
+import TimeDisplay from "./TimeDisplay";
 
-import './BottomControls.css';
+import "./BottomControls.css";
 
 const BottomControls = ({
   isPlaying,
@@ -36,7 +34,7 @@ const BottomControls = ({
   isTheaterMode,
   setIsTheaterMode,
   isFullscreen,
-  toggleFullscreen
+  toggleFullscreen,
 }) => {
   return (
     <div className="player__bottomBar">

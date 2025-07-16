@@ -30,15 +30,16 @@ const VideoPlayer = () => {
   const [showControls, setShowControls] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
-  const [quality, setQuality] = useState(-1); // -1 means auto
+  const [quality, setQuality] = useState(-1);
   const [availableQualities, setAvailableQualities] = useState([]);
   const [hlsInstance, setHlsInstance] = useState(null);
-  const [showCaptions, setShowCaptions] = useState(false);
+  const [showCaptions, setShowCaptions] = useState(true);
+
   const [buffered, setBuffered] = useState(0);
   const [showSkipIndicator, setShowSkipIndicator] = useState(false);
   const [skipDirection, setSkipDirection] = useState("");
   const [currentLevelLabel, setCurrentLevelLabel] = useState("Auto");
-  const [currentLevel, setCurrentLevel] = useState(-1); // -1 means auto
+  const [currentLevel, setCurrentLevel] = useState(-1);
   const [settingsScreen, setSettingsScreen] = useState("main");
   const [isBuffering, setIsBuffering] = useState(false);
 
@@ -66,14 +67,10 @@ const VideoPlayer = () => {
       hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
         const level = hls.levels[data.level];
         setCurrentLevelLabel(`${level.height}p`);
-      });
-      hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
-        const current = data.level;
-        setCurrentLevel(current); // set this state in your component
+        setCurrentLevel(data.level);
       });
 
       setHlsInstance(hls);
-
       return () => hls.destroy();
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = videoUrl;
@@ -114,6 +111,7 @@ const VideoPlayer = () => {
       video.removeEventListener("pause", handlePause);
     };
   }, []);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -145,24 +143,22 @@ const VideoPlayer = () => {
       }, 3000);
     };
 
+    const player = playerRef.current;
+    if (!player) return;
+
     const handleMouseMove = () => resetControlsTimeout();
     const handleMouseLeave = () => {
       if (isPlaying) setShowControls(false);
     };
 
-    const player = playerRef.current;
-    if (player) {
-      player.addEventListener("mousemove", handleMouseMove);
-      player.addEventListener("mouseleave", handleMouseLeave);
-    }
+    player.addEventListener("mousemove", handleMouseMove);
+    player.addEventListener("mouseleave", handleMouseLeave);
 
     resetControlsTimeout();
 
     return () => {
-      if (player) {
-        player.removeEventListener("mousemove", handleMouseMove);
-        player.removeEventListener("mouseleave", handleMouseLeave);
-      }
+      player.removeEventListener("mousemove", handleMouseMove);
+      player.removeEventListener("mouseleave", handleMouseLeave);
       if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
     };
   }, [isPlaying]);
@@ -170,10 +166,8 @@ const VideoPlayer = () => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       const tag = e.target.tagName;
-      const isTyping =
-        tag === "INPUT" || tag === "TEXTAREA" || e.target.isContentEditable;
-
-      if (isTyping) return;
+      if (["INPUT", "TEXTAREA"].includes(tag) || e.target.isContentEditable)
+        return;
 
       switch (e.key) {
         case " ":
@@ -197,14 +191,10 @@ const VideoPlayer = () => {
           setVolume(Math.max(0, volume - 0.1));
           break;
         case "m":
-        case "M":
           toggleMute();
           break;
         case "f":
-        case "F":
           toggleFullscreen();
-          break;
-        default:
           break;
       }
     };
@@ -215,24 +205,21 @@ const VideoPlayer = () => {
 
   const togglePlayPause = () => {
     const video = videoRef.current;
-    if (!video) return;
-    isPlaying ? video.pause() : video.play();
+    if (video) isPlaying ? video.pause() : video.play();
   };
 
   const skipBackward = () => {
     const video = videoRef.current;
-    if (video) {
-      video.currentTime = Math.max(0, video.currentTime - 10);
-      showSkipIndicatorWithDirection("left");
-    }
+    if (!video) return;
+    video.currentTime = Math.max(0, video.currentTime - 10);
+    showSkipIndicatorWithDirection("left");
   };
 
   const skipForward = () => {
     const video = videoRef.current;
-    if (video) {
-      video.currentTime = Math.min(video.duration, video.currentTime + 10);
-      showSkipIndicatorWithDirection("right");
-    }
+    if (!video) return;
+    video.currentTime = Math.min(video.duration, video.currentTime + 10);
+    showSkipIndicatorWithDirection("right");
   };
 
   const showSkipIndicatorWithDirection = (direction) => {
@@ -242,10 +229,10 @@ const VideoPlayer = () => {
   };
 
   const handleTimelineClick = (e) => {
-    const video = videoRef.current;
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const newTime = (clickX / rect.width) * duration;
+    const video = videoRef.current;
     if (video) video.currentTime = newTime;
   };
 
@@ -253,7 +240,8 @@ const VideoPlayer = () => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
     setIsMuted(newVolume === 0);
-    if (videoRef.current) videoRef.current.volume = newVolume;
+    const video = videoRef.current;
+    if (video) video.volume = newVolume;
   };
 
   const toggleMute = () => {
@@ -290,25 +278,25 @@ const VideoPlayer = () => {
 
   const changeQuality = (index) => {
     if (hlsInstance) {
-      hlsInstance.currentLevel = index; // Set quality (use -1 for auto)
-      setQuality(index); // Update UI state
+      hlsInstance.currentLevel = index;
+      setQuality(index);
     }
   };
+
   const handleVideoClick = (e) => {
     const video = videoRef.current;
     const rect = video.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
-    const videoWidth = rect.width;
     const now = Date.now();
 
     if (now - lastTapRef.current < 300) {
-      if (clickX < videoWidth / 3) skipBackward();
-      else if (clickX > (videoWidth * 2) / 3) skipForward();
+      if (clickX < rect.width / 3) skipBackward();
+      else if (clickX > (rect.width * 2) / 3) skipForward();
       else togglePlayPause();
       clearTimeout(tapTimeoutRef.current);
     } else {
       tapTimeoutRef.current = setTimeout(() => {
-        if (clickX >= videoWidth / 3 && clickX <= (videoWidth * 2) / 3) {
+        if (clickX >= rect.width / 3 && clickX <= (rect.width * 2) / 3) {
           togglePlayPause();
         }
       }, 300);
@@ -316,6 +304,21 @@ const VideoPlayer = () => {
 
     lastTapRef.current = now;
   };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const tracks = video.textTracks;
+    for (let i = 0; i < tracks.length; i++) {
+      const track = tracks[i];
+      if (track.label === "English") {
+        track.mode = showCaptions ? "showing" : "disabled";
+      } else {
+        track.mode = "disabled";
+      }
+    }
+  }, [showCaptions]);
 
   return (
     <div className="player" ref={playerRef}>
@@ -384,7 +387,7 @@ const VideoPlayer = () => {
           currentLevelLabel={
             availableQualities.find((q) => q.index === currentLevel)?.label ||
             "Auto"
-          } // ✅ Use actual playing level
+          }
         />
       </div>
     </div>
