@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import LiveVideoArea from "./components/LiveVideoArea";
 import LiveSidebar from "./components/LiveSidebar";
-import LiveFooterControls from "./components/LiveFooterControls";
 import LiveEmojiPicker from "./components/LiveEmojiPicker";
 import '../../../styles/goLive.css';
 
@@ -90,11 +89,11 @@ const GoLivePage = () => {
 
   // --- UI ---
   return (
-    <div className="golive-main-content live-meet-layout" style={{ background: "#f4f6fa" }}>
-      <div className="golive-session-header align-with-comment" style={{ background: "#fff", borderBottom: "1px solid #e5e7eb" }}>
-        <h2 className="golive-session-dashboard-title large" style={{ color: "#232323" }}>Live Session</h2>
+    <div className="golive-main-content live-meet-layout">
+      <div className="golive-session-header align-with-comment" >
+        <h2>Lecture 34 Sex Education</h2>
       </div>
-      <div className="golive-meet-row" style={{ background: "#f4f6fa" }}>
+      <div className="golive-meet-row" >
         <LiveVideoArea
           videoOn={videoOn}
           micOn={micOn}
@@ -121,14 +120,7 @@ const GoLivePage = () => {
           participants={participants}
         />
       </div>
-      <LiveFooterControls
-        micOn={micOn}
-        setMicOn={setMicOn}
-        videoOn={videoOn}
-        setVideoOn={setVideoOn}
-        setShowEmoji={setShowEmoji}
-        ICONS={ICONS}
-      />
+      
       <LiveEmojiPicker showEmoji={showEmoji} setShowEmoji={setShowEmoji} />
     </div>
   );

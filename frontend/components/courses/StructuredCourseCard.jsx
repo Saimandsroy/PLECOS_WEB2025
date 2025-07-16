@@ -3,7 +3,7 @@
 import styles from './StructuredCourseCard.module.css';
 import {useRouter} from 'next/navigation';
 
-const StructuredCourseCard = ({ course }) => {
+const StructuredCourseCard = ({course ,isPro, isEnr}) => {
   const router = useRouter();
   const handleCardClick = () => {
     router.push(`/courses/${course.id}`);
@@ -30,10 +30,10 @@ const StructuredCourseCard = ({ course }) => {
       </div>
       <div className={styles.cardContent}>
         <h3 className={styles.cardTitle}>{course.title}</h3>
-        <div className={styles.instructorInfo}>
+       {isPro && ( <div className={styles.instructorInfo}>
           <img src={course.instructorImage} alt={course.instructor} className={styles.instructorImage} />
           <span className={styles.instructorName}>{course.instructor}</span>
-        </div>
+        </div>)}
         <div className={styles.courseInfo}>
           <span className={styles.level}>{course.level}</span>
           <span
@@ -50,7 +50,7 @@ const StructuredCourseCard = ({ course }) => {
         <div className={styles.impactRate}>
           <span>Impact Rate: {course.impactRate}%</span>
         </div>
-        <button
+        {isEnr && (<button
           onClick={handleCardClick}
             className={`${styles.actionButton} ${course.enrolled ? styles.continueButton : styles.enrollButton}`}
             style={
@@ -64,7 +64,7 @@ const StructuredCourseCard = ({ course }) => {
             }
           >
           {course.enrolled ? `Continue (${course.progress||0}%)` : 'Enroll'}
-        </button>
+        </button>)}
       </div>
     </div>
   );

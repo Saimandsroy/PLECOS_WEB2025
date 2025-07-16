@@ -14,13 +14,12 @@ const LiveVideoArea = ({
   <div
     className="golive-meet-video-area"
     style={{
-      background: "#fff",
       borderRadius: 18,
       boxShadow: "0 2px 16px rgba(0,0,0,0.06)",
       margin: "32px auto",
       width: "100%",
       maxWidth: 900,
-      minHeight: 420,
+    
       display: "flex",
       alignItems: "center",
       justifyContent: "center",

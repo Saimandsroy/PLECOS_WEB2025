@@ -7,8 +7,10 @@ import CourseFilters from './CourseFilters';
 import StructuredCourseCard from './StructuredCourseCard';
 import VideoCard from './VideoCard';
 import DocumentCard from './DocumentCard';
+import Link from 'next/link';
 
-const CoursesSection = () => {
+
+const CoursesSection = ({isSe= true,isPro=true ,isEnr=true}) => {
   const [activeTab, setActiveTab] = useState('structured');
   const [filters, setFilters] = useState({
     search: '',
@@ -151,7 +153,10 @@ const CoursesSection = () => {
     return (
       <div className={styles.grid}>
         {content.map((course) => (
-          <StructuredCourseCard key={course.id} course={course} />
+          <Link key={course.id} href={`/courses/${course.id}`}>
+            <StructuredCourseCard course={course} isPro={isPro} isEnr={isEnr} />
+
+          </Link>
         ))}
       </div>
     );
@@ -183,7 +188,7 @@ const CoursesSection = () => {
   return (
     <div className={styles.coursesSection}>
       {/* <CourseTabs activeTab={activeTab} onTabChange={setActiveTab} /> */}
-      <CourseFilters filters={filters} onFilterChange={handleFilterChange} activeTab={activeTab} />
+      { isSe && <CourseFilters filters={filters} onFilterChange={handleFilterChange} />}
       <div className={styles.content}>{renderContent()}</div>
     </div>
   );
