@@ -1,0 +1,248 @@
+.p-profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  min-height: 100vh;
+}
+
+.p-profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.p-profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f4c2a1 0%, #e8a985 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.p-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.p-profile-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.p-profile-level {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.p-profile-joined {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.p-profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.p-stat-card {
+  background: var(--background-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.p-stat-card:hover {
+  background: var(--background-glass-hover);
+  box-shadow: 0 10px 25px var(--shadow-color);
+  transform: translateY(-2px);
+}
+
+.p-stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.p-stat-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.p-profile-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0;
+}
+
+.p-tab-button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.p-tab-button:hover {
+  background: var(--tab-hover);
+  color: var(--text-primary);
+}
+
+.p-tab-button.active {
+  background: var(--tab-active);
+  color: white;
+  border-bottom: 3px solid var(--brand-blue);
+}
+
+.p-tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--brand-blue);
+}
+
+.p-profile-content {
+  background: var(--background-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.p-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.p-form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.p-form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--background-glass);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.p-form-input:focus {
+  outline: none;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.p-form-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.p-update-button {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  float: right;
+  margin-top: 1rem;
+}
+
+.p-update-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(26, 115, 232, 0.3);
+}
+
+.p-update-button:active {
+  transform: translateY(0);
+}
+
+.p-tab-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .p-profile-container {
+    padding: 1rem;
+  }
+
+  .p-profile-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .p-stat-card {
+    padding: 1rem;
+  }
+
+  .p-profile-name {
+    font-size: 1.5rem;
+  }
+
+  .p-profile-tabs {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .p-tab-button {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .p-profile-content {
+    padding: 1rem;
+  }
+
+  .p-profile-avatar {
+    width: 80px;
+    height: 80px;
+  }
+}
