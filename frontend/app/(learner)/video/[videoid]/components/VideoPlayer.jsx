@@ -1,8 +1,17 @@
-'use client';
-import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Settings, Maximize, Minimize, Monitor, Captions } from 'lucide-react';
-import styles from './VideoPlayer.module.css';
-import { set } from 'nprogress';
+"use client";
+
+import React, { useRef, useState, useEffect } from "react";
+import Hls from "hls.js";
+
+import TitleOverlay from "./videoplayer/TitleOverlay";
+import SkipIndicator from "./videoplayer/SkipIndicator";
+import Timeline from "./videoplayer/Timeline";
+import BottomControls from "./videoplayer/BottomControls";
+import SettingsMenu from "./videoplayer/SettingsMenu";
+import CenterOverlay from "./videoplayer/CenterOverlay";
+import Watermark from "./videoplayer/watermark";
+
+import "./VideoPlayer.css";
 
 const VideoPlayer = () => {
   const videoRef = useRef(null);
@@ -10,7 +19,7 @@ const VideoPlayer = () => {
   const controlsTimeoutRef = useRef(null);
   const lastTapRef = useRef(0);
   const tapTimeoutRef = useRef(null);
-  
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -21,161 +30,196 @@ const VideoPlayer = () => {
   const [showControls, setShowControls] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
-  const [quality, setQuality] = useState('auto');
-  const [showCaptions, setShowCaptions] = useState(false);
+  const [quality, setQuality] = useState(-1);
+  const [availableQualities, setAvailableQualities] = useState([]);
+  const [hlsInstance, setHlsInstance] = useState(null);
+  const [showCaptions, setShowCaptions] = useState(true);
+
   const [buffered, setBuffered] = useState(0);
   const [showSkipIndicator, setShowSkipIndicator] = useState(false);
-  const [skipDirection, setSkipDirection] = useState('');
+  const [skipDirection, setSkipDirection] = useState("");
+  const [currentLevelLabel, setCurrentLevelLabel] = useState("Auto");
+  const [currentLevel, setCurrentLevel] = useState(-1);
+  const [settingsScreen, setSettingsScreen] = useState("main");
+  const [isBuffering, setIsBuffering] = useState(false);
 
-  // Sample video URL 
-  const videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+  const videoUrl =
+    "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
   const videoTitle = "Mastering React in 30 Minutes";
 
   useEffect(() => {
-  const video = videoRef.current;
-  if (!video) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-  
-  const handleLoadedMetadata = () => {
-    setDuration(video.duration || 0);
-    if (video.buffered.length > 0) {
-      setBuffered(video.buffered.end(video.buffered.length - 1));
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(videoUrl);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        const levels = hls.levels.map((lvl, idx) => ({
+          index: idx,
+          label: `${lvl.height}p`,
+        }));
+        setAvailableQualities([{ index: -1, label: "Auto" }, ...levels]);
+      });
+
+      hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+        const level = hls.levels[data.level];
+        setCurrentLevelLabel(`${level.height}p`);
+        setCurrentLevel(data.level);
+      });
+
+      setHlsInstance(hls);
+      return () => hls.destroy();
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = videoUrl;
     }
-  };
+  }, []);
 
-  
-  if (video.readyState >= 1) {         
-    handleLoadedMetadata();
-  } else {
-    video.addEventListener('loadedmetadata', handleLoadedMetadata);
-  }
-  
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
 
-  const handleTimeUpdate = () => {
-    setCurrentTime(video.currentTime);
-    if (video.buffered.length > 0) {
-      setBuffered(video.buffered.end(video.buffered.length - 1));
-    }
-  };
-  video.addEventListener('timeupdate', handleTimeUpdate);
-  video.addEventListener('play',  () => setIsPlaying(true));
-  video.addEventListener('pause', () => setIsPlaying(false));
-  video.addEventListener('ended', () => setIsPlaying(false));
+    const handleLoadedMetadata = () => {
+      setDuration(video.duration || 0);
+      if (video.buffered.length > 0) {
+        setBuffered(video.buffered.end(video.buffered.length - 1));
+      }
+    };
 
-  return () => {
-    video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-    video.removeEventListener('timeupdate', handleTimeUpdate);
-  };
-}, []);
+    const handleTimeUpdate = () => {
+      setCurrentTime(video.currentTime);
+      if (video.buffered.length > 0) {
+        setBuffered(video.buffered.end(video.buffered.length - 1));
+      }
+    };
 
-  
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    video.addEventListener("play", handlePlay);
+    video.addEventListener("pause", handlePause);
+    video.addEventListener("ended", () => setIsPlaying(false));
+
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      video.removeEventListener("play", handlePlay);
+      video.removeEventListener("pause", handlePause);
+    };
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleWaiting = () => setIsBuffering(true);
+    const handlePlaying = () => setIsBuffering(false);
+    const handleStalled = () => setIsBuffering(true);
+    const handleCanPlay = () => setIsBuffering(false);
+
+    video.addEventListener("waiting", handleWaiting);
+    video.addEventListener("playing", handlePlaying);
+    video.addEventListener("stalled", handleStalled);
+    video.addEventListener("canplay", handleCanPlay);
+
+    return () => {
+      video.removeEventListener("waiting", handleWaiting);
+      video.removeEventListener("playing", handlePlaying);
+      video.removeEventListener("stalled", handleStalled);
+      video.removeEventListener("canplay", handleCanPlay);
+    };
+  }, []);
+
   useEffect(() => {
     const resetControlsTimeout = () => {
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
+      if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
       setShowControls(true);
       controlsTimeoutRef.current = setTimeout(() => {
-        if (isPlaying) {
-          setShowControls(false);
-        }
+        if (isPlaying) setShowControls(false);
       }, 3000);
     };
 
+    const player = playerRef.current;
+    if (!player) return;
+
     const handleMouseMove = () => resetControlsTimeout();
     const handleMouseLeave = () => {
-      if (isPlaying) {
-        setShowControls(false);
-      }
+      if (isPlaying) setShowControls(false);
     };
 
-    const player = playerRef.current;
-    if (player) {
-      player.addEventListener('mousemove', handleMouseMove);
-      player.addEventListener('mouseleave', handleMouseLeave);
-    }
+    player.addEventListener("mousemove", handleMouseMove);
+    player.addEventListener("mouseleave", handleMouseLeave);
 
     resetControlsTimeout();
 
     return () => {
-      if (player) {
-        player.removeEventListener('mousemove', handleMouseMove);
-        player.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
+      player.removeEventListener("mousemove", handleMouseMove);
+      player.removeEventListener("mouseleave", handleMouseLeave);
+      if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
     };
   }, [isPlaying]);
 
-  // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.target.tagName === 'INPUT') return;
-      
+      const tag = e.target.tagName;
+      if (["INPUT", "TEXTAREA"].includes(tag) || e.target.isContentEditable)
+        return;
+
       switch (e.key) {
-        case ' ':
+        case " ":
           e.preventDefault();
           togglePlayPause();
           break;
-        case 'ArrowLeft':
+        case "ArrowLeft":
           e.preventDefault();
           skipBackward();
           break;
-        case 'ArrowRight':
+        case "ArrowRight":
           e.preventDefault();
           skipForward();
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
           setVolume(Math.min(1, volume + 0.1));
           break;
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
           setVolume(Math.max(0, volume - 0.1));
           break;
-        case 'm':
-        case 'M':
+        case "m":
           toggleMute();
           break;
-        case 'f':
-        case 'F':
+        case "f":
           toggleFullscreen();
-          break;
-        default:
           break;
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [volume, isPlaying]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [volume, isMuted, isPlaying]);
 
   const togglePlayPause = () => {
     const video = videoRef.current;
-    if (video) {
-      if (isPlaying) {
-        video.pause();
-      } else {
-        video.play();
-      }
-    }
+    if (video) isPlaying ? video.pause() : video.play();
   };
 
   const skipBackward = () => {
     const video = videoRef.current;
-    if (video) {
-      video.currentTime = Math.max(0, video.currentTime - 10);
-      showSkipIndicatorWithDirection('left');
-    }
+    if (!video) return;
+    video.currentTime = Math.max(0, video.currentTime - 10);
+    showSkipIndicatorWithDirection("left");
   };
 
   const skipForward = () => {
     const video = videoRef.current;
-    if (video) {
-      video.currentTime = Math.min(video.duration, video.currentTime + 10);
-      showSkipIndicatorWithDirection('right');
-    }
+    if (!video) return;
+    video.currentTime = Math.min(video.duration, video.currentTime + 10);
+    showSkipIndicatorWithDirection("right");
   };
 
   const showSkipIndicatorWithDirection = (direction) => {
@@ -185,24 +229,19 @@ const VideoPlayer = () => {
   };
 
   const handleTimelineClick = (e) => {
-    const video = videoRef.current;
-    const timeline = e.currentTarget;
-    const rect = timeline.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const newTime = (clickX / rect.width) * duration;
-    
-    if (video) {
-      video.currentTime = newTime;
-    }
+    const video = videoRef.current;
+    if (video) video.currentTime = newTime;
   };
 
   const handleVolumeChange = (e) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
     setIsMuted(newVolume === 0);
-    if (videoRef.current) {
-      videoRef.current.volume = newVolume;
-    }
+    const video = videoRef.current;
+    if (video) video.volume = newVolume;
   };
 
   const toggleMute = () => {
@@ -237,187 +276,119 @@ const VideoPlayer = () => {
     }
   };
 
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  const changeQuality = (index) => {
+    if (hlsInstance) {
+      hlsInstance.currentLevel = index;
+      setQuality(index);
+    }
   };
 
   const handleVideoClick = (e) => {
     const video = videoRef.current;
     const rect = video.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
-    const videoWidth = rect.width;
     const now = Date.now();
-    
-    
+
     if (now - lastTapRef.current < 300) {
-      // Double tap detected
-      if (clickX < videoWidth / 3) {
-        skipBackward();
-      } else if (clickX > (videoWidth * 2) / 3) {
-        skipForward();
-      } else {
-        togglePlayPause();
-      }
+      if (clickX < rect.width / 3) skipBackward();
+      else if (clickX > (rect.width * 2) / 3) skipForward();
+      else togglePlayPause();
       clearTimeout(tapTimeoutRef.current);
     } else {
-      // Single tap 
       tapTimeoutRef.current = setTimeout(() => {
-        if (clickX >= videoWidth / 3 && clickX <= (videoWidth * 2) / 3) {
+        if (clickX >= rect.width / 3 && clickX <= (rect.width * 2) / 3) {
           togglePlayPause();
         }
       }, 300);
     }
-    
+
     lastTapRef.current = now;
   };
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const tracks = video.textTracks;
+    for (let i = 0; i < tracks.length; i++) {
+      const track = tracks[i];
+      if (track.label === "English") {
+        track.mode = showCaptions ? "showing" : "disabled";
+      } else {
+        track.mode = "disabled";
+      }
+    }
+  }, [showCaptions]);
+
   return (
-    <div className={styles.player} ref={playerRef}>
-      <div className={styles.player__container}>
+    <div className="player" ref={playerRef}>
+      <div className="player__container">
         <video
           ref={videoRef}
-          className={styles.player__video}
-          src={videoUrl}
+          className="player__video"
           onClick={handleVideoClick}
           playsInline
         />
-        
-        
-        <div className={`${styles.player__title} ${showControls ? styles.player__controls__visible : ''}`}>
-          {videoTitle}
+        <Watermark />
+
+        <TitleOverlay title={videoTitle} visible={showControls} />
+        <CenterOverlay
+          isPlaying={isPlaying}
+          togglePlayPause={togglePlayPause}
+          showControls={showControls}
+          isBuffering={isBuffering}
+        />
+        <SkipIndicator show={showSkipIndicator} direction={skipDirection} />
+
+        <div
+          className={`player__controls ${
+            showControls ? "player__controls__visible" : ""
+          }`}
+        >
+          <Timeline
+            duration={duration}
+            currentTime={currentTime}
+            buffered={buffered}
+            onClick={handleTimelineClick}
+          />
+          <BottomControls
+            isPlaying={isPlaying}
+            togglePlayPause={togglePlayPause}
+            skipBackward={skipBackward}
+            skipForward={skipForward}
+            volume={volume}
+            isMuted={isMuted}
+            toggleMute={toggleMute}
+            handleVolumeChange={handleVolumeChange}
+            currentTime={currentTime}
+            duration={duration}
+            showCaptions={showCaptions}
+            setShowCaptions={setShowCaptions}
+            showSettings={showSettings}
+            setShowSettings={setShowSettings}
+            isTheaterMode={isTheaterMode}
+            setIsTheaterMode={setIsTheaterMode}
+            isFullscreen={isFullscreen}
+            toggleFullscreen={toggleFullscreen}
+          />
         </div>
 
-        
-        <div className={`${styles.player__centerPlay} ${!isPlaying ? styles.player__centerPlay__visible : ''}`}>
-          <button className={styles.player__button} onClick={togglePlayPause}>
-            <Play size={48} />
-          </button>
-        </div>
-
-        
-        <div className={`${styles.player__skipIndicator} ${showSkipIndicator ? styles.player__skipIndicator__visible : ''} ${skipDirection === 'left' ? styles.player__skipIndicator__left : styles.player__skipIndicator__right}`}>
-          {skipDirection === 'left' ? <SkipBack size={32} /> : <SkipForward size={32} />}
-          <span>10s</span>
-        </div>
-
-        
-        <div className={`${styles.player__controls} ${showControls ? styles.player__controls__visible : ''}`}>
-          
-          <div className={styles.player__timeline}>
-            <div className={styles.player__timelineContainer} onClick={handleTimelineClick}>
-              <div className={styles.player__timelineBuffered} style={{ width: `${(buffered / duration) * 100}%` }}></div>
-              <div className={styles.player__timelineCurrent} style={{ width: `${(currentTime / duration) * 100}%` }}></div>
-              <div className={styles.player__timelineScrubber} style={{ left: `${(currentTime / duration) * 100}%` }}></div>
-            </div>
-          </div>
-
-          
-          <div className={styles.player__bottomBar}>
-            <div className={styles.player__leftControls}>
-              <button className={styles.player__button} onClick={togglePlayPause}>
-                {isPlaying ? <Pause size={24} /> : <Play size={24} />}
-              </button>
-              <button className={styles.player__button} onClick={skipBackward}>
-                <SkipBack size={20} />
-              </button>
-              <button className={styles.player__button} onClick={skipForward}>
-                <SkipForward size={20} />
-              </button>
-              
-              <div className={styles.player__volumeContainer}>
-                <button className={styles.player__button} onClick={toggleMute}>
-                  {isMuted || volume === 0 ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                </button>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  value={isMuted ? 0 : volume}
-                  onChange={handleVolumeChange}
-                  className={styles.player__volumeSlider}
-                  style={{ '--volume-fill': `${volume * 100}%` }}
-
-                />
-              </div>
-              
-              <div className={styles.player__timeDisplay}>
-                {formatTime(currentTime)} / {formatTime(duration)}
-              </div>
-            </div>
-
-            <div className={styles.player__rightControls}>
-              <button
-                className={styles.player__button}
-                onClick={() => setShowCaptions(!showCaptions)}
-                style={{ opacity: showCaptions ? 1 : 0.6 }}
-              >
-                <Captions size={20} />
-              </button>
-              
-              <button
-                className={styles.player__button}
-                onClick={() => setShowSettings(!showSettings)}
-              >
-                <Settings size={20} />
-              </button>
-              
-              <button
-                className={styles.player__button}
-                onClick={() => setIsTheaterMode(!isTheaterMode)}
-              >
-                <Monitor size={20} />
-              </button>
-              
-              <button className={styles.player__button} onClick={toggleFullscreen}>
-                {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        
-        {showSettings && (
-          <div className={`${styles.player__settingsMenu} ${styles.player__settingsMenu__visible}`}>
-            <div className={styles.player__settingsItem}>
-              <span>Playback Speed</span>
-              <select value={playbackSpeed} onChange={(e) => changePlaybackSpeed(parseFloat(e.target.value))} className={styles.player__settingsoption}>
-                <option value={0.25}>0.25x</option>
-                <option value={0.5}>0.5x</option>
-                <option value={0.75}>0.75x</option>
-                <option value={1}>Normal</option>
-                <option value={1.25}>1.25x</option>
-                <option value={1.5}>1.5x</option>
-                <option value={1.75}>1.75x</option>
-                <option value={2}>2x</option>
-              </select>
-            </div>
-            
-            <div className={styles.player__settingsItem}>
-              <span>Quality</span>
-              <select value={quality} onChange={(e) => setQuality(e.target.value)} className={styles.player__settingsoption}>
-                <option value="auto">Auto</option>
-                <option value="1080p">1080p</option>
-                <option value="720p">720p</option>
-                <option value="480p">480p</option>
-                <option value="360p">360p</option>
-              </select>
-            </div>
-            
-            <div className={styles.player__settingsItem}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={showCaptions}
-                  onChange={(e) => setShowCaptions(e.target.checked)}
-                />
-                <span>Subtitles</span>
-              </label>
-            </div>
-          </div>
-        )}
+        <SettingsMenu
+          visible={showSettings}
+          screen={settingsScreen}
+          setScreen={setSettingsScreen}
+          playbackSpeed={playbackSpeed}
+          changePlaybackSpeed={changePlaybackSpeed}
+          quality={quality}
+          setQuality={changeQuality}
+          availableQualities={availableQualities}
+          showCaptions={showCaptions}
+          setShowCaptions={setShowCaptions}
+          currentLevelLabel={
+            availableQualities.find((q) => q.index === currentLevel)?.label ||
+            "Auto"
+          }
+        />
       </div>
     </div>
   );

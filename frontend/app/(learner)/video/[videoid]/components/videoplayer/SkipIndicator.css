@@ -1,0 +1,31 @@
+.player__skipIndicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.player__skipIndicator__visible {
+  opacity: 1;
+}
+
+.player__skipIndicator__left {
+  left: 20px;
+}
+
+.player__skipIndicator__right {
+  right: 20px;
+}

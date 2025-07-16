@@ -1,0 +1,43 @@
+.player__volumeContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player__volumeSlider {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    var(--brand-orange) 0%,
+    var(--brand-orange) var(--volume-fill),
+    rgba(255, 255, 255, 0.2) var(--volume-fill),
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  border-radius: 2px;
+  outline: none;
+  transition: background 0.3s ease;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.player__volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 12px;
+  width: 12px;
+  background: var(--brand-orange);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.player__volumeSlider::-moz-range-thumb {
+  height: 12px;
+  width: 12px;
+  background: var(--brand-orange);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
