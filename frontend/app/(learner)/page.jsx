@@ -1,46 +1,52 @@
-import InstructorGrid from './components/InstructorGrid';
-import CourseGrid from './components/CourseGrid';
+"use client";
+import { useState } from "react";
+import CourseRibbon from './components/CourseRibbon';
 import ShortsGrid from './components/ShortsGrid';
-import FilterTabWrapper from './components/FilterTabWrapper';
-import ExploreVideos from './components/ExploreVideos';
+import VideoCard from '@/components/profile/VideoCard';
 import { videoData } from '@/demo/videos';
 import { featuredInstructors } from '@/demo/educator';
 import { popularCourses } from '@/demo/courses';
 import { trendingShorts } from '@/demo/shorts';
+import thumb from "@/public/logo.png";
+import { videoDataPage } from '@/demo/videoPage';
 import './page.css';
+import FilterTabs from "./components/FilterTabs";
+import VideosRibbon from "./components/VideosRibbon";
+import EducatorRibbon from "./components/EducatorRibbon";
+import CourseGrid from './components/CourseGrid';
+import EducatorGrid from './components/EducatorGrid';
+import VideoGrid from './components/VideoGrid';
+
+const filters = [
+    { id: 'all', label: 'All', count: '1.2K+' },
+    { id: 'tutorials', label: 'Tutorials', count: '680+' },
+    { id: 'courses', label: 'Courses', count: '450+' },
+    { id: 'educators', label: 'educators', count: '120+' },
+];
 
 export default function ExplorePage() {
+    const [activeFilter, setActiveFilter] = useState('all');
     return (
         <div className="explore-page">
-            {/* <HeaderWrapper /> */}
-            <FilterTabWrapper />
-            {/* <CategoryGrid categories={categories} /> */}
-            {/* All */}
-            <ShortsGrid trendingShorts={trendingShorts} />
-            <ExploreVideos videoData={videoData} />
-            <InstructorGrid featuredInstructors={featuredInstructors} />
-            <CourseGrid popularCourses={popularCourses} />
-            {/* Videos */}
-
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-                    gap: 24,
-                }}
-            >
-                {videoData.map((video, idx) => (
-                    <div
-                        key={video.id}
-                        onClick={() => router.push(`/video/${video.id}`)}
-                        style={{ cursor: 'pointer' }}
-                    >
-                        <VideoCard {...video} logo={thumb} />
-                    </div>
-                ))}
-            </div>
-            {/* Courses */}
-            {/* Instructors */}
+            <FilterTabs filters={filters} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+            {activeFilter === 'all' && (
+                <>
+                    <ShortsGrid trendingShorts={trendingShorts} />
+                    <VideosRibbon videoData={videoData} />
+                    <EducatorRibbon featuredInstructors={featuredInstructors} title="Featured Educators" />
+                    <CourseRibbon popularCourses={popularCourses} />
+                    <VideoGrid videos={videoDataPage} />
+                </>
+            )}
+            {activeFilter === 'courses' && (
+                <CourseGrid popularCourses={popularCourses} />
+            )}
+            {activeFilter === 'educators' && (
+                <EducatorGrid featuredInstructors={featuredInstructors} />
+            )}
+            {activeFilter === 'tutorials' && (
+                <VideoGrid videos={videoDataPage} />
+            )}
         </div>
     );
 }

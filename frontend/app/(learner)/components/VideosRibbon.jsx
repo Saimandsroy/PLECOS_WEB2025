@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import "./ExploreVideos.css";
 import "./Carousel.css";
 
-const ExploreVideos = ({ videoData }) => {
+export default function VideosRibbon({ videoData }) {
   const carouselRef = useRef(null);
 
   const scroll = (direction) => {
@@ -75,5 +75,3 @@ const ExploreVideos = ({ videoData }) => {
     </section>
   );
 };
-
-export default ExploreVideos;

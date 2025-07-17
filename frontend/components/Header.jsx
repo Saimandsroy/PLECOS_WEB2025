@@ -4,7 +4,7 @@ import Image from 'next/image';
 import logo from "@/public/logos/plecos.avif";
 import ThemeToggle from './ThemeToggle';
 import './Header.css';
-import SearchBarWrapper from '@/app/(learner)/explore/components/SearchBarWrapper';
+import SearchBarWrapper from '@/app/(learner)/components/SearchBarWrapper';
 
 export default function Header() {
 
