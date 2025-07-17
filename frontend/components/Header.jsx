@@ -1,12 +1,15 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import logo from "@/public/logos/plecos.avif";
 import ThemeToggle from './ThemeToggle';
 import './Header.css';
 import SearchBarWrapper from '@/app/(learner)/components/SearchBarWrapper';
+import { Search } from 'lucide-react';
+import AdvancedSearchModal from './AdvancedSearchModal';
 
 export default function Header() {
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <>
@@ -21,16 +24,19 @@ export default function Header() {
               className="header__logo-image"
             />
           </div>
-          {/* <span className="header__title">{title}</span> */}
         </div>
-
-
         <div className="header__right">
-          <SearchBarWrapper />
+          <div
+            className="explore-search"
+            style={{ cursor: 'pointer' }}
+            onClick={() => setSearchOpen(true)}
+          >
+            <Search size={20} color="#666" />
+          </div>
           <ThemeToggle />
-
         </div>
       </header>
+      <AdvancedSearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

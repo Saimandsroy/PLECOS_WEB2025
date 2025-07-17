@@ -33,7 +33,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
 }
 
@@ -55,4 +55,12 @@
     height: 30px;
     width: 30px;
   }
+}
+
+.explore-search {
+  padding: 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--background-glass);
+  backdrop-filter: blur(20px);
 }

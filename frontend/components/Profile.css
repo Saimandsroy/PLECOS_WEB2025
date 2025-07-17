@@ -1,11 +1,3 @@
-.header__right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  position: relative;
-}
-
 .header__avatar {
   width: 34px;
   height: 34px;
