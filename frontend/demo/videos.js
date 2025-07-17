@@ -1,11 +1,4 @@
-"use client";
-import React, { useRef } from "react";
-import "./ExploreVideos.css";
-import "./Carousel.css";
-
-
-
-const videoData = [
+export const videoData = [
   {
     id: 1,
     title: "Python for Data Science",
@@ -18,7 +11,7 @@ const videoData = [
       "Data manipulation with Pandas",
       "Statistical analysis techniques",
       "Data visualization with Matplotlib",
-      "Machine learning basics"
+      "Machine learning basics",
     ],
   },
   {
@@ -33,7 +26,7 @@ const videoData = [
       "Master HTML5 and CSS3",
       "Interactive websites using JavaScript",
       "Front-end with React",
-      "Project-based learning"
+      "Project-based learning",
     ],
   },
   {
@@ -48,7 +41,7 @@ const videoData = [
       "Build models with scikit-learn",
       "Cross-validation techniques",
       "Model evaluation metrics",
-      "Hands-on mini projects"
+      "Hands-on mini projects",
     ],
   },
   {
@@ -63,7 +56,7 @@ const videoData = [
       "Object-oriented programming",
       "Working with collections",
       "File I/O and exceptions",
-      "Building CLI applications"
+      "Building CLI applications",
     ],
   },
   {
@@ -78,7 +71,7 @@ const videoData = [
       "Wireframing and prototyping",
       "User research and testing",
       "Working with Figma",
-      "Building responsive layouts"
+      "Building responsive layouts",
     ],
   },
   {
@@ -93,7 +86,7 @@ const videoData = [
       "Threats, vulnerabilities, and risks",
       "Basics of networking and firewalls",
       "Linux commands for security",
-      "Ethical hacking introduction"
+      "Ethical hacking introduction",
     ],
   },
   {
@@ -108,7 +101,7 @@ const videoData = [
       "Trees, Graphs, and Hashing",
       "Sorting and searching algorithms",
       "Recursion and dynamic programming",
-      "Mock interview problems"
+      "Mock interview problems",
     ],
   },
   {
@@ -123,7 +116,7 @@ const videoData = [
       "AWS services (EC2, S3, RDS)",
       "IAM roles and security",
       "Deploying apps in the cloud",
-      "Monitoring and scaling"
+      "Monitoring and scaling",
     ],
   },
   {
@@ -138,83 +131,7 @@ const videoData = [
       "SQL queries and Joins",
       "Normalization and indexing",
       "Transactions and concurrency",
-      "Hands-on with MySQL"
+      "Hands-on with MySQL",
     ],
-  }
+  },
 ];
-
-
-const ExploreVideos = () => {
-  const carouselRef = useRef(null);
-
-  const scroll = (direction) => {
-    if (carouselRef.current) {
-      const scrollAmount = 300;
-      carouselRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  return (
-    <section className="explore-video-section">
-      <div className="video-section-header">
-        <h2>Top Learning Videos</h2>
-        <a href="/videos" className="see-more">
-          See more &gt;
-        </a>
-      </div>
-
-      <div className="carousel-wrapper">
-        <button className="scroll-btn left" onClick={() => scroll("left")}>
-          &#10094;
-        </button>
-
-        <div className="carousel" ref={carouselRef}>
-          {videoData.map((video) => (
-            <div className="video-card" key={video.id}>
-              <div className="thumbnail-wrapper">
-                <img src={video.thumbnail} alt={video.title} />
-                <span className="watermark">PLECOS</span>
-              </div>
-
-              <div className="video-info">
-                <h3>{video.title}</h3>
-                <p className="instructor-name">By {video.instructor}</p>
-                <p className="instructor-role">{video.role}</p>
-
-                <div className="tag-list">
-                  {video.tags.map((tag, index) => (
-                    <span className="tag" key={index}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="what-you-learn">
-                  <p className="learn-heading">
-                    What will you learn in this course?
-                  </p>
-                  <ul>
-                    {video.points.map((point, index) => (
-                      <li key={index}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <button className="enroll-now-btn">Watch Now</button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <button className="scroll-btn right" onClick={() => scroll("right")}>
-          &#10095;
-        </button>
-      </div>
-    </section>
-  );
-};
-
-export default ExploreVideos;

@@ -2,13 +2,14 @@
   background: var(--background-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   position: static;
   top: 0;
   z-index: 100;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px var(--shadow-color);
+  transition: all 0.3s ease;
 }
 
 .explore-header__container {
@@ -25,7 +26,7 @@
 }
 
 .explore-header__title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   background: var(--gradient-primary);
   -webkit-background-clip: text;
@@ -37,7 +38,7 @@
 
 .explore-header__subtitle {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin: 0;
 }
 
@@ -45,5 +46,5 @@
   background: var(--gradient-primary);
   padding: 1rem;
   border-radius: 50%;
-  box-shadow: 0 10px 30px var(--shadow-color);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
 }

@@ -5,11 +5,19 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
-import "./Tabs.css";
 import CreateModel from "@/components/create/CreateModel";
+import Profile from "./Profile";
+import "./Tabs.css";
+
 const MOBILE_BREAKPOINT = 768;
 
-const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [] }) => {
+const user = {
+  name: "Alex Doe",
+  email: "alex.doe@email.com",
+  avatar: "https://api.dicebear.com/7.x/fun-emoji/svg?seed=User"
+};
+
+const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [], roleTarget, title = "Learner" }) => {
   console.log(homeActivePaths)
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -44,26 +52,32 @@ const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [] }) => 
       {/* Sidebar */}
       <aside className={clsx("le-tabs", { open })}>
         <nav className="le-tabs-nav">
-          {((iFier && iFier.identifier === "edu")
-            ? sidebarLinks.slice(0, -1)
-            : sidebarLinks
-          ).map((link) => (
-            <Link
-              key={link.to}
-              href={link.to}
-              onClick={() => setOpen(false)}
-              className={clsx("le-tabs-link", {
-                active:
-                  link.to === homePath
-                    ? pathname === homePath ||
-                    homeActivePaths.some((p) => pathname.startsWith(p))
-                    : pathname.startsWith(link.to)
-              })}
-            >
-              <span className="le-tabs-icon">{link.icon}</span>
-              <span className="le-tabs-text">{link.label}</span>
-            </Link>
-          ))}
+          <div className="le-tabs-header">
+            <Profile user={user} roleTarget={roleTarget} />
+            <div className="le-tabs-hdr-name"><p>{title}</p></div>
+          </div>
+          <div className="le-tabs-lnks-wrapper">
+            {((iFier && iFier.identifier === "edu")
+              ? sidebarLinks.slice(0, -1)
+              : sidebarLinks
+            ).map((link) => (
+              <Link
+                key={link.to}
+                href={link.to}
+                onClick={() => setOpen(false)}
+                className={clsx("le-tabs-link", {
+                  active:
+                    link.to === homePath
+                      ? pathname === homePath ||
+                      homeActivePaths.some((p) => pathname.startsWith(p))
+                      : pathname.startsWith(link.to)
+                })}
+              >
+                <span className="le-tabs-icon">{link.icon}</span>
+                <span className="le-tabs-text">{link.label}</span>
+              </Link>
+            ))}
+          </div>
           {iFier && iFier.identifier === "edu" && (
             <div style={{ position: "relative" }}>
               <button

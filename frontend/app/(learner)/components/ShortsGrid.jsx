@@ -4,74 +4,7 @@ import { Video, Play } from "lucide-react";
 import "./ShortsGrid.css";
 import "./Carousel.css";
 
-const trendingShorts = [
-  {
-    id: 1,
-    title: "Quick History Fact",
-    views: "2.1K",
-    duration: "0:58",
-    thumbnail: "🏛",
-    category: "History",
-  },
-  {
-    id: 2,
-    title: "5-Minute Python Tip",
-    views: "4.8K",
-    duration: "1:32",
-    thumbnail: "💡",
-    category: "Programming",
-  },
-  {
-    id: 3,
-    title: "Math Trick Explained",
-    views: "3.2K",
-    duration: "1:15",
-    thumbnail: "🔢",
-    category: "Mathematics",
-  },
-  {
-    id: 4,
-    title: "Science in 60 Seconds",
-    views: "5.6K",
-    duration: "1:00",
-    thumbnail: "🧪",
-    category: "Science",
-  },
-  {
-  id: 5,
-    title: "Quick History Fact",
-    views: "2.1K",
-    duration: "0:58",
-    thumbnail: "🏛",
-    category: "History",
-  },
-  {
-    id: 6,
-    title: "5-Minute Python Tip",
-    views: "4.8K",
-    duration: "1:32",
-    thumbnail: "💡",
-    category: "Programming",
-  },
-  {
-    id: 7,
-    title: "Math Trick Explained",
-    views: "3.2K",
-    duration: "1:15",
-    thumbnail: "🔢",
-    category: "Mathematics",
-  },
-  {
-    id: 8,
-    title: "Science in 60 Seconds",
-    views: "5.6K",
-    duration: "1:00",
-    thumbnail: "🧪",
-    category: "Science",
-  },
-];
-
-export default function ShortsGrid() {
+export default function ShortsGrid({ trendingShorts }) {
   const carouselRef = useRef(null);
 
   const scroll = (direction) => {
