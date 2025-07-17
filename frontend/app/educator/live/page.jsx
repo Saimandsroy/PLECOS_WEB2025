@@ -91,7 +91,7 @@ const GoLivePage = () => {
   return (
     <div className="golive-main-content live-meet-layout">
       <div className="golive-session-header align-with-comment" >
-        <h2>Lecture 34 Sex Education</h2>
+        <h2>Discrete Mathematics lec 3(AmarPandey)</h2>
       </div>
       <div className="golive-meet-row" >
         <LiveVideoArea
