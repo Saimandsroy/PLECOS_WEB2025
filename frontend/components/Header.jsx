@@ -5,6 +5,7 @@ import logo from "@/public/logos/plecos.avif";
 import { useRouter } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
 import './Header.css';
+import SearchBarWrapper from '@/app/(learner)/explore/components/SearchBarWrapper';
 
 export default function Header({ title, roleTarget }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -31,8 +32,10 @@ export default function Header({ title, roleTarget }) {
           </div>
           <span className="header__title">{title}</span>
         </div>
-
+        
+        
         <div className="header__right">
+          <SearchBarWrapper/>
           <ThemeToggle />
           <img
             src={user.avatar}

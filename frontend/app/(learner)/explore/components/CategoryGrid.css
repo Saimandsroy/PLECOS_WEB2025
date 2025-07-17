@@ -1,10 +1,10 @@
 .explore-category {
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   color: var(--text-primary);
 }
 
 .explore-category__title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1rem;
@@ -13,14 +13,11 @@
   gap: 0.5rem;
 }
 
-.explore-category__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.5rem;
-}
-
 /* Glass card styling */
 .explore-category__card {
+  min-width: 200px;  
+  max-width: 240px;  
+  width: 100%;
   background: var(--background-glass);
   border: 1px solid var(--border-color);
   padding: 2rem 1.5rem;

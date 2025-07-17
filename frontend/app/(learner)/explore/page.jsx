@@ -6,6 +6,7 @@ import './page.css';
 import HeaderWrapper from './components/HeaderWrapper';
 import SearchBarWrapper from './components/SearchBarWrapper';
 import FilterTabWrapper from './components/FilterTabWrapper';
+import ExploreVideos from './components/ExploreVideos';
 
 export default function ExplorePage() {
   
@@ -15,7 +16,10 @@ export default function ExplorePage() {
     { name: 'Science', icon: '🔬', count: '156 courses' },
     { name: 'Language', icon: '🗣', count: '134 courses' },
     { name: 'Business', icon: '💼', count: '98 courses' },
-    { name: 'Design', icon: '🎨', count: '87 courses' }
+    { name: 'Design', icon: '🎨', count: '87 courses' },
+    { name: 'Science', icon: '🔬', count: '156 courses' },
+    { name: 'Language', icon: '🗣', count: '134 courses' },
+    { name: 'Business', icon: '💼', count: '98 courses' }
   ];
   
 
@@ -23,9 +27,9 @@ export default function ExplorePage() {
   return (
     <div className="explore-page">
       <HeaderWrapper/>
-      <SearchBarWrapper/>
       <FilterTabWrapper/>
       <CategoryGrid categories={categories} />
+      <ExploreVideos/>
       <InstructorGrid />
       <CourseGrid />
       <ShortsGrid />

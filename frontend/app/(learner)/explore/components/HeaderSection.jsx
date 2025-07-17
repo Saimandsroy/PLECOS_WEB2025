@@ -17,7 +17,7 @@ export default function HeaderSection({ searchQuery, setSearchQuery, activeFilte
             </p>
           </div>
           <div className="explore-header__icon-wrapper">
-            <TrendingUp size={32} color="white" />
+            <TrendingUp size={25} color="white" />
           </div>
         </div>
       </div>
