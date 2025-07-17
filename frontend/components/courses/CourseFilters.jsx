@@ -8,7 +8,7 @@ const CourseFilters = ({ filters, onFilterChange, showCourseType }) => {
       <div className={styles.searchContainer}>
         <input
           type="text"
-          placeholder="Search courses..."
+          placeholder="Search Tutorial..."
           value={filters.search}
           onChange={(e) => onFilterChange('search', e.target.value)}
           className={styles.searchInput}

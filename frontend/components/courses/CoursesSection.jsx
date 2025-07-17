@@ -10,7 +10,7 @@ import DocumentCard from './DocumentCard';
 import Link from 'next/link';
 
 
-const CoursesSection = ({isSe= true,isPro=true ,isEnr=true}) => {
+const CoursesSection = ({ isSe = true, isPro = true, isEnr = true }) => {
   const [activeTab, setActiveTab] = useState('structured');
   const [filters, setFilters] = useState({
     search: '',
@@ -188,7 +188,7 @@ const CoursesSection = ({isSe= true,isPro=true ,isEnr=true}) => {
   return (
     <div className={styles.coursesSection}>
       {/* <CourseTabs activeTab={activeTab} onTabChange={setActiveTab} /> */}
-      { isSe && <CourseFilters filters={filters} onFilterChange={handleFilterChange} />}
+      {/* { isSe && <CourseFilters filters={filters} onFilterChange={handleFilterChange} />} */}
       <div className={styles.content}>{renderContent()}</div>
     </div>
   );

@@ -129,17 +129,15 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  background: var(--bg-gla);
+  padding: 7px;
+  background: var(--background-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 34px;
-  height: 34px;
 }
 
 .theme-toggle-button:hover {

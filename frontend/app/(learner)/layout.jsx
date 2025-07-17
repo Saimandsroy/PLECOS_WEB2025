@@ -13,11 +13,11 @@ const sidebarLinks = [
   { to: '/courses', icon: <BookmarkFilledIcon width={20} height={20} />, label: 'Courses' },
   { to: '/shorts', icon: <VideoIcon width={20} height={20} />, label: 'Shorts' },
   // { to: '/explore', icon: <StarIcon width={20} height={20} />, label: 'Explore' },
-  { to: '/misc', icon: <BellIcon width={20} height={20} />, label: 'Misc' },
+  // { to: '/misc', icon: <BellIcon width={20} height={20} />, label: 'Misc' },
   { to: '/my-section', icon: <ArchiveIcon width={20} height={20} />, label: 'Me' },
 ]
 
-const homeActivePaths = ["/profile", "/video"]
+const homeActivePaths = ["/profile", "/video", "/search"]
 export default function RootLayout({ children }) {
   const title = "Learner Dashboard";
 

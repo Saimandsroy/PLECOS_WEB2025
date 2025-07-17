@@ -35,7 +35,6 @@ export default function ExplorePage() {
                     <VideosRibbon videoData={videoData} />
                     <EducatorRibbon featuredInstructors={featuredInstructors} title="Featured Educators" />
                     <CourseRibbon popularCourses={popularCourses} />
-                    <VideoGrid videos={videoDataPage} />
                 </>
             )}
             {activeFilter === 'courses' && (
