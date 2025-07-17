@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from 'react';
-import Tabs from '../components/Tabs';
-import VideoCard from '../../../components/profile/VideoCard';
-import CoursesGrid from '../components/CoursesGrid';
-import ShortsRow from '../components/ShortsRow';
-import PostsList from '../components/PostsList';
+import Tabs from '@/components/misc/Tabs';
+import VideoCard from '@/components/profile/VideoCard';
+import CoursesGrid from '@/components/misc/CoursesGrid';
+import ShortsRow from '@/components/misc/ShortsRow';
+import PostsList from '@/components/misc/PostsList';
 import thumb from "@/public/logo.png";
 import { useRouter } from 'next/navigation';
 

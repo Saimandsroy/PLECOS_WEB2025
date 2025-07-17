@@ -12,7 +12,7 @@ const sidebarLinks = [
   { to: '/', icon: <HomeIcon width={20} height={20} />, label: 'Home' },
   { to: '/courses', icon: <BookmarkFilledIcon width={20} height={20} />, label: 'Courses' },
   { to: '/shorts', icon: <VideoIcon width={20} height={20} />, label: 'Shorts' },
-  { to: '/explore', icon: <StarIcon width={20} height={20} />, label: 'Explore' },
+  // { to: '/explore', icon: <StarIcon width={20} height={20} />, label: 'Explore' },
   { to: '/misc', icon: <BellIcon width={20} height={20} />, label: 'Misc' },
   { to: '/my-section', icon: <ArchiveIcon width={20} height={20} />, label: 'Me' },
 ]
@@ -23,9 +23,9 @@ export default function RootLayout({ children }) {
 
   return (
     <div className="le-m">
-      <Header title={title} roleTarget="/educator" />
+      <Header />
       <div className="le-c">
-        <Tabs sidebarLinks={sidebarLinks} homePath="/" homeActivePaths={homeActivePaths} />
+        <Tabs sidebarLinks={sidebarLinks} homePath="/" homeActivePaths={homeActivePaths} roleTarget="/educator" title="Learner" />
         <main className="le-mc">{children}</main>
       </div>
       {/* <Footer /> */}

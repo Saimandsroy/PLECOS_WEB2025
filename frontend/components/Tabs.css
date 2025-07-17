@@ -10,6 +10,10 @@
   transform: none;
   transition: none;
   display: flex;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 4.6rem;
+  justify-content: center;
 }
 
 .le-tabs-nav {
@@ -17,6 +21,11 @@
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 10px;
+}
+
+.le-tabs-text {
+  font-size: 0.8rem;
+  margin-top: 0;
 }
 
 .le-tabs-link {
@@ -29,8 +38,11 @@
   color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
-  font-size: 1rem;
   transition: background 0.15s, color 0.15s;
+  font-size: 15px;
+  flex-direction: column;
+  gap: 0;
+  max-width: 65px;
 }
 
 .le-tabs-link:hover {
@@ -76,22 +88,26 @@
   justify-content: center;
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .le-tabs {
-    width: 4.6rem;
-  }
+.le-tabs-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  margin: 7px 0;
+}
 
-  .le-tabs-link {
-    font-size: 15px;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
+.le-tabs-hdr-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
 
-  .le-tabs-text {
-    font-size: 0.8rem;
-    margin-top: 0;
-  }
+.le-tabs-lnks-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
 }
 
 .le-overlay-navigate {
