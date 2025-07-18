@@ -18,7 +18,7 @@ export default function VideosRibbon({ videoData }) {
 
   return (
     <section className="explore-video-section">
-      <div className="video-section-header">
+      <div className="explore-video-section-header">
         <h2>Top Learning Videos</h2>
         <a href="/videos" className="see-more">
           See more &gt;
@@ -32,13 +32,13 @@ export default function VideosRibbon({ videoData }) {
 
         <div className="carousel" ref={carouselRef}>
           {videoData.map((video) => (
-            <div className="video-card" key={video.id}>
+            <div className="explore-video-card" key={video.id}>
               <div className="thumbnail-wrapper">
                 <img src={video.thumbnail} alt={video.title} />
                 <span className="watermark">PLECOS</span>
               </div>
 
-              <div className="video-info">
+              <div className="explore-video-info">
                 <h3>{video.title}</h3>
                 <p className="instructor-name">By {video.instructor}</p>
                 <p className="instructor-role">{video.role}</p>
@@ -61,8 +61,6 @@ export default function VideosRibbon({ videoData }) {
                     ))}
                   </ul>
                 </div>
-
-                <button className="enroll-now-btn">Watch Now</button>
               </div>
             </div>
           ))}

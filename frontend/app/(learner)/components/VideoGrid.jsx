@@ -6,7 +6,8 @@ const VideoGrid = ({ videos }) => (
         style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: 24,
+            gap: 20,
+            margin: "2rem"
         }}
     >
         {videos.map((video) => (
