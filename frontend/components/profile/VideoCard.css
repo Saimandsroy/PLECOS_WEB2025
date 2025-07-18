@@ -3,6 +3,7 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
+  border: 1px solid var(--border-color);
 }
 
 .video-thumb-wrapper {
@@ -11,9 +12,9 @@
   width: 100%;
   aspect-ratio: 16/9;
   background: var(--bg-glass);
-  border: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
 }
 
 .video-thumb {
@@ -33,7 +34,6 @@
   font-weight: 600;
   padding: 2px 7px;
   border-radius: 4px;
-  z-index: 2;
 }
 
 .video-info {
@@ -66,6 +66,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  padding: 2px;
 }
 
 .video-logo {

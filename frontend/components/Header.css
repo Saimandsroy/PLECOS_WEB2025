@@ -16,6 +16,7 @@
 .header__left {
   display: flex;
   align-items: center;
+  margin-left: 15px;
 }
 
 .header__logo-image {
