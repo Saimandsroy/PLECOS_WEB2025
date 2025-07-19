@@ -1,0 +1,64 @@
+:root {
+  --scroll-btn-bg: rgba(0, 0, 0, 0.4);
+  --scroll-btn-hover-bg: rgba(0, 0, 0, 0.6);
+  --scroll-btn-color: #fff;
+}
+[data-theme="light"] {
+  --scroll-btn-bg: rgba(0, 0, 0, 0.3);
+  --scroll-btn-hover-bg: rgba(0, 0, 0, 0.5);
+}
+[data-theme="dark"] {
+  --scroll-btn-bg: rgba(255, 255, 255, 0.1);
+  --scroll-btn-hover-bg: rgba(255, 255, 255, 0.2);
+}
+/* Replaces grid with horizontal scroll */
+.carousel {
+  display: flex;
+  position: relative;
+  gap: 1.5rem;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  padding: 0.5rem 0 1rem;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Reuse your scroll button styles */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  font-size: 2rem;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 8px;
+  transition: background 0.2s;
+  background: var(--scroll-btn-bg);
+  color: var(--scroll-btn-color);
+}
+.scroll-btn:hover {
+  background: var(--scroll-btn-hover-bg);
+}
+.scroll-btn.left {
+  left: 0;
+}
+.scroll-btn.right {
+  right: 0;
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: visible;
+  height: max-content;
+}
+
+/* See more link */
+.see-more {
+  color: #00acee;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px !important;
+}
