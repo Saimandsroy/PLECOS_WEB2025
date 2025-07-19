@@ -41,26 +41,6 @@ export default function VideosRibbon({ videoData }) {
               <div className="explore-video-info">
                 <h3>{video.title}</h3>
                 <p className="instructor-name">By {video.instructor}</p>
-                <p className="instructor-role">{video.role}</p>
-
-                <div className="tag-list">
-                  {video.tags.map((tag, index) => (
-                    <span className="tag" key={index}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="what-you-learn">
-                  <p className="learn-heading">
-                    What will you learn in this course?
-                  </p>
-                  <ul>
-                    {video.points.map((point, index) => (
-                      <li key={index}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
               </div>
             </div>
           ))}

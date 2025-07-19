@@ -13,7 +13,7 @@
   justify-content: space-between;
   gap: 0.5rem;
 }
-.explore-shorts-title-text{
+.explore-shorts-title-text {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -21,8 +21,8 @@
 }
 /* Glass card styling */
 .explore-shorts__card {
-  min-width: 200px;  
-  max-width: 240px;  
+  min-width: 200px;
+  max-width: 240px;
   width: 100%;
   background: var(--background-glass);
   border: 1px solid var(--border-color);
@@ -30,7 +30,6 @@
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 32px var(--shadow-color);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   position: relative;
@@ -38,8 +37,6 @@
 
 .explore-shorts__card:hover {
   background: var(--background-glass-hover);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px var(--shadow-color);
 }
 
 .explore-shorts__banner {
@@ -123,4 +120,3 @@
 .explore-category__carousel::-webkit-scrollbar {
   display: none;
 }
-
