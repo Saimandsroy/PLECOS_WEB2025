@@ -4,13 +4,13 @@ import Image from 'next/image';
 import logo from "@/public/logos/plecos.avif";
 import ThemeToggle from './ThemeToggle';
 import './Header.css';
-import SearchBarWrapper from '@/app/(learner)/components/SearchBarWrapper';
 import { Search } from 'lucide-react';
 import AdvancedSearchModal from './AdvancedSearchModal';
+import { useRouter } from 'next/navigation';
 
-export default function Header() {
+export default function Header({ roleTarget = "/educator" }) {
+  const router = useRouter()
   const [searchOpen, setSearchOpen] = useState(false);
-
   return (
     <>
       <header className="header">
@@ -26,6 +26,7 @@ export default function Header() {
           </div>
         </div>
         <div className="header__right">
+
           <div
             className="explore-search"
             style={{ cursor: 'pointer' }}
@@ -34,6 +35,13 @@ export default function Header() {
             <Search size={20} color="#666" />
           </div>
           <ThemeToggle />
+          <div
+            className="explore-search"
+            style={{ cursor: 'pointer' }}
+            onClick={() => router.push(`${roleTarget}`)}
+          >
+            Switch Role
+          </div>
         </div>
       </header>
       <AdvancedSearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />

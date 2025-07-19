@@ -1,13 +1,10 @@
 'use client';
 
 import styles from './StructuredCourseCard.module.css';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-const StructuredCourseCard = ({course ,isPro, isEnr}) => {
+const StructuredCourseCard = ({ course, isPro }) => {
   const router = useRouter();
-  const handleCardClick = () => {
-    router.push(`/courses/${course.id}`);
-  };
   const getCourseTypeColor = (type) => {
     const colors = {
       'Interactive': '#4CAF50',
@@ -30,7 +27,7 @@ const StructuredCourseCard = ({course ,isPro, isEnr}) => {
       </div>
       <div className={styles.cardContent}>
         <h3 className={styles.cardTitle}>{course.title}</h3>
-       {isPro && ( <div className={styles.instructorInfo}>
+        {isPro && (<div className={styles.instructorInfo}>
           <img src={course.instructorImage} alt={course.instructor} className={styles.instructorImage} />
           <span className={styles.instructorName}>{course.instructor}</span>
         </div>)}
@@ -50,21 +47,6 @@ const StructuredCourseCard = ({course ,isPro, isEnr}) => {
         <div className={styles.impactRate}>
           <span>Impact Rate: {course.impactRate}%</span>
         </div>
-        {isEnr && (<button
-          onClick={handleCardClick}
-            className={`${styles.actionButton} ${course.enrolled ? styles.continueButton : styles.enrollButton}`}
-            style={
-              course.enrolled && course.progress
-                ? {
-                    background: `linear-gradient(to right, #28a745 ${course.progress}%, var(--background-secondary) ${course.progress}%)`,
-                    color: '#fff',
-                    position: 'relative',
-                  }
-                : {}
-            }
-          >
-          {course.enrolled ? `Continue (${course.progress||0}%)` : 'Enroll'}
-        </button>)}
       </div>
     </div>
   );

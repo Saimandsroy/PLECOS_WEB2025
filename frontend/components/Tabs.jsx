@@ -52,10 +52,6 @@ const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [], roleT
       {/* Sidebar */}
       <aside className={clsx("le-tabs", { open })}>
         <nav className="le-tabs-nav">
-          <div className="le-tabs-header">
-            <Profile user={user} roleTarget={roleTarget} />
-            <div className="le-tabs-hdr-name"><p>{title}</p></div>
-          </div>
           <div className="le-tabs-lnks-wrapper">
             {((iFier && iFier.identifier === "edu")
               ? sidebarLinks.slice(0, -1)
@@ -99,6 +95,10 @@ const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [], roleT
               />
             </div>
           )}
+          <div className="le-tabs-header">
+            <Profile user={user} roleTarget={roleTarget} />
+            <div className="le-tabs-hdr-name"><p>{title}</p></div>
+          </div>
         </nav>
       </aside>
     </>

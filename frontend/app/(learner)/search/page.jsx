@@ -9,6 +9,7 @@ import { featuredInstructors } from '@/demo/educator';
 import { videoDataPage } from '@/demo/videoPage';
 import thumb from "@/public/logo.png";
 import './SearchResultsPage.css';
+import Link from 'next/link';
 
 // Mock shorts data
 const mockShorts = [
@@ -71,7 +72,9 @@ export default function SearchResultsPage() {
                                 <VideoCard {...item.data} logo={thumb} />
                             )}
                             {item.type === 'course' && (
-                                <StructuredCourseCard course={item.data} isPro={true} isEnr={true} />
+                                <Link href={`/courses/${item.data.id}`} className="search-course-card">
+                                    <StructuredCourseCard course={item.data} isPro={true} />
+                                </Link>
                             )}
                             {item.type === 'instructor' && (
                                 <InstructorCard instructor={item.data} />

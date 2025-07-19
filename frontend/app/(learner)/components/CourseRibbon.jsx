@@ -5,6 +5,7 @@ import { Play } from "lucide-react";
 import StructuredCourseCard from '@/components/courses/StructuredCourseCard';
 import "./CourseGrid.css";
 import "./Carousel.css";
+import Link from "next/link";
 
 
 export default function CourseRibbon({ title, popularCourses }) {
@@ -36,9 +37,9 @@ export default function CourseRibbon({ title, popularCourses }) {
         <button className="scroll-btn left" onClick={() => scroll('left')}>&#10094;</button>
         <div className="carousel" ref={scrollRef}>
           {popularCourses.map((course) => (
-            <div key={course.id} className="explore-courses__card">
-              <StructuredCourseCard course={course} isPro={true} isEnr={true} />
-            </div>
+            <Link key={course.id} href={`/courses/${course.id}`} className="explore-courses__card">
+              <StructuredCourseCard course={course} isPro={true} />
+            </Link>
           ))}
         </div>
         <button className="scroll-btn right" onClick={() => scroll('right')}>&#10095;</button>
