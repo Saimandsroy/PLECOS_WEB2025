@@ -29,7 +29,6 @@ const iFier = {
   identifier: "edu",
   model: [
     { to: '/educator/create/video', label: 'Video' },
-    { to: '/educator/create/short', label: 'Short' },
     { to: '/educator/create/course', label: 'Course' },
   ]
 }; // This can be used to conditionally render links
