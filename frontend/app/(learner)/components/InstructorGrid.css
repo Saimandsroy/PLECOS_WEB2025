@@ -16,16 +16,14 @@
 
 /* Glass Card */
 .explore-instructors__card {
-  min-width: 200px; 
-  max-width: 280px;  
+  min-width: 200px;
+  max-width: 280px;
   flex: 0 0 auto;
   background: var(--background-glass);
   border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 2rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 12px 40px var(--shadow-color);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   position: relative;
@@ -34,8 +32,6 @@
 
 .explore-instructors__card:hover {
   background: var(--background-glass-hover);
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px var(--shadow-color);
 }
 
 .explore-instructors__badge {
