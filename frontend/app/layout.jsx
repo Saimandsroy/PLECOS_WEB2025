@@ -2,6 +2,7 @@ import React from 'react'
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import TopLoader from '@/components/TopLoader';
+import FeedbackFloatingButton from '@/components/FeedbackFloatingButton';
 
 const manrope = Manrope({
     subsets: ["latin"],
@@ -22,6 +23,7 @@ const RootLayout = ({ children }) => {
             >
                 <TopLoader />
                 {children}
+                <FeedbackFloatingButton />
             </body>
         </html>
     )
