@@ -20,22 +20,8 @@
 
 /* Glass-style card */
 .explore-courses__card {
-  min-width: 200px;
   max-width: 300px;
   width: 100%;
-  flex: 0 0 auto;
-  background: var(--background-glass);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.explore-courses__card:hover {
-  background: var(--background-glass-hover);
 }
 
 .explore-courses__banner {
