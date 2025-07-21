@@ -1,0 +1,518 @@
+.searchResults {
+  margin: 0 auto;
+  padding: 20px;
+  font-family: inherit;
+}
+
+/* Search Header */
+.searchHeader {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.searchHeader h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.resultCount {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Filter Tabs */
+.filterTabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  overflow-x: auto;
+}
+
+.filterTab {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.filterTab:hover {
+  background-color: var(--tab-hover);
+  color: var(--text-primary);
+}
+
+.filterTab.active {
+  background: var(--tab-active);
+  color: white;
+}
+
+/* Section Styling */
+.section {
+  margin-bottom: 48px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.sectionTitle:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: var(--text-accent);
+  border-radius: 2px;
+}
+
+/* Horizontal Scroll Layout */
+.scrollWrapper {
+  position: relative;
+}
+
+.horizontalScroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px 0;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.horizontalScroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.scrollButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  transition: background 0.3s ease;
+}
+
+.scrollButton.left {
+  left: 8px;
+}
+
+.scrollButton.right {
+  right: 8px;
+}
+
+.scrollButton:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.fadeLeft,
+.fadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.fadeLeft {
+  left: 0;
+  
+}
+
+.fadeRight {
+  right: 0;
+  
+}
+
+
+/* Shorts Cards */
+.shortCard {
+  flex: 0 0 140px;
+  background: var(--background-glass);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+}
+
+.shortCard:hover {
+  background: var(--background-glass-hover);
+  box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.shortThumbnail {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.shortThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shortDuration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.shortInfo {
+  padding: 12px;
+}
+
+.shortInfo h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.shortViews {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Instructor Cards */
+.instructorCard {
+  flex: 0 0 200px;
+  background: var(--background-glass);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(16px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.instructorCard:hover {
+
+  background: var(--background-glass-hover);
+  box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.instructorAvatar {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--border-color);
+}
+
+.instructorAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.instructorInfo h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.expertise {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.instructorStats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.statValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.statLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Mixed Grid Layout */
+.mixedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 8px 0;
+}
+
+/* Content Cards */
+.contentCard {
+  background: var(--background-glass);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+}
+
+.contentCard:hover {
+  background: var(--background-glass-hover);
+  box-shadow: 0 12px 30px var(--shadow-color);
+}
+
+.contentThumbnail {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.contentThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.contentCard:hover .contentThumbnail img {
+  transform: scale(1.05);
+}
+
+.videoDuration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.courseLevel {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.beginner {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.intermediate {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.advanced {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.contentInfo {
+  padding: 20px;
+}
+
+.contentTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.instructorMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.instructorProfilePhoto {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.instructorName {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.contentStats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star,
+.starHalf {
+  color: #fbbf24;
+  font-size: 14px;
+}
+
+.starHalf {
+  opacity: 0.6;
+}
+
+.starEmpty {
+  color: #d1d5db;
+  font-size: 14px;
+}
+
+.ratingValue {
+  font-size: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.views {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.impactRate {
+  font-size: 12px;
+  color: #059669;
+  font-weight: 600;
+  background-color: #d1fae5;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.course {
+  border-left: 4px solid #3b82f6;
+}
+
+.video {
+  border-left: 4px solid #ef4444;
+}
+
+.course:hover {
+  border-left-color: #1d4ed8;
+}
+
+.video:hover {
+  border-left-color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .searchResults {
+    padding: 16px;
+  }
+
+  .mixedGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .shortCard {
+    flex: 0 0 120px;
+  }
+
+  .shortThumbnail {
+    height: 160px;
+  }
+
+  .instructorCard {
+    flex: 0 0 180px;
+    padding: 16px;
+  }
+
+  .searchHeader h1 {
+    font-size: 24px;
+  }
+
+  .sectionTitle {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentStats {
+    gap: 12px;
+  }
+
+  .shortCard {
+    flex: 0 0 110px;
+  }
+
+  .instructorCard {
+    flex: 0 0 160px;
+  }
+}
+/* Replaces box-shadow hover effect */
+.contentCard:hover,
+.shortCard:hover,
+.instructorCard:hover {
+  
+  background: var(--background-glass-hover);
+  background-clip: padding-box;
+  position: relative;
+}
+
