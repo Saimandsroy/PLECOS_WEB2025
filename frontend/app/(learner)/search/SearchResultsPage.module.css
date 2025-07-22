@@ -149,7 +149,7 @@
 
 /* Shorts Cards */
 .shortCard {
-  flex: 0 0 140px;
+  flex: 0 0 250px; 
   background: var(--background-glass);
   border-radius: 12px;
   overflow: hidden;
@@ -159,15 +159,10 @@
   cursor: pointer;
 }
 
-.shortCard:hover {
-  background: var(--background-glass-hover);
-  box-shadow: 0 8px 25px var(--shadow-color);
-}
-
 .shortThumbnail {
   position: relative;
   width: 100%;
-  height: 180px;
+  aspect-ratio: 9 / 13; 
   overflow: hidden;
 }
 
@@ -176,6 +171,11 @@
   height: 100%;
   object-fit: cover;
 }
+.shortCard:hover {
+  background: var(--background-glass-hover);
+  box-shadow: 0 8px 25px var(--shadow-color);
+}
+
 
 .shortDuration {
   position: absolute;
@@ -212,15 +212,24 @@
 
 /* Instructor Cards */
 .instructorCard {
-  flex: 0 0 200px;
+  flex: 0 0 280px; 
   background: var(--background-glass);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 20px; 
+  padding: 28px; 
   text-align: center;
   border: 1px solid var(--border-color);
   backdrop-filter: blur(16px);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+}
+
+.instructorAvatar {
+  width: 100px; 
+  height: 100px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--border-color);
 }
 
 .instructorCard:hover {
@@ -229,14 +238,6 @@
   box-shadow: 0 8px 25px var(--shadow-color);
 }
 
-.instructorAvatar {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 16px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--border-color);
-}
 
 .instructorAvatar img {
   width: 100%;
@@ -472,18 +473,18 @@
   }
 
   .shortCard {
-    flex: 0 0 120px;
+    flex: 0 0 150px;
+  }
+
+  .instructorCard {
+    flex: 0 0 240px;
   }
 
   .shortThumbnail {
     height: 160px;
   }
 
-  .instructorCard {
-    flex: 0 0 180px;
-    padding: 16px;
-  }
-
+  
   .searchHeader h1 {
     font-size: 24px;
   }
@@ -499,11 +500,11 @@
   }
 
   .shortCard {
-    flex: 0 0 110px;
+    flex: 0 0 130px;
   }
 
   .instructorCard {
-    flex: 0 0 160px;
+    flex: 0 0 200px;
   }
 }
 /* Replaces box-shadow hover effect */
