@@ -1,64 +1,85 @@
 "use client";
-import InputField from "@/components/InputField";
-import AuthButton from "@/components/AuthButton";
-import { Eye, EyeOff } from "lucide-react";
-import { FcGoogle } from "react-icons/fc";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
+import "./sign-in.css";
 
-export default function LoginPage() {
-  //we will use react-hook-form
-  const router = useRouter()
-  const [show, setShow] = useState(false)
+export default function SignIn() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");          
+  const [show, setShow] = useState(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // Replace with actual sign-in logic (API call)
+    console.log("Sign in:", { email, password });
+    router.push("/");
+  };
 
   return (
-    <div className="flex flex-col w-full mt-4">
-      <h2 className="text-2xl font-bold text-black mb-3">
-        LOGIN TO YOUR ACCOUNT
-      </h2>
-      <form
-        onSubmit={() => router.push("/")}
-        className="space-y-4"
-      >
-        <InputField
-          label="Email Address:"
-          name="email"
-          type="email"
-          placeholder="Enter your email"
+    <div className="signin-container">
+      <div className="signin-card decorated">
+        <img
+          src="/logos/plecos.avif"
+          alt="Plecos Logo"
+          className="signin-logo"
         />
-        <div className="relative">
-          <InputField
-            label="Password:"
-            name="password"
-            type={show ? "text" : "password"}
-            placeholder="Enter your password"
-          />
-          <button
-            type="button"
-            onClick={() => setShow((prev) => !prev)}
-            className="absolute top-12 right-4 text-gray-400 hover:text-white focus:outline-none"
-          >
-            {show ? <EyeOff size={20} /> : <Eye size={20} />}
+        <h2 className="signin-title">Sign in to Plecos</h2>
+        <form className="signin-form" onSubmit={onSubmit}>
+          <div className="signin-field">
+            <label htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              className="signin-input"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
+          <div className="signin-field">
+            <label htmlFor="password">Password</label>
+            <div className="signin-password-wrapper">
+              <input
+                id="password"
+                type={show ? "text" : "password"}
+                className="signin-input"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                className="signin-show-btn"
+                onClick={() => setShow((prev) => !prev)}
+                tabIndex={-1}
+                aria-label={show ? "Hide password" : "Show password"}
+              >
+                {show ? <EyeClosedIcon width={20} height={20} /> : <EyeOpenIcon width={20} height={20} />}
+              </button>
+            </div>
+          </div>
+          <button type="submit" className="signin-btn">
+            Sign In
           </button>
+        </form>
+        <div className="signin-footer">
+          <span>Don't have an account?</span>
+          <a href="/auth/sign-up" className="signin-link">
+            Sign up
+          </a>
         </div>
-        <AuthButton>LOGIN</AuthButton>
-      </form>
-      <div className="text-center py-2">
-        <h3 className="text-black">or</h3>
+        {/* Decorative elements */}
+        <div className="signin-decor-top"></div>
+        <div className="signin-decor-bottom"></div>
       </div>
-      <button className="w-full flex items-center justify-center text-black border border-gray-300 py-2 rounded-3xl hover:bg-gray-100 transition">
-        <FcGoogle className="mr-2 text-lg " /> Sign in with Google
-      </button>
-
-      <p className="mt-2 text-center text-sm text-black">
-        Don't have an account?{" "}
-        <a
-          href="/auth/sign-up"
-          className="text-teal-600 font-semibold hover:underline"
-        >
-          Sign Up now
-        </a>
-      </p>
     </div>
   );
 }
+
+
