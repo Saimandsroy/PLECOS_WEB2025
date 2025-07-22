@@ -7,17 +7,21 @@
   margin: 0 auto;
   gap: 24px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-color);
   transition: all 0.3s ease-in-out;
 }
 
-/* ✅ Light theme */
 .instructor-card.light {
   background-color: #f9fafb;
   color: #1e293b;
 }
 
-.instructor-card.light .instructor-name {
-  color: #1e293b;
+.instructor-card.dark {
+  background: linear-gradient(to bottom right, #0f172a, #1e293b);
+  color: #e2e8f0;
 }
 
 .instructor-card.light .instructor-role,
@@ -25,34 +29,35 @@
   color: #475569;
 }
 
-/* ✅ Dark theme */
-.instructor-card.dark {
-  background: linear-gradient(to bottom right, #0f172a, #1e293b);
-  color: #e2e8f0;
-}
-
-.instructor-card.dark .instructor-name {
-  color: #e2e8f0;
-}
-
 .instructor-card.dark .instructor-role,
 .instructor-card.dark .instructor-bio {
   color: #94a3b8;
 }
 
-/* Shared styles (unchanged) */
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .instructor-image {
   width: 160px;
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #FF7F3F;
+  border: 3px solid #ff7f3f;
   box-shadow: 0 0 16px rgba(197, 121, 34, 0.2);
-  align-self: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.instructor-image:hover {
+  transform: scale(1.05);
 }
 
 .section-heading {
-  color: #FF7F3F;
+  color: #ff7f3f;
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
@@ -76,18 +81,69 @@
   margin-bottom: 16px;
 }
 
+.instructor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.edit-btn {
+  background-color: #ff7f3f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #e66e2f;
+}
+
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  font-size: 15px;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #ccc);
+  background-color: var(--background-primary, #fff);
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.edit-input.name-input {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.edit-input.role-input {
+  font-weight: 500;
+}
+
+.edit-textarea {
+  height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
 @media screen and (min-width: 768px) {
   .instructor-card {
     flex-direction: row;
     align-items: flex-start;
   }
 
+  .image-container {
+    align-self: flex-start;
+  }
+
   .instructor-info {
     flex: 1;
     margin-left: 24px;
-  }
-
-  .instructor-image {
-    align-self: flex-start;
   }
 }
