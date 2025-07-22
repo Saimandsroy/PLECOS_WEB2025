@@ -1,20 +1,56 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import "./sign-in.css";
 
 export default function SignIn() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");          
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // Replace with actual sign-in logic (API call)
-    console.log("Sign in:", { email, password });
-    router.push("/");
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        router.replace("/");
+      }
+    }
+  }, [router]);
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axios.post("http://localhost:3001/auth/login", {
+        email: data.email,
+        password: data.password,
+        role: data.role,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (response.data && response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        router.replace("/");
+      } else {
+        // handle error or show message
+        console.error("No token in response");
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("API Error:", error.response.data);
+      } else {
+        console.error("Error:", error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,7 +62,12 @@ export default function SignIn() {
           className="signin-logo"
         />
         <h2 className="signin-title">Sign in to Plecos</h2>
-        <form className="signin-form" onSubmit={onSubmit}>
+        {loading && (
+          <div className="signin-spinner-container">
+            <div className="signin-spinner"></div>
+          </div>
+        )}
+        <form className="signin-form" onSubmit={handleSubmit(onSubmit)} style={{ opacity: loading ? 0.6 : 1, pointerEvents: loading ? 'none' : 'auto', boxShadow: loading ? 'none' : undefined }}>
           <div className="signin-field">
             <label htmlFor="email">Email Address</label>
             <input
@@ -34,11 +75,11 @@ export default function SignIn() {
               type="email"
               className="signin-input"
               placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              {...register("email", { required: true })}
               autoComplete="email"
+              style={{ borderColor: errors.email ? '#ff7f3f' : undefined, background: errors.email ? '#fff6f2' : undefined }}
             />
+            {errors.email && <span className="signin-error">Email is required</span>}
           </div>
           <div className="signin-field">
             <label htmlFor="password">Password</label>
@@ -48,10 +89,9 @@ export default function SignIn() {
                 type={show ? "text" : "password"}
                 className="signin-input"
                 placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
+                {...register("password", { required: true })}
                 autoComplete="current-password"
+                style={{ borderColor: errors.password ? '#ff7f3f' : undefined, background: errors.password ? '#fff6f2' : undefined }}
               />
               <button
                 type="button"
@@ -63,14 +103,29 @@ export default function SignIn() {
                 {show ? <EyeClosedIcon width={20} height={20} /> : <EyeOpenIcon width={20} height={20} />}
               </button>
             </div>
+            {errors.password && <span className="signin-error">Password is required</span>}
           </div>
-          <button type="submit" className="signin-btn">
-            Sign In
+          <div className="signin-field">
+            <label htmlFor="role">Role</label>
+            <select
+              id="role"
+              className="signin-input"
+              {...register("role", { required: true })}
+              defaultValue="learner"
+              style={{ borderColor: errors.role ? '#ff7f3f' : undefined, background: errors.role ? '#fff6f2' : undefined }}
+            >
+              <option value="learner">Learner</option>
+              <option value="educator">Educator</option>
+            </select>
+            {errors.role && <span className="signin-error">Role is required</span>}
+          </div>
+          <button type="submit" className="signin-btn" disabled={loading} style={{ filter: loading ? 'grayscale(0.5)' : undefined }}>
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
         <div className="signin-footer">
           <span>Don't have an account?</span>
-          <a href="/auth/sign-up" className="signin-link">
+          <a href="/sign-up" className="signin-link">
             Sign up
           </a>
         </div>
@@ -81,5 +136,6 @@ export default function SignIn() {
     </div>
   );
 }
+
 
 
