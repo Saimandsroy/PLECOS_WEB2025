@@ -2,7 +2,8 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Tabs from "../../components/Tabs";
 import "./layout.css";
-import { HomeIcon, BookmarkFilledIcon, VideoIcon, StarIcon, ArchiveIcon, BellIcon } from '@radix-ui/react-icons'
+import { HomeIcon, BookmarkFilledIcon, VideoIcon, StarIcon, EyeOpenIcon, EyeClosedIcon, ArchiveIcon, BellIcon } from '@radix-ui/react-icons'
+
 export const metadata = {
   title: "Plecos",
   description: "A learning plateform.",
