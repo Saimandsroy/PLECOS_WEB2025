@@ -1,27 +1,63 @@
 .overview-container {
-  padding: 20px;
-  /* background-color: var(--background-secondary); */
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--text-color);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease;
+}
+
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .section-heading {
   font-size: 24px;
   font-weight: 600;
-  margin-bottom: 16px;
-  color: #FF7F3F;
+  color: #ff7f3f;
+}
+
+.edit-btn {
+  background-color: #ff7f3f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #e66e2f;
 }
 
 .learning-list {
   list-style: disc;
-  padding-left: 20px;
-  margin-bottom: 24px;
+  padding-left: 24px;
+  margin-bottom: 32px;
 }
 
 .learning-list li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 16px;
+  position: relative;
+}
+
+.learning-list input {
+  width: 100%;
+  padding: 8px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #ccc);
+  background: var(--background-primary, #fff);
+  color: var(--text-color);
+  transition: all 0.2s ease;
 }
 
 .course-info-cards {
@@ -32,10 +68,15 @@
 
 .info-card {
   background-color: var(--background-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 12px;
   padding: 16px;
-  transition: 0.2s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.info-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 .info-card h3 {
@@ -47,4 +88,28 @@
 .info-card p {
   font-size: 15px;
   line-height: 1.5;
+}
+
+.info-title-input {
+  width: 100%;
+  font-weight: 600;
+  font-size: 17px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #ccc);
+  background: var(--background-primary, #fff);
+  color: var(--text-color);
+}
+
+.info-content-input {
+  width: 100%;
+  font-size: 15px;
+  padding: 8px;
+  height: 80px;
+  resize: vertical;
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #ccc);
+  background: var(--background-primary, #fff);
+  color: var(--text-color);
 }
