@@ -1,64 +1,90 @@
-:root {
-  --scroll-btn-bg: rgba(0, 0, 0, 0.4);
-  --scroll-btn-hover-bg: rgba(0, 0, 0, 0.6);
-  --scroll-btn-color: #fff;
+.carousel-wrapper {
+  position: relative;
 }
-[data-theme="light"] {
-  --scroll-btn-bg: rgba(0, 0, 0, 0.3);
-  --scroll-btn-hover-bg: rgba(0, 0, 0, 0.5);
-}
-[data-theme="dark"] {
-  --scroll-btn-bg: rgba(255, 255, 255, 0.1);
-  --scroll-btn-hover-bg: rgba(255, 255, 255, 0.2);
-}
-/* Replaces grid with horizontal scroll */
+
 .carousel {
   display: flex;
-  position: relative;
-  gap: 1.5rem;
-  overflow: scroll;
+  gap: 1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   scroll-behavior: smooth;
-  padding: 0.5rem 0 1rem;
+  
+  /* Prevent cards from stretching when one gets taller */
+  align-items: flex-start;
+
+  /* Padding gives space for shadows and scaled cards */
+  padding: 2rem 1rem;
 }
+
 .carousel::-webkit-scrollbar {
   display: none;
 }
 
-/* Reuse your scroll button styles */
+/* --- Scroll Buttons --- */
 .scroll-btn {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 20;
+  background: linear-gradient(to right, rgba(16, 16, 16, 0.7), transparent);
+  width: 60px;
   border: none;
-  font-size: 2rem;
-  padding: 0.25rem 0.75rem;
   cursor: pointer;
-  z-index: 2;
-  border-radius: 8px;
-  transition: background 0.2s;
-  background: var(--scroll-btn-bg);
-  color: var(--scroll-btn-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
 }
-.scroll-btn:hover {
-  background: var(--scroll-btn-hover-bg);
+
+.scroll-btn.right {
+  right: 0;
+  background: linear-gradient(to left, rgba(16, 16, 16, 0.7), transparent);
 }
+
 .scroll-btn.left {
   left: 0;
 }
-.scroll-btn.right {
-  right: 0;
+
+.carousel-wrapper:hover .scroll-btn {
+  opacity: 1;
+  visibility: visible;
 }
 
-.carousel-wrapper {
-  position: relative;
-  overflow: visible;
-  height: max-content;
+.scroll-btn.hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
 }
 
-/* See more link */
-.see-more {
-  color: #00acee;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px !important;
+/* --- Navigation Dots --- */
+.nav-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.dot.active {
+  background-color: black;
+  transform: scale(1.3);
 }

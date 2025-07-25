@@ -1,30 +1,77 @@
 "use client";
-
-import { useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Play } from "lucide-react";
-import StructuredCourseCard from '@/components/courses/StructuredCourseCard';
-import "./CourseGrid.css";
-import "./Carousel.css";
 import Link from "next/link";
-
+import StructuredCourseCard from "@/components/courses/StructuredCourseCard";
+import "./CourseRibbon.css"; // Using the new dedicated CSS file
 
 export default function CourseRibbon({ title, popularCourses }) {
-  const scrollRef = useRef(null);
+  const carouselRef = useRef(null);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const updateCarouselState = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    setIsAtStart(el.scrollLeft < 1);
+    const isEnd = Math.abs(el.scrollWidth - el.clientWidth - el.scrollLeft) < 1;
+    setIsAtEnd(isEnd);
+
+    if (el.clientWidth > 0) {
+      const calculatedTotalPages = Math.ceil(el.scrollWidth / el.clientWidth);
+      if (totalPages !== calculatedTotalPages) {
+        setTotalPages(calculatedTotalPages);
+      }
+
+      const calculatedCurrentPage = Math.round(el.scrollLeft / el.clientWidth);
+      if (currentPage !== calculatedCurrentPage) {
+        setCurrentPage(calculatedCurrentPage);
+      }
+    }
+  }, [totalPages, currentPage]);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel || !popularCourses || popularCourses.length === 0) return;
+
+    updateCarouselState();
+
+    const resizeObserver = new ResizeObserver(updateCarouselState);
+    resizeObserver.observe(carousel);
+    carousel.addEventListener("scroll", updateCarouselState, { passive: true });
+
+    return () => {
+      resizeObserver.unobserve(carousel);
+      carousel.removeEventListener("scroll", updateCarouselState);
+    };
+  }, [popularCourses, updateCarouselState]);
 
   const scroll = (direction) => {
-    if (scrollRef.current) {
-      const amount = 300;
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -amount : amount,
-        behavior: "smooth",
-      });
-    }
+    const el = carouselRef.current;
+    if (!el) return;
+    const scrollAmount = el.clientWidth * 0.9;
+    el.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  const goToPage = (pageIndex) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    el.scrollTo({
+      left: pageIndex * el.clientWidth,
+      behavior: "smooth",
+    });
   };
 
   return (
-    <section className="explore-courses">
-      <div className="explore-courses-header">
-        <h2 className="explore-courses__title">
+    <section className="course-ribbon">
+      <div className="course-ribbon-header">
+        <h2 className="course-ribbon__title">
           <Play size={28} />
           {title || "Popular Courses"}
         </h2>
@@ -33,17 +80,46 @@ export default function CourseRibbon({ title, popularCourses }) {
         </a>
       </div>
 
-      <div className="carousel-wrapper">
-        <button className="scroll-btn left" onClick={() => scroll('left')}>&#10094;</button>
-        <div className="carousel" ref={scrollRef}>
+      <div className="carousel-container">
+        <button
+          className={`carousel-arrow left ${isAtStart ? "hidden" : ""}`}
+          onClick={() => scroll("left")}
+          aria-label="Scroll Left"
+        >
+          &#10094;
+        </button>
+
+        <div className="carousel" ref={carouselRef}>
           {popularCourses.map((course) => (
-            <Link key={course.id} href={`/courses/${course.id}`} className="explore-courses__card">
-              <StructuredCourseCard course={course} isPro={true} />
-            </Link>
+            <div className="carousel-item" key={course.id}>
+              <Link href={`/courses/${course.id}`} className="course-card-link">
+                <StructuredCourseCard course={course} isPro={true} />
+              </Link>
+            </div>
           ))}
         </div>
-        <button className="scroll-btn right" onClick={() => scroll('right')}>&#10095;</button>
+
+        <button
+          className={`carousel-arrow right ${isAtEnd ? "hidden" : ""}`}
+          onClick={() => scroll("right")}
+          aria-label="Scroll Right"
+        >
+          &#10095;
+        </button>
       </div>
+
+      {totalPages > 1 && (
+        <div className="carousel-dots">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <button
+              key={idx}
+              className={`dot ${currentPage === idx ? "active" : ""}`}
+              onClick={() => goToPage(idx)}
+              aria-label={`Go to page ${idx + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
