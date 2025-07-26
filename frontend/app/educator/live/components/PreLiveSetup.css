@@ -53,7 +53,7 @@ body::-webkit-scrollbar {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    /* background-color: #000; */
+    background-color: #000;
     border-radius: 8px;
     overflow: hidden;
 }
@@ -80,7 +80,7 @@ body::-webkit-scrollbar {
     color: #fff;
     font-size: 1.1rem;
     text-align: center;
-    padding: 1rem;
+    
 }
 
 /* Bar for mic and camera toggle buttons */
