@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
 
   return (
     <div className="le-m">
-      <Header />
+      <Header roleTarget="/educator"/>
       <div className="le-c">
         <Tabs sidebarLinks={sidebarLinks} homePath="/" homeActivePaths={homeActivePaths} roleTarget="/educator" title="Learner" />
         <main className="le-mc">{children}</main>

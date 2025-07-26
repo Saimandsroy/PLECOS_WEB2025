@@ -1,0 +1,132 @@
+/* Main wrapper to center the summary card */
+.post-live-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: #121212;
+    padding: 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* The summary card itself */
+.post-live-card {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Header section with thank-you message */
+.summary-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.summary-header p {
+    margin: 0.5rem 0 0;
+    font-size: 1.1rem;
+    color: #aaa;
+}
+
+/* Container for stats */
+.summary-stats {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    padding: 1.5rem 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #4a90e2;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #aaa;
+}
+
+/* Container for action buttons */
+.summary-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* General button styling */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Primary button styling */
+.action-btn.primary-btn {
+    background-color: #4a90e2;
+    color: #fff;
+}
+
+.action-btn.primary-btn:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.2);
+}
+
+/* Secondary button styling */
+.action-btn.secondary-btn {
+    background-color: transparent;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+
+.action-btn.secondary-btn:hover {
+    background-color: #2a2a2a;
+    border-color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .post-live-card {
+        padding: 2rem;
+    }
+
+    .summary-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .summary-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}

@@ -35,7 +35,7 @@ const iFier = {
 export default function educatorLayout({ children }) {
   return (
     <div className="le-m">
-      <Header />
+      <Header roleTarget="/"/>
       <div className="le-c">
         <Tabs sidebarLinks={sidebarLinks} iFier={iFier} homePath="/educator" homeActivePaths={["/videos"]} roleTarget="/" title="Educator" />
         <main className="le-mc">{children}</main>
