@@ -123,7 +123,7 @@ const PreLiveSetup = ({ onGoLive }) => {
                 <h1 className="card-header">Go Live Setup</h1>
                 
                 <div className="video-preview-container">
-                    <video ref={videoRef} className="video-preview" autoPlay muted playsInline></video>
+                    <video ref={videoRef} className="video-preview" autoPlay muted playsInline style={{ transform: 'scaleX(-1)' }}></video>
                     {error && <div className="video-error-overlay">{error}</div>}
                     {!cameraOn && !error && <div className="video-off-overlay">Camera is Off</div>}
                 </div>

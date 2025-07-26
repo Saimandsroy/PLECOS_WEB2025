@@ -73,7 +73,7 @@ const LiveStreamArea = ({ onEndStream }) => {
                 <div className="live-stream-container">
                     <div className="video-wrapper">
                         <div className="live-badge">LIVE</div>
-                        <video ref={videoRef} className="live-video" autoPlay muted playsInline></video>
+                        <video ref={videoRef} className="live-video" autoPlay muted playsInline style={{ transform: 'scaleX(-1)' }}></video>
                         {!cameraOn && <div className="cam-off-overlay">Camera is Off</div>}
                     </div>
 
