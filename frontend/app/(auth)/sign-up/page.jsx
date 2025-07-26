@@ -1,67 +1,114 @@
 "use client";
-
-import InputField from "@/components/InputField";
-import AuthButton from "@/components/AuthButton";
-import { Eye, EyeOff } from "lucide-react";
-import { FcGoogle } from "react-icons/fc";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
+import { FcGoogle } from "react-icons/fc";
+import "./sign-up.css";
 
-export default function Signup() {
+export default function SignUp() {
   const router = useRouter();
-  const [show, setShow] = useState(false)
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // Replace with actual sign-up logic (API call)
+    console.log("Sign up:", { fullName, email, password });
+    router.push("/");
+  };
+
+  const onGoogleSignUp = () => {
+    // Replace with actual Google sign-up logic
+    console.log("Sign up with Google");
+  };
 
   return (
-    <div className="flex flex-col w-full mt-4">
-      <h2 className="text-2xl font-bold text-black mb-3">
-        CREATE YOUR PLECOS ACCOUNT
-      </h2>
-      <form onSubmit={() => router.push("/")} className="space-y-4">
-        <InputField
-          label="Full Name:"
-          name="fullname"
-          type="text"
-          placeholder="Enter your full name"
+    <div className="signup-container">
+      <div className="signup-card decorated">
+        <img
+          src="/logos/plecos.avif"
+          alt="Plecos Logo"
+          className="signup-logo"
         />
-        <InputField
-          label="Email Address:"
-          name="email"
-          type="email"
-          placeholder="Enter your email"
-        />
-        <div className="relative">
-          <InputField
-            label="Password:"
-            name="password"
-            type={show ? "text" : "password"}
-            placeholder="Enter your password"
-          />
-          <button
-            type="button"
-            onClick={() => setShow((prev) => !prev)}
-            className="absolute top-12 right-4 text-gray-400 hover:text-white focus:outline-none"
-          >
-            {show ? <EyeOff size={20} /> : <Eye size={20} />}
+        <h2 className="signup-title">Create your Plecos account</h2>
+        <form className="signup-form" onSubmit={onSubmit}>
+          <div className="signup-field">
+            <label htmlFor="fullname">Full Name</label>
+            <input
+              id="fullname"
+              type="text"
+              className="signup-input"
+              placeholder="Enter your full name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+              autoComplete="name"
+            />
+          </div>
+          <div className="signup-field">
+            <label htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              className="signup-input"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
+          <div className="signup-field">
+            <label htmlFor="password">Password</label>
+            <div className="signup-password-wrapper">
+              <input
+                id="password"
+                type={show ? "text" : "password"}
+                className="signup-input"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                className="signup-show-btn"
+                onClick={() => setShow((prev) => !prev)}
+                tabIndex={-1}
+                aria-label={show ? "Hide password" : "Show password"}
+              >
+                {show ? (
+                  <EyeClosedIcon width={20} height={20} />
+                ) : (
+                  <EyeOpenIcon width={20} height={20} />
+                )}
+              </button>
+            </div>
+          </div>
+          <button type="submit" className="signup-btn">
+            Sign Up
           </button>
-        </div>
-        <AuthButton>Signup</AuthButton>
-      </form>
-      <div className="text-center py-2">
-        <h3 className="text-black">or</h3>
-      </div>
-      <button className="w-full flex items-center justify-center text-black border border-gray-300 py-2 rounded-3xl hover:bg-gray-100 transition">
-        <FcGoogle className="mr-2 text-lg " /> Sign up with Google
-      </button>
-
-      <p className="mt-2 text-center text-sm text-black">
-        Already have an account?{" "}
-        <a
-          href="/auth/sign-in"
-          className="text-teal-600 font-semibold hover:underline"
+        </form>
+        <button
+          className="signup-google-btn"
+          type="button"
+          onClick={onGoogleSignUp}
         >
-          Login now
-        </a>
-      </p>
+          <FcGoogle className="signup-google-icon" /> Sign up with Google
+        </button>
+        <div className="signup-footer">
+          <span>Already have an account?</span>
+          <a href="/auth/sign-in" className="signup-link">
+            Login
+          </a>
+        </div>
+        {/* Decorative elements */}
+        <div className="signup-decor-top"></div>
+        <div className="signup-decor-bottom"></div>
+      </div>
     </div>
   );
 }
