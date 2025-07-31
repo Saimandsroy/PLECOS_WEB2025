@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import "./sign-in.css";
-
+import api from "@/api/axios.js"
 export default function SignIn() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -25,33 +25,38 @@ export default function SignIn() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
+      const response = await api.post("/auth/login", {
         email: data.email,
         password: data.password,
         role: data.role,
       }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
         withCredentials: true,
       });
-      if (response.data && response.data.token) {
+
+      if (response.data?.token) {
         localStorage.setItem("token", response.data.token);
         router.replace("/");
       } else {
-        // handle error or show message
-        console.error("No token in response");
+        console.error("No token received from server");
+        // Show user-friendly error message
       }
     } catch (error) {
-      if (error.response) {
+      if (error.response?.status === 401) {
+        console.error("Invalid credentials");
+        // Show "Invalid email or password" message
+      } else if (error.response?.status === 422) {
+        console.error("Validation error:", error.response.data);
+        // Show validation errors
+      } else if (error.response) {
         console.error("API Error:", error.response.data);
       } else {
-        console.error("Error:", error.message);
+        console.error("Network Error:", error.message);
       }
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="signin-container">

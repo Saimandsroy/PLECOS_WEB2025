@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/api/axios.js";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
@@ -25,7 +25,7 @@ export default function SignUp() {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3001/auth/register", {
+      const response = await api.post("/auth/register", {
         email: data.email,
         password: data.password,
         role: data.role,
@@ -34,9 +34,11 @@ export default function SignUp() {
           "Content-Type": "application/json",
         },
         withCredentials: true,
-      });
-      if (response.data && response.data.token) {
-        localStorage.setItem("token", response.data.token);
+      })
+
+      console.log("token", response.data)
+      if (response.data && response.data.data.token) {
+        localStorage.setItem("token", response.data.data.token);
         router.replace("/");
       } else {
         // handle error or show message
