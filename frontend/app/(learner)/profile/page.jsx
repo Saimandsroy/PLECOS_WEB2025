@@ -1,152 +1,154 @@
-"use client"
-import React, { useState } from "react";
-import "./page.css";
+'use client'
+import React, { useState } from 'react';
+import './page.css';
 
 const ProfilePage = () => {
-  const [activeTab, setActiveTab] = useState("Personal Info");
+  const [activeTab, setActiveTab] = useState('personal');
+
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+  };
 
   return (
-    <div className="p-profile-container">
-      <div className="p-profile-header">
-        <div className="p-profile-avatar">
-          <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
-            <circle cx="50" cy="35" r="15" fill="#8B4513" />
-            <path
-              d="M20 85 C20 65, 35 50, 50 50 C65 50, 80 65, 80 85 Z"
-              fill="#8B4513"
-            />
-          </svg>
-        </div>
-        <h1 className="p-profile-name">Sophia Clark</h1>
-        <p className="p-profile-level">Level 7</p>
-        <p className="p-profile-joined">Joined 2 years ago</p>
-      </div>
-
-      {/* <div className="p-profile-stats">
-        <div className="p-stat-card">
-          <div className="p-stat-number">5</div>
-          <div className="p-stat-label">Courses Enrolled</div>
-        </div>
-        <div className="p-stat-card">
-          <div className="p-stat-number">80%</div>
-          <div className="p-stat-label">Completion Rate</div>
-        </div>
-        <div className="p-stat-card">
-          <div className="p-stat-number">12</div>
-          <div className="p-stat-label">Badges Earned</div>
-        </div>
-      </div> */}
-
-      <div className="p-profile-tabs">
-        <button
-          className={`p-tab-button ${
-            activeTab === "Personal Info" ? "active" : ""
-          }`}
-          onClick={() => setActiveTab("Personal Info")}
-        >
-          Personal Info
-        </button>
-        <button
-          className={`p-tab-button ${
-            activeTab === "Educational Info" ? "active" : ""
-          }`}
-          onClick={() => setActiveTab("Educational Info")}
-        >
-          Educational Info
-        </button>
-        <button
-          className={`p-tab-button ${
-            activeTab === "Social Platform Linking" ? "active" : ""
-          }`}
-          onClick={() => setActiveTab("Social Platform Linking")}
-        >
-          Social Platform Linking
-        </button>
-      </div>
-
-      <div className="p-profile-content">
-        <div className="p-tab-content">
-          {activeTab === "Personal Info" && (
-            <div>
-              <div className="p-form-group">
-                <label className="p-form-label">Date of Birth</label>
-                <input
-                  type="date"
-                  className="p-form-input"
-                  placeholder="Select date"
-                />
-              </div>
-              <div className="p-form-group">
-                <label className="p-form-label">Location</label>
-                <input
-                  type="text"
-                  className="p-form-input"
-                  placeholder="Enter your location"
-                />
-              </div>
-              <button className="p-update-button">Update Personal Info</button>
+    <div className="p-container">
+      <div className="p-card">
+        {/* Header Section */}
+        <div className="p-header">
+          <div className="p-header-content">
+            <div className="p-avatar">
+              <span className="p-avatar-text">P</span>
             </div>
-          )}
-
-          {activeTab === "Educational Info" && (
-            <div>
-              <div className="p-form-group">
-                <label className="p-form-label">Highest Education</label>
-                <input
-                  type="text"
-                  className="p-form-input"
-                  placeholder="Enter your highest education"
-                />
+            <div className="p-user-info">
+              <h1 className="p-user-name">Rahul Saini</h1>
+              <p className="p-user-title">Software Developer</p>
+              <div className="p-location">
+                <span className="p-location-icon">📍</span>
+                <span>Bilaspur, India</span>
               </div>
-              <div className="p-form-group">
-                <label className="p-form-label">Institution</label>
-                <input
-                  type="text"
-                  className="p-form-input"
-                  placeholder="Enter your institution"
-                />
-              </div>
-              <div className="p-form-group">
-                <label className="p-form-label">Field of Study</label>
-                <input
-                  type="text"
-                  className="p-form-input"
-                  placeholder="Enter your field of study"
-                />
-              </div>
-              <button className="p-update-button">
-                Update Educational Info
+            </div>
+            <div className="p-edit-button-container">
+              <button className="p-edit-button">
+                <span className="p-edit-icon">✏️</span>
+                Edit Profile
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Tabs Navigation */}
+        <div className="p-tabs-border">
+          <nav className="p-tabs-nav">
+            <button 
+              className={`p-tab-button ${activeTab === 'personal' ? 'p-tab-active' : ''}`}
+              onClick={() => handleTabClick('personal')}
+            >
+              Personal Details
+            </button>
+            <button 
+              className={`p-tab-button ${activeTab === 'education' ? 'p-tab-active' : ''}`}
+              onClick={() => handleTabClick('education')}
+            >
+              Educational Details
+            </button>
+            <button 
+              className={`p-tab-button ${activeTab === 'experience' ? 'p-tab-active' : ''}`}
+              onClick={() => handleTabClick('experience')}
+            >
+              Experience
+            </button>
+            <button 
+              className={`p-tab-button ${activeTab === 'social' ? 'p-tab-active' : ''}`}
+              onClick={() => handleTabClick('social')}
+            >
+              Social Links
+            </button>
+          </nav>
+        </div>
+
+        {/* Tab Content */}
+        <div className="p-content">
+          {/* Personal Details Tab */}
+          {activeTab === 'personal' && (
+            <div className="p-tab-content">
+              <div className="p-grid">
+                <div className="p-field">
+                  <label className="p-label">Full Name</label>
+                  <p className="p-value">Rahul Kumar</p>
+                </div>
+                <div className="p-field">
+                  <label className="p-label">Email</label>
+                  <p className="p-value">rahul@example.com</p>
+                </div>
+                <div className="p-field">
+                  <label className="p-label">Phone</label>
+                  <p className="p-value">+91 12345 67890</p>
+                </div>
+                <div className="p-field">
+                  <label className="p-label">Date of Birth</label>
+                  <p className="p-value">January 1, 2000</p>
+                </div>
+                <div className="p-field p-field-full">
+                  <label className="p-label">About Me</label>
+                  <p className="p-value p-about-text">
+                    A passionate software developer with a knack for creating elegant solutions in the least amount of time. I am interested in web development and competitive programming.
+                  </p>
+                </div>
+              </div>
+            </div>
           )}
 
-          {activeTab === "Social Platform Linking" && (
-            <div>
-              <div className="p-form-group">
-                <label className="p-form-label">LinkedIn Profile</label>
-                <input
-                  type="url"
-                  className="p-form-input"
-                  placeholder="https://linkedin.com/in/yourprofile"
-                />
+          {/* Education Tab */}
+          {activeTab === 'education' && (
+            <div className="p-tab-content">
+              <div className="p-education-list">
+                <div className="p-education-item">
+                  <p className="p-education-title">Guru Ghasidas Vishwavidyalaya (GGU), Bilaspur</p>
+                  <p className="p-education-subtitle">Bachelor of Technology in Computer Science</p>
+                  <p className="p-education-date">2020 - 2024</p>
+                </div>
+                <div className="p-education-item">
+                  <p className="p-education-title">High School</p>
+                  <p className="p-education-subtitle">Science Stream</p>
+                  <p className="p-education-date">2018 - 2020</p>
+                </div>
               </div>
-              <div className="p-form-group">
-                <label className="p-form-label">GitHub Profile</label>
-                <input
-                  type="url"
-                  className="p-form-input"
-                  placeholder="https://github.com/yourusername"
-                />
+            </div>
+          )}
+
+          {/* Experience Tab */}
+          {activeTab === 'experience' && (
+            <div className="p-tab-content">
+              <div className="p-experience-list">
+                <div className="p-experience-item">
+                  <p className="p-experience-title">Software Development Intern</p>
+                  <p className="p-experience-subtitle">Tech Solutions Inc. | Summer 2023</p>
+                  <ul className="p-experience-details">
+                    <li>Developed and maintained web applications using React and Node.js.</li>
+                    <li>Collaborated with a team of developers to deliver high-quality software.</li>
+                    <li>Participated in code reviews and agile development processes.</li>
+                  </ul>
+                </div>
               </div>
-              <div className="p-form-group">
-                <label className="p-form-label">Twitter Profile</label>
-                <input
-                  type="url"
-                  className="p-form-input"
-                  placeholder="https://twitter.com/yourusername"
-                />
+            </div>
+          )}
+
+          {/* Social Links Tab */}
+          {activeTab === 'social' && (
+            <div className="p-tab-content">
+              <div className="p-grid">
+                <div className="p-field">
+                  <label className="p-label">LinkedIn</label>
+                  <a className="p-link" href="#">linkedin.com/in/gpriye0ns</a>
+                </div>
+                <div className="p-field">
+                  <label className="p-label">GitHub</label>
+                  <a className="p-link" href="#">github.com/gpriye0ns</a>
+                </div>
+                <div className="p-field">
+                  <label className="p-label">Twitter</label>
+                  <a className="p-link" href="#">twitter.com/gpriye0ns</a>
+                </div>
               </div>
-              <button className="p-update-button">Update Social Links</button>
             </div>
           )}
         </div>
