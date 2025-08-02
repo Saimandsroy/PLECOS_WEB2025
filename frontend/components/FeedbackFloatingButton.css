@@ -1,0 +1,61 @@
+/* ===================================================== */
+/* FeedbackFloatingButton.css                  */
+/* ===================================================== */
+
+.feedback-fab {
+  position: fixed;
+  z-index: 1500;
+  
+  /* Desktop styles */
+  width: 56px;
+  height: 56px;
+  right: 24px;
+  bottom: 24px;
+
+  /* New Gradient Background */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border-radius: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  text-decoration: none;
+  cursor: pointer;
+  
+  border: none;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feedback-fab svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* --- Interaction Effects --- */
+.feedback-fab:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.feedback-fab:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+  .feedback-fab {
+    width: 48px;
+    height: 48px;
+    right: 20px;
+    /* Positioned higher to avoid overlapping mobile navigation bars */
+    bottom: 92px; 
+  }
+
+  .feedback-fab svg {
+    width: 24px;
+    height: 24px;
+  }
+}
