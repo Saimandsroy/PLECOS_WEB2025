@@ -1,21 +1,15 @@
-import VideoCard from '@/components/profile/VideoCard';
-import thumb from "@/public/logo.png";
+import React from "react";
+import VideoCard from "@/components/profile/VideoCard";
+import "./VideoGrid.css";
 
-const VideoGrid = ({ videos }) => (
-    <div
-        style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: 20,
-            margin: "2rem"
-        }}
-    >
-        {videos.map((video) => (
-            <div key={video.id} style={{ cursor: 'pointer' }}>
-                <VideoCard {...video} logo={thumb} />
-            </div>
-        ))}
+const VideoGrid = ({ videos }) => {
+  return (
+    <div className="video-grid-container">
+      {videos.map((video) => (
+        <VideoCard key={video.id} video={video} />
+      ))}
     </div>
-);
+  );
+};
 
 export default VideoGrid;
