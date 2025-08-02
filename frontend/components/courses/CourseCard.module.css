@@ -1,0 +1,263 @@
+.cardWrapper {
+  position: relative;
+  width: 330px;
+}
+.cardWrapper::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-orange));
+  filter: blur(25px);
+  border-radius: 20px;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+.cardWrapper:hover .card {
+  
+  box-shadow: 0 12px 30px var(--shadow-color);
+}
+.cardWrapper:hover::after {
+  opacity: 0.3;
+}
+.dark .cardWrapper:hover::after {
+  opacity: 0.5;
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--le-m-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* --- Thumbnail Section --- */
+.cardThumbnail {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+.thumbnailImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.cardWrapper:hover .thumbnailImage {
+  transform: scale(1.05);
+}
+.thumbnailOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+}
+
+/* --- Badge Tags --- */
+.favoriteTag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(var(--bg-header-rgb), 0.4);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.enrolledBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 8px;
+  color: var(--brand-blue);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--brand-blue);
+}
+
+/* ✅ Level tag on image */
+.levelTag {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 10px;
+  color: rgb(10, 226, 10);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgb(0, 194, 0);
+  z-index: 2;
+}
+
+/* --- Content Section --- */
+.cardContent {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  position: relative;
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* --- Course Tags --- */
+.tagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  transition: opacity 0.3s ease;
+}
+.courseTag {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  border-radius: 6px;
+  background: var(--tab-hover);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* --- Meta + Stats --- */
+.metaInfo,
+.statsSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: opacity 0.3s ease;
+}
+.instructorInfo,
+.dateInfo,
+.ratingInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.instructorImage {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--background-primary);
+  object-fit: cover;
+}
+.starIcon {
+  color: var(--brand-orange);
+}
+.impactInfo {
+  color: var(--text-primary);
+}
+
+/* --- Hover Overlay --- */
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  background: rgba(var(--background-secondary), 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  visibility: hidden;
+}
+.dark .hoverOverlay {
+  background: rgba(var(--bg-popup-rgb), 0.85);
+}
+.hoverOverlay,
+.hoverOverlay * {
+  color: var(--text-primary) !important;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex-grow: 1;
+  justify-content: center;
+}
+.featuresList li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.featureIcon {
+  color: var(--brand-blue);
+  flex-shrink: 0;
+}
+
+.hoverAction {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* --- Optional Enrolled Hover UI --- */
+.enrolledHoverContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  height: 100%;
+  text-align: center;
+}
+.enrolledTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* --- Hide base info on hover --- */
+.cardWrapper:hover .metaInfo,
+.cardWrapper:hover .statsSection,
+.cardWrapper:hover .titleSection,
+.cardWrapper:hover .tagsContainer {
+  opacity: 0;
+  visibility: hidden;
+}
+.cardWrapper:hover .hoverOverlay {
+  opacity: 1;
+  visibility: visible;
+  transition: 0.3s ease;
+}
