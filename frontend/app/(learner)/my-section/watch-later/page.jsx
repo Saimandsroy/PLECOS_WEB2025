@@ -101,7 +101,7 @@ const WatchLater = () => {
         </Link>
         <h2 style={{ fontWeight: 600, fontSize: 24 }}>Watch Later</h2>
       </div>
-      <Tabs active={activeTab} setActive={setActiveTab}/>
+      <Tabs active={activeTab} setActive={setActiveTab} />
       {activeTab === "videos" && (
         <div
           style={{
@@ -116,8 +116,10 @@ const WatchLater = () => {
           ))}
         </div>
       )}
-      <div style={{marginTop: "2rem"}}>
-        {activeTab === "shorts" && <ShortsRow shorts={shortsData} logo={thumb} />}
+      <div style={{ marginTop: "2rem" }}>
+        {activeTab === "shorts" && (
+          <ShortsRow shorts={shortsData} logo={thumb} />
+        )}
       </div>
     </div>
   );
