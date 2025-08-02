@@ -1,6 +1,5 @@
- .coursesSection {
+.coursesSection {
   padding: 2rem;
-  
 }
 
 .content {
@@ -16,15 +15,29 @@
   color: var(--text-secondary);
 }
 
-
+/* ✅ Grid with centered, non-stretching cards */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, 330px);
+  justify-content: center; /* This centers the grid items */
+  gap: 4rem;
   margin-top: 1rem;
+  align-items: stretch;
 }
 
+/* Ensure card fills height */
+.cardWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
+/* Document list style */
 .documentGrid {
   display: flex;
   flex-direction: column;
@@ -32,6 +45,18 @@
   margin-top: 1rem;
 }
 
+/* ✅ Responsive breakpoints */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, 310px);
+  }
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, 280px);
+  }
+}
 
 @media (max-width: 768px) {
   .coursesSection {
@@ -41,27 +66,12 @@
   .grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
-  }
-
-  .documentGrid {
-    gap: 1rem;
+    place-items: center; /* This centers the single card */
   }
 }
 
 @media (max-width: 480px) {
   .coursesSection {
     padding: 0.5rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  }
-}
-
-@media (min-width: 1600px) {
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   }
 }

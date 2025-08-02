@@ -60,8 +60,9 @@
 /* Each item in the carousel */
 .carousel-item {
   flex: 0 0 auto;
-  width: 300px; /* Width for course cards */
+  width: 330px !important; /* Width for course cards */
   scroll-snap-align: center;
+ 
   margin: 0 0.5rem;
 }
 .carousel-item:first-child {

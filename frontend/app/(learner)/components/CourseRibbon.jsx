@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Play } from "lucide-react";
 import Link from "next/link";
 import StructuredCourseCard from "@/components/courses/StructuredCourseCard";
+import CourseCard from "@/components/courses/CourseCard";
 import "./CourseRibbon.css"; // Using the new dedicated CSS file
 
 export default function CourseRibbon({ title, popularCourses }) {
@@ -92,9 +93,7 @@ export default function CourseRibbon({ title, popularCourses }) {
         <div className="carousel" ref={carouselRef}>
           {popularCourses.map((course) => (
             <div className="carousel-item" key={course.id}>
-              <Link href={`/courses/${course.id}`} className="course-card-link">
-                <StructuredCourseCard course={course} isPro={true} />
-              </Link>
+              <CourseCard course={course} isPro={true} />
             </div>
           ))}
         </div>
