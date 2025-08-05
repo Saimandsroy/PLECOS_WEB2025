@@ -59,6 +59,7 @@ export default function CourseClient({ courseID }) {
     <div>
       {/* <CourseTitle title={course.title} /> */}
       <CourseBanner course={course} />
+      <div className="navigation-container">
       <div
         style={{
           display: "flex",
@@ -68,6 +69,8 @@ export default function CourseClient({ courseID }) {
           paddingTop: 12,
           paddingBottom: 12,
           marginBottom: 24,
+          marginTop: 24
+          , padding:"0 100px"
         }}
       >
         {tabs.map((t) => (
@@ -95,7 +98,7 @@ export default function CourseClient({ courseID }) {
           </button>
         ))}
       </div>
-
+</div>
       {/* Tab Content */}
       <div style={{ marginTop: 12 }}>
         {tab === "overview" && <CourseOverview />}

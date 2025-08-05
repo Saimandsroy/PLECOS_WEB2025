@@ -1,0 +1,7 @@
+
+@media (max-width: 640px) {
+.navigation-container{
+    overflow-x: scroll;
+    padding: 0rem 10rem;
+}
+}

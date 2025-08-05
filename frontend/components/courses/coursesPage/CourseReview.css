@@ -36,9 +36,15 @@ textarea::placeholder {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: scroll;
+  height: 300px;
+}
+.course-section{
+  
 }
 
 .review-card {
+  margin-right: 1rem;
   padding: 1rem;
   border-radius: 10px;
   transition: all 0.3s ease;
@@ -75,4 +81,11 @@ textarea::placeholder {
   margin: 0;
   font-size: 14px;
   color: var(--text-color);
+}
+
+@media (max-width: 640px) {
+  .container{
+    display: flex;
+    flex-direction: column;
+  }
 }
