@@ -9,11 +9,16 @@
   display: flex;
   gap: 12px;
   margin-bottom: 20px;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 8px;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
 }
-
+.content-tabs::-webkit-scrollbar{
+  display: none;
+}
 .content-tab {
   padding: 8px 16px;
   font-weight: 600;
@@ -24,6 +29,8 @@
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.2s ease;
+  
+  
 }
 
 .content-tab:hover {
@@ -40,4 +47,5 @@
 .tab-content {
   padding-top: 10px;
   font-size: 16px;
+  
 }

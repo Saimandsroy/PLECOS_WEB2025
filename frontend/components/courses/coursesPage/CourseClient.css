@@ -4,4 +4,7 @@
     overflow-x: scroll;
     padding: 0rem 10rem;
 }
+.navigation-container::-webkit-scrollbar{
+    display: none;
+}
 }
