@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
@@ -24,7 +23,10 @@ export default function SignIn() {
 
   const onSubmit = async (data) => {
     setLoading(true);
+    console.log("Signin form")
     try {
+      console.log("Signin form 56")
+
       const response = await api.post("/auth/login", {
         email: data.email,
         password: data.password,
@@ -32,9 +34,9 @@ export default function SignIn() {
       }, {
         withCredentials: true,
       });
-
-      if (response.data?.token) {
-        localStorage.setItem("token", response.data.token);
+      console.log(response)
+      if (response.data?.data.token) {
+        localStorage.setItem("token", response.data.data.token);
         router.replace("/");
       } else {
         console.error("No token received from server");

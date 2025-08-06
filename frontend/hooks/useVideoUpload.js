@@ -21,9 +21,11 @@ const useVideoUpload = () => {
 
     try {
       // Phase 1: Initiate upload and get presigned URL
+      const token = localStorage.getItem("token");
       const initiateResponse = await axios.post(
         "/videos/",
         {
+          user: token,
           fileName: file.name,
           fileSize: file.size,
           fileType: file.type,
