@@ -1,22 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronLeft, Play, FileVideo } from "lucide-react";
+import { ChevronLeft, Play, FileVideo, Loader2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
-import useVideoUpload from "@/hooks/useVideoUpload";   // <= NEW
+import { useRouter } from "next/navigation";
+import { useUploadContext } from "@/contexts/UploadContext";
 import "./page.css";
 
 const UploadForm = () => {
-  /* ---------- form fields ---------- */
+  const router = useRouter();
+  const { initiateUpload } = useUploadContext();
+
   const [currentStep, setCurrentStep] = useState(1);
+  const [isInitiating, setIsInitiating] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
-  const handleLoadedMetadata = (e) => {
-    const secs = Math.floor(e.target.duration);   // drop decimals
-    const intSecs = Number.parseInt(secs, 10);
-    console.log("hello oho")
-    console.log(intSecs)
-    setVideoDuration(intSecs);   // seconds (float)
-  };
+
   const [formData, setFormData] = useState({
     video: null,
     thumbnail: null,
@@ -26,17 +24,12 @@ const UploadForm = () => {
     description: "",
   });
 
-  /* ---------- upload hook ---------- */
-  const {
-    uploadVideo,
-    progress,
-    status,        // idle | uploading | completed | error
-    error,
-    retryCount,
-    resetUpload,
-  } = useVideoUpload();
+  const handleLoadedMetadata = (e) => {
+    const secs = Math.floor(e.target.duration);
+    const intSecs = Number.parseInt(secs, 10);
+    setVideoDuration(intSecs);
+  };
 
-  /* ---------- basic helpers ---------- */
   const handleInputChange = (field, value) =>
     setFormData((prev) => ({ ...prev, [field]: value }));
 
@@ -46,13 +39,13 @@ const UploadForm = () => {
   const nextStep = () => currentStep < 2 && setCurrentStep(2);
   const prevStep = () => currentStep > 1 && setCurrentStep(1);
 
-  /* ---------- main submit ---------- */
   const handleSubmit = async () => {
-    if (!formData.video) return;
+    if (!formData.video || isInitiating) return;
+
+    setIsInitiating(true);
 
     try {
-      /* gather metadata expected by backend */
-      const meta = {
+      const metadata = {
         title: formData.title,
         description: formData.description,
         category: formData.category,
@@ -60,11 +53,10 @@ const UploadForm = () => {
         duration: videoDuration,
         uploadDate: new Date().toISOString(),
       };
-      console.log(videoDuration)
-      await uploadVideo(formData.video, meta);
 
-      alert("Video uploaded successfully!");
-      /* reset UI once finished */
+      await initiateUpload(formData.video, metadata);
+
+      // Reset form
       setFormData({
         video: null,
         thumbnail: null,
@@ -73,21 +65,25 @@ const UploadForm = () => {
         title: "",
         description: "",
       });
-      resetUpload();
       setCurrentStep(1);
-    } catch (e) {
-      // error state already handled by hook – optional extra logging here
-      console.error(e);
+
+      // Navigate to uploads page
+      router.push('/educator/create');
+
+    } catch (error) {
+      console.error('Upload initiation failed:', error);
+      alert('Failed to start upload. Please try again.');
+    } finally {
+      setIsInitiating(false);
     }
   };
 
-  /* ---------- drag-and-drop (optional) ---------- */
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (files) => files[0] && handleFileUpload("video", files[0]),
     accept: { "video/*": [] },
     maxFiles: 1,
-    maxSize: 2_000 * 1024 * 1024, // 2 GB
-    disabled: status === "uploading",
+    maxSize: 2_000 * 1024 * 1024,
+    disabled: isInitiating,
   });
 
   return (
@@ -97,12 +93,12 @@ const UploadForm = () => {
         <p className="upload-subtitle">Share your knowledge with the world</p>
 
         <div className="upload-content-grid">
-          {/* ---------------- LEFT ---------------- */}
+          {/* LEFT SECTION */}
           <div className="upload-video-section">
             <div
               className="upload-video-area"
               {...getRootProps()}
-              style={{ cursor: status === "uploading" ? "not-allowed" : "pointer" }}
+              style={{ cursor: isInitiating ? "not-allowed" : "pointer" }}
             >
               <input {...getInputProps()} />
               {formData.video ? (
@@ -122,12 +118,12 @@ const UploadForm = () => {
               )}
             </div>
 
-            {/* thumbnail upload */}
+            {/* Thumbnail upload */}
             <div className="upload-form-group" style={{ marginTop: "1rem" }}>
               <div
                 className="upload-thumbnail-area"
                 onClick={() =>
-                  status !== "uploading" && document.getElementById("thumbnail-upload").click()
+                  !isInitiating && document.getElementById("thumbnail-upload").click()
                 }
               >
                 <input
@@ -153,31 +149,22 @@ const UploadForm = () => {
               </div>
             </div>
 
-            {/* progress / retry / error banners */}
-            {status === "uploading" && (
+            {/* Loading state during initiation */}
+            {isInitiating && (
               <div className="upload-progress">
-                <div className="progress-bar">
-                  <div
-                    className="progress-fill"
-                    style={{ width: `${progress}%` }}
-                  />
+                <div className="flex items-center gap-2 mb-2">
+                  <Loader2 className="animate-spin" size={16} />
+                  <span>Preparing upload...</span>
                 </div>
-                <p>{progress}% uploaded {retryCount ? `(retry ${retryCount})` : ""}</p>
+                <div className="progress-bar">
+                  <div className="progress-fill animate-pulse" style={{ width: '30%' }} />
+                </div>
               </div>
-            )}
-
-            {status === "completed" && (
-              <div className="success-message">✅ Upload complete!</div>
-            )}
-
-            {status === "error" && (
-              <div className="error-message">❌ {error}</div>
             )}
           </div>
 
-          {/* ---------------- RIGHT ---------------- */}
+          {/* RIGHT SECTION */}
           <div className="upload-right-section">
-            {/* step 1 */}
             {currentStep === 1 && (
               <div className="upload-step-content active">
                 <div className="upload-form-group">
@@ -188,7 +175,7 @@ const UploadForm = () => {
                     placeholder="Enter a compelling title"
                     value={formData.title}
                     onChange={(e) => handleInputChange("title", e.target.value)}
-                    disabled={status === "uploading"}
+                    disabled={isInitiating}
                   />
                 </div>
 
@@ -198,7 +185,7 @@ const UploadForm = () => {
                     className="upload-select"
                     value={formData.category}
                     onChange={(e) => handleInputChange("category", e.target.value)}
-                    disabled={status === "uploading"}
+                    disabled={isInitiating}
                   >
                     <option value="">Choose a category</option>
                     <option value="education">Education</option>
@@ -214,7 +201,6 @@ const UploadForm = () => {
               </div>
             )}
 
-            {/* step 2 */}
             {currentStep === 2 && (
               <div className="upload-step-content active">
                 <h2 className="upload-section-title">Video Details</h2>
@@ -226,7 +212,7 @@ const UploadForm = () => {
                     placeholder="Describe your video…"
                     value={formData.description}
                     onChange={(e) => handleInputChange("description", e.target.value)}
-                    disabled={status === "uploading"}
+                    disabled={isInitiating}
                   />
                 </div>
 
@@ -237,7 +223,7 @@ const UploadForm = () => {
                     placeholder="tag1, tag2, tag3"
                     value={formData.tags}
                     onChange={(e) => handleInputChange("tags", e.target.value)}
-                    disabled={status === "uploading"}
+                    disabled={isInitiating}
                   />
                   <small style={{ color: "var(--text-secondary)" }}>
                     Comma-separated keywords
@@ -246,10 +232,14 @@ const UploadForm = () => {
               </div>
             )}
 
-            {/* action buttons */}
+            {/* Action buttons */}
             <div className="upload-actions">
               {currentStep === 2 ? (
-                <button className="upload-back-btn" onClick={prevStep} disabled={status === "uploading"}>
+                <button
+                  className="upload-back-btn"
+                  onClick={prevStep}
+                  disabled={isInitiating}
+                >
                   <ChevronLeft size={20} /> Back
                 </button>
               ) : (
@@ -260,7 +250,7 @@ const UploadForm = () => {
                 <button
                   className="upload-next-btn"
                   onClick={nextStep}
-                  disabled={!formData.video || status === "uploading"}
+                  disabled={!formData.video || isInitiating}
                 >
                   Next Step
                 </button>
@@ -269,12 +259,17 @@ const UploadForm = () => {
                   className="upload-submit-btn"
                   onClick={handleSubmit}
                   disabled={
-                    !formData.title.trim() ||
-                    status === "uploading" ||
-                    status === "completed"
+                    !formData.title.trim() || isInitiating
                   }
                 >
-                  {status === "uploading" ? "Uploading…" : "Publish Video"}
+                  {isInitiating ? (
+                    <>
+                      <Loader2 className="animate-spin mr-2" size={16} />
+                      Starting Upload...
+                    </>
+                  ) : (
+                    "Publish Video"
+                  )}
                 </button>
               )}
             </div>

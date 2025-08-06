@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
@@ -20,6 +20,7 @@ const user = {
 const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [], roleTarget, title = "Learner" }) => {
   console.log(homeActivePaths)
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   // Separate state for the model dropdown
   const [modelOpen, setModelOpen] = useState(false);
@@ -80,7 +81,7 @@ const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [], roleT
                 className={clsx("le-tabs-link", "le-tabs-link-last", {
                   active: pathname === lastElement.to,
                 })}
-                onClick={() => setModelOpen((v) => !v)}
+                onClick={() => router.push("/educator/create")}
                 aria-label="Open create menu"
                 type="button"
               >

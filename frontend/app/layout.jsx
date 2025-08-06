@@ -3,6 +3,8 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import TopLoader from '@/components/TopLoader';
 import FeedbackFloatingButton from '@/components/FeedbackFloatingButton';
+import { UploadProvider } from '@/contexts/UploadContext';
+import GlobalUploadStatus from '@/components/global/GlobalUploadStatus.jsx';
 
 const manrope = Manrope({
     subsets: ["latin"],
@@ -21,9 +23,12 @@ const RootLayout = ({ children }) => {
             <body
                 className={`${manrope.variable} antialiased`}
             >
-                <TopLoader />
-                {children}
-                <FeedbackFloatingButton />
+                <UploadProvider>
+                    <TopLoader />
+                    {children}
+                    <GlobalUploadStatus />
+                    <FeedbackFloatingButton />
+                </UploadProvider>
             </body>
         </html>
     )
