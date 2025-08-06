@@ -9,6 +9,14 @@ import "./page.css";
 const UploadForm = () => {
   /* ---------- form fields ---------- */
   const [currentStep, setCurrentStep] = useState(1);
+  const [videoDuration, setVideoDuration] = useState(0);
+  const handleLoadedMetadata = (e) => {
+    const secs = Math.floor(e.target.duration);   // drop decimals
+    const intSecs = Number.parseInt(secs, 10);
+    console.log("hello oho")
+    console.log(intSecs)
+    setVideoDuration(intSecs);   // seconds (float)
+  };
   const [formData, setFormData] = useState({
     video: null,
     thumbnail: null,
@@ -49,8 +57,10 @@ const UploadForm = () => {
         description: formData.description,
         category: formData.category,
         tags: formData.tags.split(",").map((t) => t.trim()).filter(Boolean),
+        duration: videoDuration,
+        uploadDate: new Date().toISOString(),
       };
-
+      console.log(videoDuration)
       await uploadVideo(formData.video, meta);
 
       alert("Video uploaded successfully!");
@@ -96,7 +106,7 @@ const UploadForm = () => {
             >
               <input {...getInputProps()} />
               {formData.video ? (
-                <video className="upload-video-preview" controls>
+                <video className="upload-video-preview" controls onLoadedMetadata={handleLoadedMetadata}>
                   <source src={URL.createObjectURL(formData.video)} />
                 </video>
               ) : (

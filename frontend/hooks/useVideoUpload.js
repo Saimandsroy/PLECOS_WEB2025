@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import axios from "@/api/axios.js";
-
+import jwt from "jsonwebtoken";
 const useVideoUpload = () => {
   const [uploadState, setUploadState] = useState({
     isUploading: false,
@@ -25,7 +25,7 @@ const useVideoUpload = () => {
       const initiateResponse = await axios.post(
         "/videos/",
         {
-          user: token,
+          email: jwt.decode(token).email,
           fileName: file.name,
           fileSize: file.size,
           fileType: file.type,
@@ -38,8 +38,13 @@ const useVideoUpload = () => {
         }
       );
 
-      const { uploadId, presignedUrl } = initiateResponse.data;
+      const { video, presignedUrl } = initiateResponse.data.data;
+      // extract the part before the "?"
+      const fileUrl = presignedUrl.split("?")[0];
 
+      console.log("herlleroe", initiateResponse.data.data);
+      console.log("presignedUrl", video, " ", video.video_id);
+      const uploadId = video.video_id;
       setUploadState((prev) => ({
         ...prev,
         uploadId,
@@ -54,9 +59,9 @@ const useVideoUpload = () => {
       });
 
       // Phase 3: Notify backend of completion
-      const completeResponse = await axios.post(
-        `/api/uploads/${uploadId}/complete`,
-        {},
+      const completeResponse = await axios.patch(
+        `/videos/${uploadId}`,
+        { email: jwt.decode(token).email, videoUrl: fileUrl, status: "active" },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -113,7 +118,6 @@ const useVideoUpload = () => {
       });
 
       xhr.open("PUT", presignedUrl);
-      xhr.setRequestHeader("Content-Type", file.type);
       xhr.send(file);
     });
   };
