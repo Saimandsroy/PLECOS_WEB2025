@@ -51,21 +51,21 @@ const MySecActions = () => (
       <Link href={a.href || ""} key={a.label}>
         <div
           className="glass-card"
-          style={{
-            padding: "2rem 0",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            fontWeight: 500,
-            fontSize: 18,
-            gap: 16,
-            minHeight: 110,
-            textAlign: "center",
-            color: "var(--text-primary)",
-            transition: "all 0.3s ease",
-          }}
+          // style={{
+          //   padding: "2rem 0",
+          //   display: "flex",
+          //   flexDirection: "column",
+          //   alignItems: "center",
+          //   fontWeight: 500,
+          //   fontSize: 18,
+          //   gap: 16,
+          //   minHeight: 110,
+          //   textAlign: "center",
+          //   color: "var(--text-primary)",
+          //   transition: "all 0.3s ease",
+          // }}
         >
-          {a.icon}
+          <span className="icon-fixed">{a.icon}</span>
           <span>{a.label}</span>
         </div>
       </Link>
