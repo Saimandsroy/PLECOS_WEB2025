@@ -1,0 +1,15 @@
+.myGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 8px;
+}
+@media (max-width: 600px) {
+  .myGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .glass-card{
+    aspect-ratio: 1/1;
+    font-size: 1rem;
+  }
+}

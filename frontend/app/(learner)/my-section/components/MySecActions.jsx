@@ -1,4 +1,5 @@
 import React from "react";
+import "./MySecActions.css"
 import {
   ClockIcon,
   ListBulletIcon,
@@ -38,12 +39,13 @@ const actions = [
 
 const MySecActions = () => (
   <div
-    style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-      gap: 20,
-      marginBottom: 8,
-    }}
+  className="myGrid"
+    // style={{
+    //   display: "grid",
+    //   gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    //   gap: 20,
+    //   marginBottom: 8,
+    // }}
   >
     {actions.map((a) => (
       <Link href={a.href || ""} key={a.label}>
