@@ -3,6 +3,7 @@ import Footer from "../../components/Footer";
 import Tabs from "../../components/Tabs";
 import "./layout.css";
 import { HomeIcon, BookmarkFilledIcon, VideoIcon, StarIcon, EyeOpenIcon, EyeClosedIcon, ArchiveIcon, BellIcon } from '@radix-ui/react-icons'
+import LayoutContent from "@/components/LayoutContent";
 
 export const metadata = {
   title: "Plecos",
@@ -23,13 +24,16 @@ export default function RootLayout({ children }) {
   const title = "Learner Dashboard";
 
   return (
-    <div className="le-m">
-      <Header roleTarget="/educator"/>
-      <div className="le-c">
-        <Tabs sidebarLinks={sidebarLinks} homePath="/" homeActivePaths={homeActivePaths} roleTarget="/educator" title="Learner" />
-        <main className="le-mc">{children}</main>
+    <LayoutContent>
+      <div className="le-m">
+        <Header roleTarget="/educator" />
+        <div className="le-c">
+          <Tabs sidebarLinks={sidebarLinks} homePath="/" homeActivePaths={homeActivePaths} roleTarget="/educator" title="Learner" />
+          <main className="le-mc">{children}</main>
+        </div>
+        {/* <Footer /> */}
       </div>
-      {/* <Footer /> */}
-    </div>
+
+    </LayoutContent>
   );
 }
