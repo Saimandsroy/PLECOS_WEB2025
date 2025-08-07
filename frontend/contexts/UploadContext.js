@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import axios from "@/api/axios.js";
 import jwt from "jsonwebtoken";
 
@@ -214,6 +220,28 @@ export const UploadProvider = ({ children }) => {
     }
   };
 
+  const cancelAllUploads = useCallback(() => {
+    uploads.forEach((upload) => {
+      if (
+        [
+          "initiating",
+          "phase1-uploading",
+          "phase2-uploading",
+          "phase3-uploading",
+        ].includes(upload.status)
+      ) {
+        updateUpload(upload.id, {
+          status: "error",
+          error: "Upload cancelled by user",
+        });
+      }
+    });
+
+    // Clear from localStorage
+    localStorage.removeItem("activeUploads");
+    setUploads([]);
+  }, [uploads, updateUpload, setUploads]);
+
   return (
     <UploadContext.Provider
       value={{
@@ -223,6 +251,7 @@ export const UploadProvider = ({ children }) => {
         removeUpload,
         initiateUpload,
         retryUpload,
+        cancelAllUploads,
       }}
     >
       {children}
