@@ -1,14 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import api from "@/api/axios.js";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import "./sign-up.css";
+import axios from "axios";
+import { signIn } from "next-auth/react";
 
 export default function SignUp() {
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,34 +27,30 @@ export default function SignUp() {
     }
   }, [router]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     setLoading(true);
-    try {
-      const response = await api.post("/auth/register", {
-        email: data.email,
-        password: data.password,
-        role: data.role,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
 
-      console.log("token", response.data)
-      if (response.data && response.data.data.token) {
-        localStorage.setItem("token", response.data.data.token);
-        router.replace("/");
-      } else {
-        // handle error or show message
-        console.error("No token in response");
-      }
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/register`, {
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+      });
+
+      await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+        redirect: true,
+        redirectTo: "/",
+      });
+
+      router.push("/");
     } catch (error) {
-      if (error.response) {
-        console.error("API Error:", error.response.data);
-      } else {
-        console.error("Error:", error.message);
-      }
+      console.error("Sign up error:", error);
+      const errorMessage =
+        error.response?.data?.error || "An error occurred during sign up";
+      console.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -69,7 +70,15 @@ export default function SignUp() {
             <div className="signup-spinner"></div>
           </div>
         )}
-        <form className="signup-form" onSubmit={handleSubmit(onSubmit)} style={{ opacity: loading ? 0.6 : 1, pointerEvents: loading ? 'none' : 'auto', boxShadow: loading ? 'none' : undefined }}>
+        <form
+          className="signup-form"
+          onSubmit={handleSubmit(onSubmit)}
+          style={{
+            opacity: loading ? 0.6 : 1,
+            pointerEvents: loading ? "none" : "auto",
+            boxShadow: loading ? "none" : undefined,
+          }}
+        >
           <div className="signup-field">
             <label htmlFor="email">Email Address</label>
             <input
@@ -79,9 +88,14 @@ export default function SignUp() {
               placeholder="Enter your email"
               {...register("email", { required: true })}
               autoComplete="email"
-              style={{ borderColor: errors.email ? '#ff7f3f' : undefined, background: errors.email ? '#fff6f2' : undefined }}
+              style={{
+                borderColor: errors.email ? "#ff7f3f" : undefined,
+                background: errors.email ? "#fff6f2" : undefined,
+              }}
             />
-            {errors.email && <span className="signup-error">Email is required</span>}
+            {errors.email && (
+              <span className="signup-error">Email is required</span>
+            )}
           </div>
           <div className="signup-field">
             <label htmlFor="password">Password</label>
@@ -93,7 +107,10 @@ export default function SignUp() {
                 placeholder="Enter your password"
                 {...register("password", { required: true })}
                 autoComplete="new-password"
-                style={{ borderColor: errors.password ? '#ff7f3f' : undefined, background: errors.password ? '#fff6f2' : undefined }}
+                style={{
+                  borderColor: errors.password ? "#ff7f3f" : undefined,
+                  background: errors.password ? "#fff6f2" : undefined,
+                }}
               />
               <button
                 type="button"
@@ -102,10 +119,16 @@ export default function SignUp() {
                 tabIndex={-1}
                 aria-label={show ? "Hide password" : "Show password"}
               >
-                {show ? <EyeClosedIcon width={20} height={20} /> : <EyeOpenIcon width={20} height={20} />}
+                {show ? (
+                  <EyeClosedIcon width={20} height={20} />
+                ) : (
+                  <EyeOpenIcon width={20} height={20} />
+                )}
               </button>
             </div>
-            {errors.password && <span className="signup-error">Password is required</span>}
+            {errors.password && (
+              <span className="signup-error">Password is required</span>
+            )}
           </div>
           <div className="signup-field">
             <label htmlFor="role">Role</label>
@@ -114,15 +137,25 @@ export default function SignUp() {
               className="signup-input"
               {...register("role", { required: true })}
               defaultValue="learner"
-              style={{ borderColor: errors.role ? '#ff7f3f' : undefined, background: errors.role ? '#fff6f2' : undefined }}
+              style={{
+                borderColor: errors.role ? "#ff7f3f" : undefined,
+                background: errors.role ? "#fff6f2" : undefined,
+              }}
             >
               <option value="learner">Learner</option>
               <option value="educator">Educator</option>
             </select>
-            {errors.role && <span className="signup-error">Role is required</span>}
+            {errors.role && (
+              <span className="signup-error">Role is required</span>
+            )}
           </div>
-          <button type="submit" className="signup-btn" disabled={loading} style={{ filter: loading ? 'grayscale(0.5)' : undefined }}>
-            {loading ? 'Signing Up...' : 'Sign Up'}
+          <button
+            type="submit"
+            className="signup-btn"
+            disabled={loading}
+            style={{ filter: loading ? "grayscale(0.5)" : undefined }}
+          >
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
         <div className="signup-footer">
