@@ -10,6 +10,8 @@ import {
   PlusIcon
 } from '@radix-ui/react-icons';
 import { FaTowerCell } from "react-icons/fa6";
+import GlobalUploadStatus from "@/components/global/GlobalUploadStatus";
+import LayoutContent from "@/components/LayoutContent.jsx";
 
 export const metadata = {
   title: "Plecos",
@@ -32,15 +34,19 @@ const iFier = {
     { to: '/educator/create/course', label: 'Course' },
   ]
 }; // This can be used to conditionally render links
+
 export default function educatorLayout({ children }) {
   return (
-    <div className="le-m">
-      <Header roleTarget="/"/>
-      <div className="le-c">
-        <Tabs sidebarLinks={sidebarLinks} iFier={iFier} homePath="/educator" homeActivePaths={["/videos"]} roleTarget="/" title="Educator" />
-        <main className="le-mc">{children}</main>
+
+    <LayoutContent>
+      <div className="le-m">
+        <Header roleTarget="/" />
+        <div className="le-c">
+          <Tabs sidebarLinks={sidebarLinks} iFier={iFier} homePath="/educator" homeActivePaths={["/videos"]} roleTarget="/" title="Educator" />
+          <main className="le-mc">{children}</main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </LayoutContent>
   );
 }

@@ -7,9 +7,11 @@ import './Header.css';
 import { Search } from 'lucide-react';
 import AdvancedSearchModal from './AdvancedSearchModal';
 import { useRouter } from 'next/navigation';
+import useUploadWarning from '@/hooks/useUploadWarning';
 
 export default function Header({ roleTarget = "/educator" }) {
   const router = useRouter()
+  const { safeRouterPush } = useUploadWarning();
   const [searchOpen, setSearchOpen] = useState(false);
   return (
     <>
@@ -38,7 +40,7 @@ export default function Header({ roleTarget = "/educator" }) {
           <div
             className="explore-search"
             style={{ cursor: 'pointer' }}
-            onClick={() => router.push(`${roleTarget}`)}
+            onClick={() => roleTarget == "/" ? safeRouterPush("/") : router.push(roleTarget)}
           >
             Switch Role
           </div>

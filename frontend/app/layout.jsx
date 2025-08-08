@@ -2,11 +2,10 @@
 import React from "react";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import TopLoader from "@/components/TopLoader";
-import FeedbackFloatingButton from "@/components/FeedbackFloatingButton";
-import { UploadProvider } from "@/contexts/UploadContext";
-import GlobalUploadStatus from "@/components/global/GlobalUploadStatus.jsx";
-import { Providers } from "./providers"; // Add this import
+import { Providers } from "./providers";
+import TopLoader from '@/components/TopLoader';
+import FeedbackFloatingButton from '@/components/FeedbackFloatingButton';
+import { UploadProvider } from '@/contexts/UploadContext';
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -30,7 +29,6 @@ const RootLayout = ({ children }) => {
           <UploadProvider>
             <TopLoader />
             {children}
-            <GlobalUploadStatus />
             <FeedbackFloatingButton />
           </UploadProvider>
         </Providers>
@@ -38,5 +36,6 @@ const RootLayout = ({ children }) => {
     </html>
   );
 };
+
 
 export default RootLayout;
