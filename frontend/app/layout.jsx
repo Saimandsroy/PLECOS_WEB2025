@@ -6,6 +6,7 @@ import { Providers } from "./providers";
 import TopLoader from '@/components/TopLoader';
 import FeedbackFloatingButton from '@/components/FeedbackFloatingButton';
 import { UploadProvider } from '@/contexts/UploadContext';
+import QueryProvider from '@/contexts/QueryProvider';
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -24,13 +25,14 @@ const RootLayout = ({ children }) => {
       </head>
       <body className={`${manrope.variable} antialiased`}>
         <Providers>
-          {" "}
           {/* Wrap everything with Providers */}
-          <UploadProvider>
-            <TopLoader />
-            {children}
-            <FeedbackFloatingButton />
-          </UploadProvider>
+          <QueryProvider>
+            <UploadProvider>
+              <TopLoader />
+              {children}
+              <FeedbackFloatingButton />
+            </UploadProvider>
+          </QueryProvider>
         </Providers>
       </body>
     </html>
