@@ -1,21 +1,49 @@
 "use client";
 
-import React, { useState } from "react";
-import { ChevronLeft, Play, FileVideo, Loader2 } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  ChevronLeft,
+  Play,
+  FileVideo,
+  Loader2,
+  Image as ImageIcon,
+  CheckCircle2,
+  AlertTriangle,
+  Clock,
+  Tag,
+} from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { useRouter } from "next/navigation";
 import { useUploadContext } from "@/contexts/UploadContext";
 import "./page.css";
 
-const UploadForm = () => {
+const MAX_VIDEO_SIZE = 2_000 * 1024 * 1024; // 2GB
+const MAX_THUMB_SIZE = 5 * 1024 * 1024; // 5MB
+
+const categories = [
+  "Education",
+  "Technology",
+  "Science",
+  "Business",
+  "Arts & Design",
+  "Health & Fitness",
+  "Programming",
+  "Mathematics",
+];
+
+export default function UploadForm() {
   const router = useRouter();
   const { initiateUpload } = useUploadContext();
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [step, setStep] = useState(1);
   const [isInitiating, setIsInitiating] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
+  const [err, setErr] = useState("");
 
-  const [formData, setFormData] = useState({
+  const thumbInputRef = useRef(null);
+  const videoRef = useRef(null);
+
+  const [form, setForm] = useState({
     video: null,
     thumbnail: null,
     category: "",
@@ -24,40 +52,104 @@ const UploadForm = () => {
     description: "",
   });
 
-  const handleLoadedMetadata = (e) => {
-    const secs = Math.floor(e.target.duration);
-    const intSecs = Number.parseInt(secs, 10);
-    setVideoDuration(intSecs);
+  // Stable object URL for video to avoid reloads on re-render
+  const videoUrl = useMemo(() => {
+    if (!form.video) return null;
+    return URL.createObjectURL(form.video);
+  }, [form.video]);
+
+  useEffect(() => {
+    return () => {
+      if (videoUrl) URL.revokeObjectURL(videoUrl);
+    };
+  }, [videoUrl]);
+
+  const onLoadedMetadata = (e) => {
+    try {
+      const secs = Math.max(0, Math.floor(e.target.duration || 0));
+      setVideoDuration(secs);
+    } catch {
+      setVideoDuration(0);
+    }
   };
 
-  const handleInputChange = (field, value) =>
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const tagList = useMemo(
+    () =>
+      form.tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
+    [form.tags]
+  );
 
-  const handleFileUpload = (field, file) =>
-    setFormData((prev) => ({ ...prev, [field]: file }));
+  const setField = (k, v) => setForm((p) => ({ ...p, [k]: v }));
 
-  const nextStep = () => currentStep < 2 && setCurrentStep(2);
-  const prevStep = () => currentStep > 1 && setCurrentStep(1);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: { "video/*": [] },
+    maxFiles: 1,
+    maxSize: MAX_VIDEO_SIZE,
+    disabled: isInitiating,
+    multiple: false,
+    onDrop: (files) => {
+      const file = files?.[0];
+      if (!file) return;
+      if (file.size > MAX_VIDEO_SIZE) {
+        setErr("Video is larger than 2GB. Please choose a smaller file.");
+        return;
+      }
+      setErr("");
+      setField("video", file);
+    },
+  });
 
-  const handleSubmit = async () => {
-    if (!formData.video || isInitiating) return;
+  const onSelectThumb = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > MAX_THUMB_SIZE) {
+      setErr("Thumbnail is larger than 5MB.");
+      return;
+    }
+    setErr("");
+    setField("thumbnail", file);
+  };
 
+  const openThumbPicker = () => {
+    if (!isInitiating && thumbInputRef.current) thumbInputRef.current.click();
+  };
+
+  const formatDuration = (seconds) => {
+    if (!seconds) return "00:00";
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    const pad = (n) => String(n).padStart(2, "0");
+    return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
+  };
+
+  const canNext = !!form.video && !isInitiating;
+  const canPublish =
+    !!form.video &&
+    !!form.title.trim() &&
+    !!form.category &&
+    !isInitiating;
+
+  const submit = async () => {
+    if (!canPublish) return;
+    setErr("");
     setIsInitiating(true);
-
     try {
       const metadata = {
-        title: formData.title,
-        description: formData.description,
-        category: formData.category,
-        tags: formData.tags.split(",").map((t) => t.trim()).filter(Boolean),
-        duration: videoDuration,
+        title: form.title,
+        description: form.description,
+        category: form.category,
+        tags: tagList,
+        duration: videoDuration || 0,
         uploadDate: new Date().toISOString(),
       };
+      await initiateUpload(form.video, metadata);
 
-      await initiateUpload(formData.video, metadata);
-
-      // Reset form
-      setFormData({
+      // Reset and go back to create page
+      setForm({
         video: null,
         thumbnail: null,
         category: "",
@@ -65,219 +157,298 @@ const UploadForm = () => {
         title: "",
         description: "",
       });
-      setCurrentStep(1);
-
-      // Navigate to uploads page
-      router.push('/educator/create');
-
-    } catch (error) {
-      console.error('Upload initiation failed:', error);
-      alert('Failed to start upload. Please try again.');
+      setStep(1);
+      router.push("/educator/create");
+    } catch (e) {
+      setErr(
+        e?.response?.data?.error ||
+        e?.message ||
+        "Failed to start upload. Please try again."
+      );
     } finally {
       setIsInitiating(false);
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: (files) => files[0] && handleFileUpload("video", files[0]),
-    accept: { "video/*": [] },
-    maxFiles: 1,
-    maxSize: 2_000 * 1024 * 1024,
-    disabled: isInitiating,
-  });
-
+  // New layout: Wizard header + two cards (Media on left; Details on right)
   return (
-    <div className="upload-page">
-      <div className="upload-container">
-        <h1 className="upload-title">Upload video</h1>
-        <p className="upload-subtitle">Share your knowledge with the world</p>
-
-        <div className="upload-content-grid">
-          {/* LEFT SECTION */}
-          <div className="upload-video-section">
-            <div
-              className="upload-video-area"
-              {...getRootProps()}
-              style={{ cursor: isInitiating ? "not-allowed" : "pointer" }}
+    <div className="uplx-page">
+      <div className="uplx-container">
+        <header className="uplx-header">
+          <div className="uplx-head-left">
+            <button
+              className="uplx-btn-ghost"
+              onClick={() => router.back()}
+              disabled={isInitiating}
+              title="Back"
             >
-              <input {...getInputProps()} />
-              {formData.video ? (
-                <video className="upload-video-preview" controls onLoadedMetadata={handleLoadedMetadata}>
-                  <source src={URL.createObjectURL(formData.video)} />
-                </video>
+              <ChevronLeft size={18} />
+              Back
+            </button>
+            <div className="uplx-steps">
+              <div className={`uplx-step ${step >= 1 ? "active" : ""}`}>1</div>
+              <div className={`uplx-step ${step >= 2 ? "active" : ""}`}>2</div>
+            </div>
+            <h1 className="uplx-title">Upload new video</h1>
+          </div>
+          <div className="uplx-head-right">
+            <button
+              className={`uplx-btn ${canPublish ? "uplx-btn-primary" : "uplx-btn-disabled"}`}
+              onClick={submit}
+              disabled={!canPublish}
+            >
+              {isInitiating ? (
+                <>
+                  <Loader2 className="uplx-spinner" />
+                  Starting upload...
+                </>
               ) : (
-                <div className="upload-video-placeholder">
-                  <div className="upload-play-icon">
-                    <Play size={32} fill="currentColor" />
+                "Publish"
+              )}
+            </button>
+          </div>
+        </header>
+
+        {err ? (
+          <div className="uplx-banner uplx-banner-error">
+            <AlertTriangle size={16} />
+            <span>{err}</span>
+          </div>
+        ) : null}
+
+        <div className="uplx-grid">
+          {/* Media card */}
+          <section className="uplx-card">
+            <h3 className="uplx-card-title">Media</h3>
+
+            {/* Dropzone separated from preview to avoid re-mounts */}
+            {!form.video ? (
+              <div
+                className={`uplx-drop ${isDragActive ? "uplx-drop-active" : ""}`}
+                {...getRootProps()}
+                style={{ cursor: isInitiating ? "not-allowed" : "pointer" }}
+              >
+                <input {...getInputProps()} />
+                <div className="uplx-drop-inner">
+                  <div className="uplx-icon-circle">
+                    <Play size={24} />
                   </div>
-                  <h3>
-                    {isDragActive ? "Drop the file here" : "Click or drag to upload"}
-                  </h3>
-                  <p>MP4, WebM, AVI up to 2 GB</p>
+                  <div>
+                    <h4>{isDragActive ? "Drop your video" : "Click or drag a video"}</h4>
+                    <p>MP4, WebM, AVI up to 2GB</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="uplx-preview-wrap">
+                <video
+                  key={videoUrl} /* ensures only reload when file changes */
+                  className="uplx-video"
+                  controls
+                  ref={videoRef}
+                  onLoadedMetadata={onLoadedMetadata}
+                  src={videoUrl}
+                />
+                <div className="uplx-video-meta">
+                  <Clock size={14} /> {formatDuration(videoDuration)}
+                </div>
+
+                <div className="uplx-row">
+                  <div className="uplx-tag">
+                    <FileVideo size={14} />
+                    <span>
+                      {form.video.name} • {Math.max(1, Math.round(form.video.size / (1024 * 1024)))} MB
+                    </span>
+                  </div>
+                  <button
+                    className="uplx-btn uplx-btn-ghost"
+                    onClick={() => setField("video", null)}
+                    disabled={isInitiating}
+                  >
+                    Choose another
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Thumbnail */}
+            <div className="uplx-thumb" onClick={openThumbPicker}>
+              <input
+                ref={thumbInputRef}
+                type="file"
+                accept="image/*"
+                className="uplx-hidden"
+                onChange={onSelectThumb}
+                disabled={isInitiating}
+              />
+              {form.thumbnail ? (
+                <img
+                  src={URL.createObjectURL(form.thumbnail)}
+                  alt="Thumbnail preview"
+                  className="uplx-thumb-img"
+                />
+              ) : (
+                <div className="uplx-thumb-ph">
+                  <div className="uplx-icon-circle sm">
+                    <ImageIcon size={18} />
+                  </div>
+                  <div>
+                    <strong>Upload thumbnail</strong>
+                    <div className="uplx-muted">JPG, PNG up to 5MB</div>
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Thumbnail upload */}
-            <div className="upload-form-group" style={{ marginTop: "1rem" }}>
-              <div
-                className="upload-thumbnail-area"
-                onClick={() =>
-                  !isInitiating && document.getElementById("thumbnail-upload").click()
-                }
-              >
-                <input
-                  id="thumbnail-upload"
-                  type="file"
-                  accept="image/*"
-                  className="upload-file-input"
-                  onChange={(e) => handleFileUpload("thumbnail", e.target.files[0])}
-                />
-                {formData.thumbnail ? (
-                  <img
-                    src={URL.createObjectURL(formData.thumbnail)}
-                    alt="Thumbnail preview"
-                    className="upload-thumbnail-preview"
+            {isInitiating && (
+              <div className="uplx-progress">
+                <Loader2 className="uplx-spinner" />
+                <div className="uplx-progress-bar">
+                  <div className="uplx-progress-fill" style={{ width: "30%" }} />
+                </div>
+              </div>
+            )}
+          </section>
+
+          {/* Details card */}
+          <section className="uplx-card">
+            <h3 className="uplx-card-title">Details</h3>
+
+            <div className="uplx-field">
+              <label className="uplx-label">Title</label>
+              <input
+                type="text"
+                className="uplx-input"
+                placeholder="Enter a compelling title"
+                value={form.title}
+                onChange={(e) => setField("title", e.target.value)}
+                disabled={isInitiating}
+              />
+              <div className="uplx-hint">Clear, concise, helpful for learners.</div>
+            </div>
+
+            <div className="uplx-row-2">
+              <div className="uplx-field">
+                <label className="uplx-label">Category</label>
+                <select
+                  className="uplx-select"
+                  value={form.category}
+                  onChange={(e) => setField("category", e.target.value)}
+                  disabled={isInitiating}
+                >
+                  <option value="">Choose a category</option>
+                  {categories.map((c) => (
+                    <option key={c.toLowerCase()} value={c.toLowerCase()}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="uplx-field">
+                <label className="uplx-label">Tags</label>
+                <div className="uplx-input-icon">
+                  <Tag size={16} />
+                  <input
+                    type="text"
+                    className="uplx-input"
+                    placeholder="tag1, tag2, tag3"
+                    value={form.tags}
+                    onChange={(e) => setField("tags", e.target.value)}
+                    disabled={isInitiating}
                   />
-                ) : (
-                  <div className="upload-thumbnail-placeholder">
-                    <FileVideo size={48} className="upload-thumbnail-icon" />
-                    <p>Upload thumbnail</p>
-                    <small>JPG, PNG up to 5 MB</small>
+                </div>
+                {!!tagList.length && (
+                  <div className="uplx-chips">
+                    {tagList.map((t) => (
+                      <span key={t} className="uplx-chip">
+                        {t}
+                      </span>
+                    ))}
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Loading state during initiation */}
-            {isInitiating && (
-              <div className="upload-progress">
-                <div className="flex items-center gap-2 mb-2">
-                  <Loader2 className="animate-spin" size={16} />
-                  <span>Preparing upload...</span>
-                </div>
-                <div className="progress-bar">
-                  <div className="progress-fill animate-pulse" style={{ width: '30%' }} />
-                </div>
-              </div>
-            )}
-          </div>
+            <div className="uplx-field">
+              <label className="uplx-label">Description</label>
+              <textarea
+                rows={6}
+                className="uplx-textarea"
+                placeholder="Describe your video…"
+                value={form.description}
+                onChange={(e) => setField("description", e.target.value)}
+                disabled={isInitiating}
+              />
+            </div>
 
-          {/* RIGHT SECTION */}
-          <div className="upload-right-section">
-            {currentStep === 1 && (
-              <div className="upload-step-content active">
-                <div className="upload-form-group">
-                  <label className="upload-label">Video Title</label>
-                  <input
-                    type="text"
-                    className="upload-input"
-                    placeholder="Enter a compelling title"
-                    value={formData.title}
-                    onChange={(e) => handleInputChange("title", e.target.value)}
-                    disabled={isInitiating}
-                  />
-                </div>
-
-                <div className="upload-form-group">
-                  <label className="upload-label">Select category</label>
-                  <select
-                    className="upload-select"
-                    value={formData.category}
-                    onChange={(e) => handleInputChange("category", e.target.value)}
-                    disabled={isInitiating}
-                  >
-                    <option value="">Choose a category</option>
-                    <option value="education">Education</option>
-                    <option value="technology">Technology</option>
-                    <option value="science">Science</option>
-                    <option value="business">Business</option>
-                    <option value="arts">Arts & Design</option>
-                    <option value="health">Health & Fitness</option>
-                    <option value="programming">Programming</option>
-                    <option value="mathematics">Mathematics</option>
-                  </select>
-                </div>
-              </div>
-            )}
-
-            {currentStep === 2 && (
-              <div className="upload-step-content active">
-                <h2 className="upload-section-title">Video Details</h2>
-
-                <div className="upload-form-group">
-                  <label className="upload-label">Description</label>
-                  <textarea
-                    className="upload-textarea"
-                    placeholder="Describe your video…"
-                    value={formData.description}
-                    onChange={(e) => handleInputChange("description", e.target.value)}
-                    disabled={isInitiating}
-                  />
-                </div>
-
-                <div className="upload-form-group">
-                  <label className="upload-label">Tags</label>
-                  <input
-                    className="upload-input"
-                    placeholder="tag1, tag2, tag3"
-                    value={formData.tags}
-                    onChange={(e) => handleInputChange("tags", e.target.value)}
-                    disabled={isInitiating}
-                  />
-                  <small style={{ color: "var(--text-secondary)" }}>
-                    Comma-separated keywords
-                  </small>
-                </div>
-              </div>
-            )}
-
-            {/* Action buttons */}
-            <div className="upload-actions">
-              {currentStep === 2 ? (
+            <div className="uplx-actions">
+              {step === 2 ? (
                 <button
-                  className="upload-back-btn"
-                  onClick={prevStep}
+                  className="uplx-btn uplx-btn-ghost"
+                  onClick={() => setStep(1)}
                   disabled={isInitiating}
                 >
-                  <ChevronLeft size={20} /> Back
+                  <ChevronLeft size={18} />
+                  Back
                 </button>
               ) : (
                 <div />
               )}
 
-              {currentStep === 1 ? (
+              {step === 1 ? (
                 <button
-                  className="upload-next-btn"
-                  onClick={nextStep}
-                  disabled={!formData.video || isInitiating}
+                  className={`uplx-btn ${canNext ? "uplx-btn-primary" : "uplx-btn-disabled"}`}
+                  onClick={() => setStep(2)}
+                  disabled={!canNext}
                 >
-                  Next Step
+                  Next
                 </button>
               ) : (
                 <button
-                  className="upload-submit-btn"
-                  onClick={handleSubmit}
-                  disabled={
-                    !formData.title.trim() || isInitiating
-                  }
+                  className={`uplx-btn ${canPublish ? "uplx-btn-primary" : "uplx-btn-disabled"}`}
+                  onClick={submit}
+                  disabled={!canPublish}
                 >
                   {isInitiating ? (
                     <>
-                      <Loader2 className="animate-spin mr-2" size={16} />
-                      Starting Upload...
+                      <Loader2 className="uplx-spinner" />
+                      Starting upload...
                     </>
                   ) : (
-                    "Publish Video"
+                    "Publish"
                   )}
                 </button>
               )}
             </div>
-          </div>
+
+            <div className="uplx-summary">
+              <div className="uplx-srow">
+                <span>Video</span>
+                {form.video ? (
+                  <span className="uplx-ok">
+                    <CheckCircle2 size={16} /> Selected
+                  </span>
+                ) : (
+                  <span className="uplx-muted">Not selected</span>
+                )}
+              </div>
+              <div className="uplx-srow">
+                <span>Title</span>
+                <span className={form.title ? "uplx-ok" : "uplx-muted"}>
+                  {form.title ? "Ready" : "Missing"}
+                </span>
+              </div>
+              <div className="uplx-srow">
+                <span>Category</span>
+                <span className={form.category ? "uplx-ok" : "uplx-muted"}>
+                  {form.category ? "Selected" : "Missing"}
+                </span>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
   );
-};
-
-export default UploadForm;
+}

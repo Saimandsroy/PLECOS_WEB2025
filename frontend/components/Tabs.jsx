@@ -18,13 +18,11 @@ const user = {
 };
 
 const Tabs = ({ sidebarLinks, iFier, homePath = "/", homeActivePaths = [], roleTarget, title = "Learner" }) => {
-  console.log(homeActivePaths)
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   // Separate state for the model dropdown
   const [modelOpen, setModelOpen] = useState(false);
-  console.log(modelOpen)
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > MOBILE_BREAKPOINT) {

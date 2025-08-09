@@ -619,3 +619,508 @@
     padding: 0.2rem 0.5rem;
   }
 }
+
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge-failed,
+.badge-success,
+.badge-processing,
+.subtle-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+}
+
+.badge-failed {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-processing {
+  background: rgba(26, 115, 232, 0.12);
+  color: var(--brand-blue);
+  border: 1px solid rgba(26, 115, 232, 0.3);
+}
+
+.subtle-chip {
+  background: var(--background-secondary);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.upload-filename-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Skeletons */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-block {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 37%, #ececec 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+.shimmer-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 37%, #ececec 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  margin-bottom: 8px;
+}
+.shimmer-line.small {
+  height: 10px;
+  opacity: 0.9;
+}
+.shimmer-line.tiny {
+  height: 8px;
+  opacity: 0.8;
+}
+.shimmer-line.w-60 {
+  width: 60%;
+}
+.shimmer-line.w-40 {
+  width: 40%;
+}
+.shimmer-line.w-24 {
+  width: 24%;
+}
+.shimmer-line.w-10 {
+  width: 10%;
+}
+.shimmer-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 37%, #ececec 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+.progress-fill.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(26, 115, 232, 0.5) 25%,
+    rgba(77, 159, 255, 0.6) 37%,
+    rgba(26, 115, 232, 0.5) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Compact empty state */
+.empty-state.compact {
+  padding: 2rem 1.5rem;
+}
+
+/* Section header row + filters */
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.section-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filters-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+.chip {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--background);
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.chip:hover {
+  color: var(--text-primary);
+  border-color: var(--text-accent);
+}
+.chip-active {
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  border-color: transparent;
+}
+
+/* Rich upload cards */
+.upload-item.rich {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: stretch;
+}
+@media (max-width: 720px) {
+  .upload-item.rich {
+    grid-template-columns: 100%;
+  }
+}
+
+.upload-card-left {
+  display: flex;
+}
+.thumb {
+  position: relative;
+  width: 120px;
+  height: 68px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+}
+.thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb-skeleton {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 37%, #ececec 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+.thumb-watermark {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.upload-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.upload-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.upload-status-row,
+.upload-progress-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .upload-status-row,
+  .upload-progress-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.upload-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--background);
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pill-btn:hover {
+  border-color: var(--text-accent);
+  transform: translateY(-1px);
+}
+.pill-btn.warn {
+  background: rgba(255, 127, 63, 0.12);
+  border-color: rgba(255, 127, 63, 0.35);
+  color: var(--brand-orange);
+}
+.pill-muted {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--background-secondary);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--background);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.icon-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-accent);
+  transform: translateY(-1px);
+}
+.icon-btn-active {
+  border-color: var(--text-accent);
+  color: var(--text-primary);
+}
+
+/* Kebab menu */
+.menu-wrap {
+  position: relative;
+}
+.menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: var(--background-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.25rem;
+  min-width: 160px;
+  box-shadow: 0 12px 30px var(--shadow-color);
+  z-index: 10;
+}
+.menu button {
+  width: 100%;
+  padding: 0.6rem 0.6rem;
+  text-align: left;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.menu button:hover {
+  background: var(--tab-hover);
+}
+.menu button.danger {
+  color: #dc2626;
+}
+
+/* Chips/Badges existing from earlier */
+.subtle-chip {
+  background: var(--background-secondary);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.badge-failed,
+.badge-success,
+.badge-processing {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+}
+.badge-failed {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.badge-success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.badge-processing {
+  background: rgba(26, 115, 232, 0.12);
+  color: var(--brand-blue);
+  border: 1px solid rgba(26, 115, 232, 0.3);
+}
+
+/* Skeleton & shimmer (reuse) */
+.icon-placeholder {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #ececec;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Keep your existing recent-upload highlight rules, status-icon colors, etc. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--background);
+  color: var(--text-primary);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+    border-color 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 6px 16px var(--shadow-color);
+  user-select: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px var(--shadow-color);
+  border-color: var(--text-accent);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Primary gradient style (matches your create-btn) */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #fff;
+  border-color: transparent;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px var(--shadow-color);
+}
+
+/* Warning variant (optional) */
+.btn-warn {
+  background: var(--gradient-secondary);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Subtle/ghost style */
+.btn-ghost {
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+/* Disabled state */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Loading state: add .is-loading to the button */
+.btn.is-loading {
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Spinner */
+.btn .spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top-color: #ffffff;
+  border-right-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.btn.btn-ghost .spinner {
+  border-top-color: var(--text-accent);
+  border-right-color: var(--text-accent);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Size variants */
+.btn-sm {
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+.btn-lg {
+  padding: 0.9rem 1.4rem;
+  border-radius: 12px;
+  font-size: 1.05rem;
+}
+
+/* Full width utility (if needed) */
+.btn-block {
+  width: 100%;
+}
+
+/* Load More row styles (works with your existing section) */
+.load-more-row {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 0.25rem;
+}
