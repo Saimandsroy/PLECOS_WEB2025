@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import "./sign-up.css";
-import axios from "axios";
+import api from "@/api/axios";
 import { signIn } from "next-auth/react";
 
 export default function SignUp() {
@@ -31,7 +31,7 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/register`, {
+      await api.post(`/auth/register`, {
         email: formData.email,
         password: formData.password,
         role: formData.role,
