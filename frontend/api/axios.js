@@ -1,39 +1,58 @@
-import axios from "axios";
-const baseURL = "http://localhost:3041/";
+// lib/api.js
+import axios from 'axios'
+import { getSession } from "next-auth/react"
 
-const instance = axios.create({
-  baseURL: baseURL,
-  timeout: 30000,
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
-});
+// Create axios instance
+const apiClient = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 10000,
+})
 
-instance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+// Request interceptor to add auth token
+apiClient.interceptors.request.use(
+  async (config) => {
+    const session = await getSession()
+    
+    if (session?.accessToken) {
+      config.headers.Authorization = `Bearer ${session.accessToken}`
     }
-    return config;
+    
+    return config
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
+// Response interceptor for error handling
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("authToken");
-      window.location.href = "/login";
+      // Token might be expired, you could trigger a refresh here
+      console.error('Unauthorized request:', error.response.data)
     }
-    return Promise.reject(error);
+    
+    return Promise.reject(error)
   }
-);
+)
 
-export default instance;
+// API helper functions
+export const api = {
+  get: (url, config = {}) => 
+    apiClient.get(url, config),
+  
+  post: (url, data = {}, config = {}) =>
+    apiClient.post(url, data, config),
+    
+  put: (url, data = {}, config = {}) =>
+    apiClient.put(url, data, config),
+    
+  patch: (url, data = {}, config = {}) =>
+    apiClient.patch(url, data, config),
+    
+  delete: (url, config = {}) =>
+    apiClient.delete(url, config),
+}
+
+export default apiClient
