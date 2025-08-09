@@ -1,12 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import "./sign-in.css";
 import { signIn } from "next-auth/react";
+
 export default function SignIn() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { data: session, status } = useSession();
   const {
     register,
     handleSubmit,
@@ -14,29 +18,59 @@ export default function SignIn() {
   } = useForm();
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Check for auth errors from URL params
+  useEffect(() => {
+    const error = searchParams.get('error');
+    if (error === 'CredentialsSignin') {
+      setError('Invalid credentials. Please check your email and password.');
+    }
+  }, [searchParams]);
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      if (token) {
-        router.replace("/");
-      }
+    if (status === "authenticated") {
+      const callbackUrl = searchParams.get('callbackUrl') || '/';
+      router.replace(callbackUrl);
     }
-  }, [router]);
+  }, [status, router, searchParams]);
 
   const onSubmit = async (formData) => {
-    setLoading(true)
+    setLoading(true);
+    setError("");
     console.log("Submitting form:", formData);
-    
-    const result = await signIn('credentials', {
-      ...formData,
-      redirect: true,
-      callbackUrl: "/",
-    });
-    console.log(result)
-    
-    setLoading(false)
+
+    try {
+      const result = await signIn('credentials', {
+        ...formData,
+        redirect: false, // Handle redirect manually
+      });
+      console.log("Sign in result:", result);
+      if (result?.error) {
+        setError('Invalid credentials. Please check your email and password.');
+      } else if (result?.ok) {
+        // Success - redirect will happen via useEffect
+        const callbackUrl = searchParams.get('callbackUrl') || '/';
+        router.replace(callbackUrl);
+      }
+    } catch (err) {
+      console.error('Sign in error:', err);
+      setError('An unexpected error occurred. Please try again.');
+    }
+
+    setLoading(false);
+  };
+
+  // Show loading state while checking session
+  if (status === "loading") {
+    return (
+      <div className="signin-container">
+        <div className="signin-spinner-container">
+          <div className="signin-spinner"></div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -48,18 +82,33 @@ export default function SignIn() {
           className="signin-logo"
         />
         <h2 className="signin-title">Sign in to Plecos</h2>
+
+        {error && (
+          <div className="signin-error-banner" style={{
+            background: '#fee2e2',
+            color: '#dc2626',
+            padding: '12px',
+            borderRadius: '8px',
+            marginBottom: '16px',
+            textAlign: 'center',
+            fontSize: '14px'
+          }}>
+            {error}
+          </div>
+        )}
+
         {loading && (
           <div className="signin-spinner-container">
             <div className="signin-spinner"></div>
           </div>
         )}
+
         <form
           className="signin-form"
           onSubmit={handleSubmit(onSubmit)}
           style={{
             opacity: loading ? 0.6 : 1,
             pointerEvents: loading ? "none" : "auto",
-            boxShadow: loading ? "none" : undefined,
           }}
         >
           <div className="signin-field">
@@ -80,6 +129,7 @@ export default function SignIn() {
               <span className="signin-error">Email is required</span>
             )}
           </div>
+
           <div className="signin-field">
             <label htmlFor="password">Password</label>
             <div className="signin-password-wrapper">
@@ -113,6 +163,7 @@ export default function SignIn() {
               <span className="signin-error">Password is required</span>
             )}
           </div>
+
           <div className="signin-field">
             <label htmlFor="role">Role</label>
             <select
@@ -132,21 +183,23 @@ export default function SignIn() {
               <span className="signin-error">Role is required</span>
             )}
           </div>
+
           <button
             type="submit"
             className="signin-btn"
             disabled={loading}
-            style={{ filter: loading ? "grayscale(0.5)" : undefined }}
           >
             {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
+
         <div className="signin-footer">
           <span>Don't have an account?</span>
           <a href="/sign-up" className="signin-link">
             Sign up
           </a>
         </div>
+
         {/* Decorative elements */}
         <div className="signin-decor-top"></div>
         <div className="signin-decor-bottom"></div>
