@@ -85,7 +85,7 @@ const ProfilePage = () => {
     try {
       setVideosLoading(true);
       console.log("Fetching videos for:", profileData.email_id);
-      const response = await api.get(`/portal/${profileData.email_id}/videos?page=${page}&limit=12`);
+      const response = await api.get(`/portal/${profileData.email_id}/video?page=${page}&limit=12`);
 
       // Fix: Use axios response structure, not fetch
       const data = response.data.data;
