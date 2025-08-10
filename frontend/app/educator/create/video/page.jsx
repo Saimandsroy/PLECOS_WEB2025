@@ -33,12 +33,13 @@ const categories = [
 
 export default function UploadForm() {
   const router = useRouter();
-  const { initiateUpload } = useUploadContext();
+  const { initiateUpload, uploads } = useUploadContext(); // ✅ Get uploads to track status
 
   const [step, setStep] = useState(1);
   const [isInitiating, setIsInitiating] = useState(false);
   const [videoDuration, setVideoDuration] = useState(0);
   const [err, setErr] = useState("");
+  const [uploadId, setUploadId] = useState(null); // ✅ Track current upload ID
 
   const thumbInputRef = useRef(null);
   const videoRef = useRef(null);
@@ -51,6 +52,86 @@ export default function UploadForm() {
     title: "",
     description: "",
   });
+
+  // State for tracking thumbnail upload (only during submit)
+  const [thumbnailUploading, setThumbnailUploading] = useState(false);
+
+  // ✅ Monitor upload progress and completion
+  useEffect(() => {
+    if (uploadId) {
+      const currentUpload = uploads.find(u => u.id === uploadId);
+
+      if (currentUpload) {
+        console.log("Upload status:", currentUpload.status, "Progress:", currentUpload.progress);
+
+        // ✅ Only redirect when upload is truly completed
+        if (currentUpload.status === "completed") {
+          console.log("✅ Upload completed successfully! Redirecting...");
+
+          // Reset form
+          setForm({
+            video: null,
+            thumbnail: null,
+            category: "",
+            tags: "",
+            title: "",
+            description: "",
+          });
+          setStep(1);
+          setUploadId(null);
+          setIsInitiating(false);
+
+          // Redirect after successful completion
+          router.push("/educator/create");
+        } else if (currentUpload.status === "error") {
+          console.error("❌ Upload failed:", currentUpload.error);
+          setErr(currentUpload.error || "Upload failed");
+          setIsInitiating(false);
+          setUploadId(null);
+        }
+      }
+    }
+  }, [uploads, uploadId, router]);
+
+  // Upload thumbnail function (called only on submit)
+  const uploadThumbnailToR2 = async (file) => {
+    setThumbnailUploading(true);
+
+    try {
+      // 1. Get signed URL from your Next.js backend
+      const response = await fetch(
+        `/api/image-upload?filename=${encodeURIComponent(file.name)}&contentType=${encodeURIComponent(file.type)}&fileSize=${file.size}`
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to get signed URL');
+      }
+
+      const { signedUrl, key, uuidFilename } = await response.json();
+
+      // 2. Upload the file directly to R2 using the signed URL
+      const uploadResponse = await fetch(signedUrl, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+
+      if (uploadResponse.ok) {
+        console.log('✅ Thumbnail upload successful!');
+        return key; // Return the R2 key
+      } else {
+        throw new Error(`Upload failed with status: ${uploadResponse.status}`);
+      }
+    } catch (error) {
+      console.error('Thumbnail upload error:', error);
+      throw error; // Re-throw to be handled in submit function
+    } finally {
+      setThumbnailUploading(false);
+    }
+  };
 
   // Stable object URL for video to avoid reloads on re-render
   const videoUrl = useMemo(() => {
@@ -102,19 +183,24 @@ export default function UploadForm() {
     },
   });
 
+  // Modified to NOT upload immediately - just store the file
   const onSelectThumb = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     if (file.size > MAX_THUMB_SIZE) {
       setErr("Thumbnail is larger than 5MB.");
       return;
     }
+
     setErr("");
-    setField("thumbnail", file);
+    setField("thumbnail", file); // Just store the file, don't upload yet
   };
 
   const openThumbPicker = () => {
-    if (!isInitiating && thumbInputRef.current) thumbInputRef.current.click();
+    if (!isInitiating && !thumbnailUploading && thumbInputRef.current) {
+      thumbInputRef.current.click();
+    }
   };
 
   const formatDuration = (seconds) => {
@@ -126,18 +212,36 @@ export default function UploadForm() {
     return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
   };
 
-  const canNext = !!form.video && !isInitiating;
+  const canNext = !!form.video && !isInitiating && !thumbnailUploading;
   const canPublish =
     !!form.video &&
     !!form.title.trim() &&
     !!form.category &&
-    !isInitiating;
+    !isInitiating &&
+    !thumbnailUploading;
 
+  // ✅ Fixed submit function
   const submit = async () => {
     if (!canPublish) return;
     setErr("");
     setIsInitiating(true);
+
     try {
+      let thumbnailKey = null;
+
+      // Upload thumbnail only when submitting
+      if (form.thumbnail) {
+        try {
+          console.log("📤 Starting thumbnail upload...");
+          thumbnailKey = await uploadThumbnailToR2(form.thumbnail);
+          console.log("✅ Thumbnail uploaded with key:", thumbnailKey);
+        } catch (error) {
+          setErr(`Thumbnail upload failed: ${error.message}`);
+          setIsInitiating(false);
+          return;
+        }
+      }
+
       const metadata = {
         title: form.title,
         description: form.description,
@@ -145,32 +249,35 @@ export default function UploadForm() {
         tags: tagList,
         duration: videoDuration || 0,
         uploadDate: new Date().toISOString(),
+        thumbnailKey: thumbnailKey, // Use the uploaded key
       };
-      await initiateUpload(form.video, metadata);
 
-      // Reset and go back to create page
-      setForm({
-        video: null,
-        thumbnail: null,
-        category: "",
-        tags: "",
-        title: "",
-        description: "",
-      });
-      setStep(1);
-      router.push("/educator/create");
+      console.log("📤 Starting video upload with metadata:", metadata);
+
+      // ✅ Store the upload ID to track its progress
+      const uploadId = await initiateUpload(form.video, metadata);
+      setUploadId(uploadId);
+
+      console.log("📤 Upload initiated with ID:", uploadId);
+
+      // ✅ DON'T redirect here - let the useEffect handle it when upload completes
+
     } catch (e) {
+      console.error("❌ Submit error:", e);
       setErr(
         e?.response?.data?.error ||
         e?.message ||
         "Failed to start upload. Please try again."
       );
-    } finally {
       setIsInitiating(false);
+      setUploadId(null);
     }
+    // ✅ Don't set setIsInitiating(false) here - let useEffect handle it
   };
 
-  // New layout: Wizard header + two cards (Media on left; Details on right)
+  // ✅ Get current upload for display
+  const currentUpload = uploadId ? uploads.find(u => u.id === uploadId) : null;
+
   return (
     <div className="uplx-page">
       <div className="uplx-container">
@@ -179,7 +286,7 @@ export default function UploadForm() {
             <button
               className="uplx-btn-ghost"
               onClick={() => router.back()}
-              disabled={isInitiating}
+              disabled={isInitiating || thumbnailUploading}
               title="Back"
             >
               <ChevronLeft size={18} />
@@ -197,10 +304,17 @@ export default function UploadForm() {
               onClick={submit}
               disabled={!canPublish}
             >
-              {isInitiating ? (
+              {isInitiating || thumbnailUploading ? (
                 <>
                   <Loader2 className="uplx-spinner" />
-                  Starting upload...
+                  {thumbnailUploading
+                    ? "Uploading thumbnail..."
+                    : currentUpload?.status === "phase2-uploading"
+                      ? `Uploading video... ${currentUpload.progress || 0}%`
+                      : currentUpload?.status === "phase3-uploading"
+                        ? "Finalizing..."
+                        : "Starting upload..."
+                  }
                 </>
               ) : (
                 "Publish"
@@ -216,6 +330,18 @@ export default function UploadForm() {
           </div>
         ) : null}
 
+        {/* ✅ Show upload progress */}
+        {currentUpload && (
+          <div className="uplx-banner" style={{ backgroundColor: 'rgba(26, 115, 232, 0.1)', borderColor: 'rgba(26, 115, 232, 0.3)', color: '#1a73e8' }}>
+            <Loader2 className="uplx-spinner" size={16} />
+            <span>
+              {currentUpload.status === "phase1-uploading" && "Getting upload URL..."}
+              {currentUpload.status === "phase2-uploading" && `Uploading to R2... ${currentUpload.progress || 0}%`}
+              {currentUpload.status === "phase3-uploading" && "Finalizing upload..."}
+            </span>
+          </div>
+        )}
+
         <div className="uplx-grid">
           {/* Media card */}
           <section className="uplx-card">
@@ -226,7 +352,7 @@ export default function UploadForm() {
               <div
                 className={`uplx-drop ${isDragActive ? "uplx-drop-active" : ""}`}
                 {...getRootProps()}
-                style={{ cursor: isInitiating ? "not-allowed" : "pointer" }}
+                style={{ cursor: (isInitiating || thumbnailUploading) ? "not-allowed" : "pointer" }}
               >
                 <input {...getInputProps()} />
                 <div className="uplx-drop-inner">
@@ -242,7 +368,7 @@ export default function UploadForm() {
             ) : (
               <div className="uplx-preview-wrap">
                 <video
-                  key={videoUrl} /* ensures only reload when file changes */
+                  key={videoUrl}
                   className="uplx-video"
                   controls
                   ref={videoRef}
@@ -263,7 +389,7 @@ export default function UploadForm() {
                   <button
                     className="uplx-btn uplx-btn-ghost"
                     onClick={() => setField("video", null)}
-                    disabled={isInitiating}
+                    disabled={isInitiating || thumbnailUploading}
                   >
                     Choose another
                   </button>
@@ -271,7 +397,7 @@ export default function UploadForm() {
               </div>
             )}
 
-            {/* Thumbnail */}
+            {/* Updated Thumbnail section */}
             <div className="uplx-thumb" onClick={openThumbPicker}>
               <input
                 ref={thumbInputRef}
@@ -279,14 +405,26 @@ export default function UploadForm() {
                 accept="image/*"
                 className="uplx-hidden"
                 onChange={onSelectThumb}
-                disabled={isInitiating}
+                disabled={isInitiating || thumbnailUploading}
               />
               {form.thumbnail ? (
-                <img
-                  src={URL.createObjectURL(form.thumbnail)}
-                  alt="Thumbnail preview"
-                  className="uplx-thumb-img"
-                />
+                <div className="uplx-thumb-uploaded">
+                  <img
+                    src={URL.createObjectURL(form.thumbnail)}
+                    alt="Thumbnail preview"
+                    className="uplx-thumb-img"
+                  />
+                  {thumbnailUploading && (
+                    <div className="uplx-thumb-overlay">
+                      <Loader2 className="uplx-spinner" size={20} />
+                      <span>Uploading to R2...</span>
+                    </div>
+                  )}
+                  <div className="uplx-thumb-ready">
+                    <CheckCircle2 size={16} />
+                    <span>Ready for upload</span>
+                  </div>
+                </div>
               ) : (
                 <div className="uplx-thumb-ph">
                   <div className="uplx-icon-circle sm">
@@ -294,24 +432,45 @@ export default function UploadForm() {
                   </div>
                   <div>
                     <strong>Upload thumbnail</strong>
-                    <div className="uplx-muted">JPG, PNG up to 5MB</div>
+                    <div className="uplx-muted">JPG, PNG up to 5MB • Will upload on publish</div>
                   </div>
                 </div>
               )}
             </div>
 
-            {isInitiating && (
+            {/* ✅ Enhanced progress display */}
+            {(isInitiating || thumbnailUploading) && (
               <div className="uplx-progress">
                 <Loader2 className="uplx-spinner" />
                 <div className="uplx-progress-bar">
-                  <div className="uplx-progress-fill" style={{ width: "30%" }} />
+                  <div
+                    className="uplx-progress-fill"
+                    style={{
+                      width: thumbnailUploading
+                        ? "15%"
+                        : currentUpload?.progress
+                          ? `${Math.max(20, currentUpload.progress)}%`
+                          : "30%"
+                    }}
+                  />
+                </div>
+                <div className="uplx-progress-text">
+                  {thumbnailUploading
+                    ? "Uploading thumbnail..."
+                    : currentUpload?.status === "phase2-uploading"
+                      ? `Uploading video... ${currentUpload.progress || 0}%`
+                      : currentUpload?.status === "phase3-uploading"
+                        ? "Finalizing upload..."
+                        : "Starting upload..."
+                  }
                 </div>
               </div>
             )}
           </section>
 
-          {/* Details card */}
+          {/* Rest of your form remains the same */}
           <section className="uplx-card">
+            {/* ... rest of your details card code ... */}
             <h3 className="uplx-card-title">Details</h3>
 
             <div className="uplx-field">
@@ -322,7 +481,7 @@ export default function UploadForm() {
                 placeholder="Enter a compelling title"
                 value={form.title}
                 onChange={(e) => setField("title", e.target.value)}
-                disabled={isInitiating}
+                disabled={isInitiating || thumbnailUploading}
               />
               <div className="uplx-hint">Clear, concise, helpful for learners.</div>
             </div>
@@ -334,7 +493,7 @@ export default function UploadForm() {
                   className="uplx-select"
                   value={form.category}
                   onChange={(e) => setField("category", e.target.value)}
-                  disabled={isInitiating}
+                  disabled={isInitiating || thumbnailUploading}
                 >
                   <option value="">Choose a category</option>
                   {categories.map((c) => (
@@ -355,7 +514,7 @@ export default function UploadForm() {
                     placeholder="tag1, tag2, tag3"
                     value={form.tags}
                     onChange={(e) => setField("tags", e.target.value)}
-                    disabled={isInitiating}
+                    disabled={isInitiating || thumbnailUploading}
                   />
                 </div>
                 {!!tagList.length && (
@@ -378,7 +537,7 @@ export default function UploadForm() {
                 placeholder="Describe your video…"
                 value={form.description}
                 onChange={(e) => setField("description", e.target.value)}
-                disabled={isInitiating}
+                disabled={isInitiating || thumbnailUploading}
               />
             </div>
 
@@ -387,7 +546,7 @@ export default function UploadForm() {
                 <button
                   className="uplx-btn uplx-btn-ghost"
                   onClick={() => setStep(1)}
-                  disabled={isInitiating}
+                  disabled={isInitiating || thumbnailUploading}
                 >
                   <ChevronLeft size={18} />
                   Back
@@ -410,10 +569,10 @@ export default function UploadForm() {
                   onClick={submit}
                   disabled={!canPublish}
                 >
-                  {isInitiating ? (
+                  {isInitiating || thumbnailUploading ? (
                     <>
                       <Loader2 className="uplx-spinner" />
-                      Starting upload...
+                      {thumbnailUploading ? "Uploading thumbnail..." : "Starting upload..."}
                     </>
                   ) : (
                     "Publish"
@@ -422,12 +581,23 @@ export default function UploadForm() {
               )}
             </div>
 
+            {/* Updated summary section */}
             <div className="uplx-summary">
               <div className="uplx-srow">
                 <span>Video</span>
                 {form.video ? (
                   <span className="uplx-ok">
                     <CheckCircle2 size={16} /> Selected
+                  </span>
+                ) : (
+                  <span className="uplx-muted">Not selected</span>
+                )}
+              </div>
+              <div className="uplx-srow">
+                <span>Thumbnail</span>
+                {form.thumbnail ? (
+                  <span className="uplx-ok">
+                    <CheckCircle2 size={16} /> Ready
                   </span>
                 ) : (
                   <span className="uplx-muted">Not selected</span>

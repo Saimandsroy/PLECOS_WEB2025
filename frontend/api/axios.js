@@ -1,14 +1,11 @@
-// lib/api.js
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
-// Browser-only API client with session interceptor
 export const apiBrowser = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 10000,
 });
 
-// Request interceptor for browser client only
 apiBrowser.interceptors.request.use(
   async (config) => {
     // Only run getSession on the client
@@ -25,7 +22,6 @@ apiBrowser.interceptors.request.use(
   }
 );
 
-// Response interceptor for error handling
 apiBrowser.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -36,7 +32,6 @@ apiBrowser.interceptors.response.use(
   }
 );
 
-// Server API factory function - creates instance with token
 export function createServerApi(accessToken) {
   const serverApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL,
@@ -59,7 +54,6 @@ export function createServerApi(accessToken) {
   };
 }
 
-// Browser API helper functions
 export const api = {
   get: (url, config = {}) => apiBrowser.get(url, config),
   post: (url, data = {}, config = {}) => apiBrowser.post(url, data, config),
@@ -68,5 +62,4 @@ export const api = {
   delete: (url, config = {}) => apiBrowser.delete(url, config),
 };
 
-// Export browser client as default for backward compatibility
 export default apiBrowser;

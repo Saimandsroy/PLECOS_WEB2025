@@ -7,9 +7,9 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import axios from "@/api/axios.js";
 import jwt from "jsonwebtoken";
 import { v4 as uuid } from "uuid";
+import axios from "@/api/axios";
 
 const UploadContext = createContext(null);
 
@@ -23,11 +23,8 @@ export const useUploadContext = () => {
 
 export const UploadProvider = ({ children }) => {
   const [uploads, setUploads] = useState([]);
-  // In-memory maps for non-serializable/transient fields
-  const filesRef = useRef(new Map()); // id -> File
-  const xhrRef = useRef(new Map()); // id -> XMLHttpRequest
-
-  // Debounced persistence timer
+  const filesRef = useRef(new Map());
+  const xhrRef = useRef(new Map());
   const persistTimerRef = useRef(null);
 
   const safeDecode = () => {
@@ -38,7 +35,6 @@ export const UploadProvider = ({ children }) => {
   };
 
   const persistUploads = useCallback((list) => {
-    // Strip transient fields before persisting
     const sanitized = list.map(({ file, xhr, ...rest }) => rest);
     localStorage.setItem("activeUploads", JSON.stringify(sanitized));
   }, []);
@@ -48,28 +44,23 @@ export const UploadProvider = ({ children }) => {
       if (persistTimerRef.current) clearTimeout(persistTimerRef.current);
       persistTimerRef.current = setTimeout(() => {
         persistUploads(list);
-      }, 400); // debounce 400ms
+      }, 400);
     },
     [persistUploads]
   );
 
-  // Load uploads from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem("activeUploads");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         setUploads(parsed);
-        // Attempt auto-resume only for items that have file in-memory (after SPA navigation),
-        // not after hard refresh (file will not be present).
         parsed.forEach((upload) => {
           if (upload.status === "phase1-complete" && upload.presignedUrl) {
-            // Only resume if we still have the File in memory
             const file = filesRef.current.get(upload.id);
             if (file) {
-              resumeUpload({ ...upload, file });
+              resumeUpload({ ...upload, file, metadata: upload.metadata }); // ✅ Pass metadata
             } else {
-              // Mark as needs file to resume
               updateUpload(upload.id, {
                 status: "error",
                 error:
@@ -79,13 +70,11 @@ export const UploadProvider = ({ children }) => {
           }
         });
       } catch {
-        // corrupted storage - clear it
         localStorage.removeItem("activeUploads");
       }
     }
     return () => {
       if (persistTimerRef.current) clearTimeout(persistTimerRef.current);
-      // abort any in-flight XHRs
       xhrRef.current.forEach((xhr) => {
         try {
           xhr.abort();
@@ -94,9 +83,8 @@ export const UploadProvider = ({ children }) => {
       xhrRef.current.clear();
       filesRef.current.clear();
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Save uploads to localStorage whenever uploads change (debounced)
   useEffect(() => {
     schedulePersist(uploads);
   }, [uploads, schedulePersist]);
@@ -120,7 +108,6 @@ export const UploadProvider = ({ children }) => {
 
   const removeUpload = (id) => {
     setUploads((prev) => prev.filter((u) => u.id !== id));
-    // cleanup transient maps
     filesRef.current.delete(id);
     const xhr = xhrRef.current.get(id);
     if (xhr) {
@@ -133,43 +120,61 @@ export const UploadProvider = ({ children }) => {
 
   const uploadFileToR2 = (id, file, presignedUrl, onProgress) => {
     return new Promise((resolve, reject) => {
+      console.log(`🚀 Starting R2 upload for ${id}:`, {
+        fileName: file.name,
+        fileSize: file.size,
+        presignedUrlPreview: presignedUrl.substring(0, 100) + "...",
+      });
+
       const xhr = new XMLHttpRequest();
       xhrRef.current.set(id, xhr);
 
       xhr.upload.addEventListener("progress", (e) => {
         if (e.lengthComputable) {
           const percentComplete = Math.round((e.loaded / e.total) * 100);
+          console.log(`📊 Upload progress for ${id}: ${percentComplete}%`);
           onProgress(percentComplete);
         }
       });
 
       xhr.addEventListener("load", () => {
+        console.log(
+          `✅ R2 upload completed for ${id} with status:`,
+          xhr.status
+        );
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve();
         } else {
+          console.error(
+            `❌ R2 upload failed for ${id}:`,
+            xhr.status,
+            xhr.statusText
+          );
           reject(new Error(`Upload failed with status: ${xhr.status}`));
         }
       });
 
-      xhr.addEventListener("error", () => {
+      xhr.addEventListener("error", (e) => {
+        console.error(`❌ Network error for upload ${id}:`, e);
         reject(new Error("Upload failed due to network error"));
       });
 
       xhr.addEventListener("abort", () => {
+        console.log(`⏹️ Upload aborted for ${id}`);
         reject(new Error("Upload was aborted"));
       });
 
       xhr.open("PUT", presignedUrl);
-      // Set only if your backend presign expects Content-Type
-      // xhr.setRequestHeader("Content-Type", file.type);
+      xhr.setRequestHeader("Content-Type", file.type); // ✅ Set content type
       xhr.send(file);
     }).finally(() => {
-      // clear the xhr ref for this id
       xhrRef.current.delete(id);
     });
   };
 
   const initiateUpload = async (file, metadata) => {
+    console.log("🚀 Initiating upload with metadata:", metadata);
+
     const id = addUpload({
       fileName: file.name,
       fileSize: file.size,
@@ -179,29 +184,19 @@ export const UploadProvider = ({ children }) => {
       phase: 1,
     });
 
-    // store file in memory only
     filesRef.current.set(id, file);
 
     try {
       updateUpload(id, { status: "phase1-uploading" });
 
-      const { token, email } = safeDecode();
-      if (!email || !token) throw new Error("Not authenticated");
+      const initiateResponse = await axios.post("/videos/", {
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type,
+        ...metadata,
+      });
 
-      // Phase 1: Get presigned URL
-      const initiateResponse = await axios.post(
-        "/videos/",
-        {
-          email,
-          fileName: file.name, // consider using a uuid key server-side if desired
-          fileSize: file.size,
-          fileType: file.type,
-          ...metadata,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      console.log("✅ Phase 1 response:", initiateResponse);
 
       const { video, presignedUrl, objectUrl } =
         initiateResponse?.data?.data || {};
@@ -210,7 +205,6 @@ export const UploadProvider = ({ children }) => {
       }
       const fileUrl = objectUrl || presignedUrl.split("?")[0];
 
-      // Update with phase 1 complete data (do NOT store file in persisted state)
       updateUpload(id, {
         status: "phase1-complete",
         presignedUrl,
@@ -218,7 +212,6 @@ export const UploadProvider = ({ children }) => {
         videoId: video.video_id,
       });
 
-      // Start phase 2 automatically (file from in-memory map)
       const f = filesRef.current.get(id);
       if (!f) {
         updateUpload(id, {
@@ -228,16 +221,19 @@ export const UploadProvider = ({ children }) => {
         return id;
       }
 
+      // ✅ Pass metadata to resumeUpload
       await resumeUpload({
         id,
         file: f,
         presignedUrl,
         fileUrl,
         videoId: video.video_id,
+        metadata, // ✅ Include metadata here
       });
 
       return id;
     } catch (error) {
+      console.error("❌ Phase 1 failed:", error);
       updateUpload(id, {
         status: "error",
         error:
@@ -247,8 +243,11 @@ export const UploadProvider = ({ children }) => {
     }
   };
 
+  // ✅ Fixed resumeUpload function
   const resumeUpload = async (uploadData) => {
-    const { id, file, presignedUrl, fileUrl, videoId } = uploadData;
+    const { id, file, presignedUrl, fileUrl, videoId, metadata } = uploadData; // ✅ Destructure metadata
+
+    console.log("🔄 Resuming upload for:", id, "with metadata:", metadata);
 
     try {
       if (!file) {
@@ -261,35 +260,58 @@ export const UploadProvider = ({ children }) => {
       }
 
       updateUpload(id, { status: "phase2-uploading", phase: 2 });
+      console.log("📤 Starting Phase 2: R2 Upload for", id);
 
       // Phase 2: Upload to R2
       await uploadFileToR2(id, file, presignedUrl, (progress) => {
         updateUpload(id, { progress });
       });
 
+      console.log("✅ Phase 2 completed for", id);
       updateUpload(id, { status: "phase3-uploading", phase: 3, progress: 95 });
+      console.log("📤 Starting Phase 3: Finalizing upload for", id);
 
-      // Phase 3: Complete upload
-      const { token, email } = safeDecode();
-      if (!email || !token) throw new Error("Not authenticated");
+      // ✅ Phase 3: Complete upload with metadata
+      const patchData = {
+        videoUrl: fileUrl,
+        status: "active",
+      };
 
-      await axios.patch(
-        `/videos/${videoId}`,
-        { email, videoUrl: fileUrl, status: "active" },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      // ✅ Add metadata fields to patch request
+      if (metadata) {
+        if (metadata.title) patchData.title = metadata.title;
+        if (metadata.description) patchData.description = metadata.description;
+        if (metadata.category) patchData.category = metadata.category;
+        if (metadata.tags) patchData.tags = metadata.tags;
+        if (metadata.duration) patchData.duration = metadata.duration;
+        if (metadata.thumbnailKey)
+          patchData.thumbnailKey = metadata.thumbnailKey;
+        if (metadata.uploadDate) patchData.uploadDate = metadata.uploadDate;
+      }
 
+      console.log("📤 Phase 3: PATCH request data:", {
+        videoUrl: fileUrl,
+        status: "active",
+      });
+
+      await axios.patch(`/videos/${videoId}`, {
+        videoUrl: fileUrl,
+        status: "active",
+      });
+
+      console.log("✅ Phase 3 completed successfully for", id);
       updateUpload(id, {
         status: "completed",
         progress: 100,
         phase: 3,
       });
 
-      // Optionally move to history UI instead of removing, or make this configurable
       setTimeout(() => {
+        console.log("🗑️ Removing completed upload:", id);
         removeUpload(id);
       }, 5000);
     } catch (error) {
+      console.error("❌ Resume upload failed for", id, ":", error);
       updateUpload(id, {
         status: "error",
         error:
@@ -305,15 +327,12 @@ export const UploadProvider = ({ children }) => {
     const file = filesRef.current.get(id);
     const hasPresigned = !!upload.presignedUrl;
 
-    // If we have file and presignedUrl, try resuming; else re-initiate
     if (hasPresigned && file) {
-      await resumeUpload({ ...upload, file });
+      await resumeUpload({ ...upload, file, metadata: upload.metadata }); // ✅ Pass metadata
     } else if (file) {
-      // Restart from phase 1 with existing metadata
       removeUpload(id);
       await initiateUpload(file, upload.metadata || {});
     } else {
-      // No file available: prompt user to reselect (surface error)
       updateUpload(id, {
         error:
           "Cannot retry: original file not available. Please start a new upload and select the file again.",
@@ -322,7 +341,6 @@ export const UploadProvider = ({ children }) => {
   };
 
   const cancelAllUploads = useCallback(() => {
-    // Abort all XHRs
     xhrRef.current.forEach((xhr) => {
       try {
         xhr.abort();
@@ -330,13 +348,10 @@ export const UploadProvider = ({ children }) => {
     });
     xhrRef.current.clear();
     filesRef.current.clear();
-
-    // Clear local state and storage
     setUploads([]);
     localStorage.removeItem("activeUploads");
   }, []);
 
-  // Optional: cancel a single upload
   const cancelUpload = useCallback((id) => {
     const xhr = xhrRef.current.get(id);
     if (xhr) {
