@@ -1,11 +1,17 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import "./VideoCard.css";
-
+import thumb from "@/public/logo.png";
+import Image from "next/image";
 const VideoCard = ({ video }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
-
+  const duration = () => {
+    const hours = Math.floor(video.duration / 3600);
+    const minutes = Math.floor(video.duration / 60) - (hours * 60);
+    const seconds = video.duration % 60
+    return `${hours > 0 ? `${hours}:` : ""}${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
   // Close menu on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,8 +27,8 @@ const VideoCard = ({ video }) => {
   return (
     <div className="video-card">
       <div className="video-thumbnail">
-        <img src={video.thumbnail} alt={video.title} />
-        <span className="video-duration">{video.duration}</span>
+        <img src="@/public/video-tutorial.png" alt={video.title} />
+        <span className="video-duration">{duration(video.duraion)}</span>
         <div className="play-icon">
           <svg viewBox="0 0 24 24">
             <path d="M8 5v14l11-7z" />
@@ -56,12 +62,12 @@ const VideoCard = ({ video }) => {
 
         <div className="video-info">
           <img
-            src={video.instructor.image}
-            alt={video.instructor.name}
+            src={video?.instructor?.image || thumb}
+            alt={video?.instructor?.name || "Instructor"}
             className="instructor-image"
           />
           <div className="info-text">
-            <p className="instructor-name">{video.instructor.name}</p>
+            <p className="instructor-name">{video?.instructor?.name || "Instructor"}</p>
             <p className="video-stats">
               {video.views} Views • {video.uploadedAt}
             </p>
@@ -73,3 +79,8 @@ const VideoCard = ({ video }) => {
 };
 
 export default VideoCard;
+
+/**
+ * instructor name
+ *instructor pic
+ */
