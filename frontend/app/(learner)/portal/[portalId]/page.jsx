@@ -63,7 +63,7 @@ const ProfilePage = () => {
       try {
         setProfileLoading(true);
         const response = await api.get(`/portal/${portalId}`);
-        const data = response.data.data[0]; // Remove await here since response.data is not a promise
+        const data = response.data.data[0];
         console.log("Profile response:", response);
         if (!data) throw new Error('Failed to fetch profile');
         setProfileData(data);

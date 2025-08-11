@@ -1,13 +1,31 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import VideoPlayer from "./components/VideoPlayer";
 import VideoDetails from "./components/VideoDetails";
 import ActionBar from "./components/ActionBar";
 import CommentsSection from "./components/CommentsSection";
 import RecommendationsList from "./components/RecommendationsList";
-
 import styles from "./page.module.css";
-
+import { useParams } from "next/navigation";
+import { api } from "@/api/axios";
 const VideoView = () => {
+  const { videoId } = useParams();
+  const [sedio, setSedio] = useState();
+  // const videoUrl = process.env.NEXT_PUBLIC_R2_ENDPOINT + video.videoUrl
+  // console.log(videoUrl)
+  console.log(sedio)
+  useEffect(() => {
+    const data = async () => {
+      try {
+        const response = await api.get(`/videos/${videoId}`);
+        console.log(response.data.data)
+        setSedio(response.data.data);
+      } catch (error) {
+        console.error("Error fetching video data:", error);
+      }
+    }
+    data();
+  }, []);
   const videoData = {
     title: "Mastering React in 30 Minutes",
     src: "https://www.sample-videos.com/video321/mp4/240/big_buck_bunny_240p_2mb.mp4",
@@ -112,7 +130,7 @@ const VideoView = () => {
   return (
     <div className={styles.videoViewContainer}>
       <div className={styles.mainContent}>
-        <VideoPlayer src={videoData.src} />
+        <VideoPlayer src={sedio?.videoUrl} />
         <VideoDetails
           title={videoData.title}
           instructor={videoData.instructor}
