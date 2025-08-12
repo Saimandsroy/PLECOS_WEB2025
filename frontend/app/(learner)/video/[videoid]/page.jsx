@@ -8,6 +8,8 @@ import RecommendationsList from "./components/RecommendationsList";
 import styles from "./page.module.css";
 import { useParams } from "next/navigation";
 import { api } from "@/api/axios";
+import VideoDetailsSkeleton from "./components/VideoDetailsSkelton";
+import { formatRelativeTime } from "@/lib/relativeTime";
 const VideoView = () => {
   const { videoId } = useParams();
   const [sedio, setSedio] = useState();
@@ -131,19 +133,18 @@ const VideoView = () => {
     <div className={styles.videoViewContainer}>
       <div className={styles.mainContent}>
         <VideoPlayer src={sedio?.videoUrl} />
-        <VideoDetails
-          title={videoData.title}
+        {sedio ? (<VideoDetails
+          title={sedio.title}
           instructor={videoData.instructor}
-          views={videoData.views}
-          uploadDate={videoData.uploadDate}
-          duration={videoData.duration}
-          rating={videoData.rating}
-          description={videoData.description}
-          category={videoData.category}
-        />
+          views={sedio.views}
+          uploadDate={formatRelativeTime(sedio.createdAt)}
+          rating={sedio.likes}
+          description={sedio.description}
+          category={sedio.category}
+        />) : <VideoDetailsSkeleton />}
 
         <ActionBar likes={248} dislikes={3} />
-        <CommentsSection />
+        {sedio && <CommentsSection videoId={sedio?.video_id} />}
       </div>
       <aside className={styles.sidebar}>
         <RecommendationsList videos={recommendations} />
