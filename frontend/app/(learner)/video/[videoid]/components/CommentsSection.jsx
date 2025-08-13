@@ -29,7 +29,6 @@ const CommentSection = ({ videoId }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [newComment, setNewComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   useEffect(() => {
     setIsCollapsed(isMobile);
   }, [isMobile]);
@@ -47,7 +46,7 @@ const CommentSection = ({ videoId }) => {
       setIsSubmitting(false);
     }
   };
-
+  console.log(comments)
   return (
     <div className="comment-section">
       {isMobile && isCollapsed && (
