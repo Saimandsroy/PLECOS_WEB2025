@@ -81,9 +81,9 @@ export default function VideosRibbon({ videoData }) {
     <section className="explore-video-section">
       <div className="explore-video-section-header">
         <h2>Top Learning Videos</h2>
-        <a href="/videos" className="see-more">
+        {/* <a href="/videos" className="see-more">
           See more &gt;
-        </a>
+        </a> */}
       </div>
 
       <div

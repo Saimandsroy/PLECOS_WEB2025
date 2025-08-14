@@ -74,8 +74,10 @@ const Downloads = () => {
           ))}
         </div>
       )}
-      <div style={{marginTop: "2rem"}}>
-        {activeTab === "shorts" && <ShortsRow shorts={shortsData} logo={thumb} />}
+      <div style={{ marginTop: "2rem" }}>
+        {activeTab === "shorts" && (
+          <ShortsRow shorts={shortsData} logo={thumb} />
+        )}
       </div>
     </div>
   );

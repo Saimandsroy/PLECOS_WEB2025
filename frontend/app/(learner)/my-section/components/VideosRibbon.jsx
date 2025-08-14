@@ -20,9 +20,9 @@ export default function VideosRibbon({ videoData }) {
     <section className="explore-video-section">
       <div className="explore-video-section-header">
         <h2>History</h2>
-        <a href="/videos" className="see-more">
+        {/* <a href="/videos" className="see-more">
           See more &gt;
-        </a>
+        </a> */}
       </div>
 
       <div className="carousel-wrapper">
@@ -52,4 +52,4 @@ export default function VideosRibbon({ videoData }) {
       </div>
     </section>
   );
-};
+}
