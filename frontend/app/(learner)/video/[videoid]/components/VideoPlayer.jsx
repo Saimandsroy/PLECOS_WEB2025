@@ -13,7 +13,7 @@ import Watermark from "./videoplayer/watermark";
 
 import "./VideoPlayer.css";
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ src }) => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const controlsTimeoutRef = useRef(null);
@@ -42,41 +42,137 @@ const VideoPlayer = () => {
   const [currentLevel, setCurrentLevel] = useState(-1);
   const [settingsScreen, setSettingsScreen] = useState("main");
   const [isBuffering, setIsBuffering] = useState(false);
-
-  const videoUrl =
-    "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
+  const [videoError, setVideoError] = useState(null);
+  const videoUrl = (process.env.NEXT_PUBLIC_R2_ENDPOINT + src) || "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
   const videoTitle = "Mastering React in 30 Minutes";
 
+  // Helper function to detect video format
+  const getVideoFormat = (url) => {
+    const urlLower = url.toLowerCase();
+    if (urlLower.includes('.m3u8')) return 'hls';
+    if (urlLower.includes('.mp4')) return 'mp4';
+    if (urlLower.includes('.webm')) return 'webm';
+    if (urlLower.includes('.ogg') || urlLower.includes('.ogv')) return 'ogg';
+    if (urlLower.includes('.mov')) return 'mov';
+    if (urlLower.includes('.avi')) return 'avi';
+    if (urlLower.includes('.mkv')) return 'mkv';
+    // Default to mp4 if unknown
+    return 'mp4';
+  };
+
+  // Helper function to check browser support for video format
+  const canPlayFormat = (video, format) => {
+    switch (format) {
+      case 'mp4':
+        return video.canPlayType('video/mp4') !== '';
+      case 'webm':
+        return video.canPlayType('video/webm') !== '';
+      case 'ogg':
+        return video.canPlayType('video/ogg') !== '';
+      case 'hls':
+        return video.canPlayType('application/vnd.apple.mpegurl') !== '';
+      default:
+        return true; // Assume supported for other formats
+    }
+  };
+
+  // Main video loading effect
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(videoUrl);
-      hls.attachMedia(video);
+    const format = getVideoFormat(videoUrl);
+    setVideoError(null);
+    setIsBuffering(true);
 
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        const levels = hls.levels.map((lvl, idx) => ({
-          index: idx,
-          label: `${lvl.height}p`,
-        }));
-        setAvailableQualities([{ index: -1, label: "Auto" }, ...levels]);
-      });
-
-      hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
-        const level = hls.levels[data.level];
-        setCurrentLevelLabel(`${level.height}p`);
-        setCurrentLevel(data.level);
-      });
-
-      setHlsInstance(hls);
-      return () => hls.destroy();
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = videoUrl;
+    // Cleanup previous HLS instance
+    if (hlsInstance) {
+      hlsInstance.destroy();
+      setHlsInstance(null);
     }
-  }, []);
 
+    // Handle HLS format
+    if (format === 'hls') {
+      if (Hls.isSupported()) {
+        const hls = new Hls({
+          debug: false,
+          enableWorker: true,
+          lowLatencyMode: true,
+        });
+
+        hls.loadSource(videoUrl);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          const levels = hls.levels.map((lvl, idx) => ({
+            index: idx,
+            label: `${lvl.height}p`,
+          }));
+          setAvailableQualities([{ index: -1, label: "Auto" }, ...levels]);
+          setIsBuffering(false);
+        });
+
+        hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
+          const level = hls.levels[data.level];
+          if (level) {
+            setCurrentLevelLabel(`${level.height}p`);
+            setCurrentLevel(data.level);
+          }
+        });
+
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          console.error('HLS Error:', data);
+          if (data.fatal) {
+            switch (data.type) {
+              case Hls.ErrorTypes.NETWORK_ERROR:
+                setVideoError('Network error occurred');
+                hls.startLoad();
+                break;
+              case Hls.ErrorTypes.MEDIA_ERROR:
+                setVideoError('Media error occurred');
+                hls.recoverMediaError();
+                break;
+              default:
+                setVideoError('Fatal error occurred');
+                hls.destroy();
+                break;
+            }
+          }
+        });
+
+        setHlsInstance(hls);
+        return () => hls.destroy();
+      }
+      // Fallback for Safari native HLS support
+      else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoUrl;
+        video.crossOrigin = "anonymous";
+        video.preload = "metadata";
+        video.load();
+      } else {
+        setVideoError('HLS format not supported in this browser');
+      }
+    }
+    // Handle other video formats (MP4, WebM, etc.)
+    else {
+      // Check if browser supports the format
+      if (canPlayFormat(video, format)) {
+        video.src = videoUrl;
+        video.crossOrigin = "anonymous";
+        video.preload = "metadata";
+        video.load();
+
+        // Reset quality settings for direct video files
+        setAvailableQualities([]);
+        setCurrentLevelLabel("Original");
+      } else {
+        setVideoError(`${format.toUpperCase()} format not supported in this browser`);
+      }
+    }
+
+  }, [videoUrl]);
+
+  // Video event handlers
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -86,6 +182,7 @@ const VideoPlayer = () => {
       if (video.buffered.length > 0) {
         setBuffered(video.buffered.end(video.buffered.length - 1));
       }
+      setVideoError(null);
     };
 
     const handleTimeUpdate = () => {
@@ -97,21 +194,49 @@ const VideoPlayer = () => {
 
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => setIsPlaying(false);
+
+    const handleError = (e) => {
+      const error = video.error;
+      if (error) {
+        let errorMessage = 'Video playback error';
+        switch (error.code) {
+          case error.MEDIA_ERR_ABORTED:
+            errorMessage = 'Video playback aborted';
+            break;
+          case error.MEDIA_ERR_NETWORK:
+            errorMessage = 'Network error occurred';
+            break;
+          case error.MEDIA_ERR_DECODE:
+            errorMessage = 'Video decoding error';
+            break;
+          case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+            errorMessage = 'Video format not supported';
+            break;
+        }
+        setVideoError(errorMessage);
+      }
+      setIsBuffering(false);
+    };
 
     video.addEventListener("loadedmetadata", handleLoadedMetadata);
     video.addEventListener("timeupdate", handleTimeUpdate);
     video.addEventListener("play", handlePlay);
     video.addEventListener("pause", handlePause);
-    video.addEventListener("ended", () => setIsPlaying(false));
+    video.addEventListener("ended", handleEnded);
+    video.addEventListener("error", handleError);
 
     return () => {
       video.removeEventListener("loadedmetadata", handleLoadedMetadata);
       video.removeEventListener("timeupdate", handleTimeUpdate);
       video.removeEventListener("play", handlePlay);
       video.removeEventListener("pause", handlePause);
+      video.removeEventListener("ended", handleEnded);
+      video.removeEventListener("error", handleError);
     };
   }, []);
 
+  // Buffering state handlers
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -120,26 +245,33 @@ const VideoPlayer = () => {
     const handlePlaying = () => setIsBuffering(false);
     const handleStalled = () => setIsBuffering(true);
     const handleCanPlay = () => setIsBuffering(false);
+    const handleLoadStart = () => setIsBuffering(true);
+    const handleLoadedData = () => setIsBuffering(false);
 
     video.addEventListener("waiting", handleWaiting);
     video.addEventListener("playing", handlePlaying);
     video.addEventListener("stalled", handleStalled);
     video.addEventListener("canplay", handleCanPlay);
+    video.addEventListener("loadstart", handleLoadStart);
+    video.addEventListener("loadeddata", handleLoadedData);
 
     return () => {
       video.removeEventListener("waiting", handleWaiting);
       video.removeEventListener("playing", handlePlaying);
       video.removeEventListener("stalled", handleStalled);
       video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("loadstart", handleLoadStart);
+      video.removeEventListener("loadeddata", handleLoadedData);
     };
   }, []);
 
+  // Controls visibility handler
   useEffect(() => {
     const resetControlsTimeout = () => {
       if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
       setShowControls(true);
       controlsTimeoutRef.current = setTimeout(() => {
-        if (isPlaying) setShowControls(false);
+        if (isPlaying && !videoError) setShowControls(false);
       }, 3000);
     };
 
@@ -148,7 +280,7 @@ const VideoPlayer = () => {
 
     const handleMouseMove = () => resetControlsTimeout();
     const handleMouseLeave = () => {
-      if (isPlaying) setShowControls(false);
+      if (isPlaying && !videoError) setShowControls(false);
     };
 
     player.addEventListener("mousemove", handleMouseMove);
@@ -161,8 +293,9 @@ const VideoPlayer = () => {
       player.removeEventListener("mouseleave", handleMouseLeave);
       if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
     };
-  }, [isPlaying]);
+  }, [isPlaying, videoError]);
 
+  // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
       const tag = e.target.tagName;
@@ -205,19 +338,28 @@ const VideoPlayer = () => {
 
   const togglePlayPause = () => {
     const video = videoRef.current;
-    if (video) isPlaying ? video.pause() : video.play();
+    if (video && !videoError) {
+      if (isPlaying) {
+        video.pause();
+      } else {
+        video.play().catch(error => {
+          console.error('Play failed:', error);
+          setVideoError('Playback failed');
+        });
+      }
+    }
   };
 
   const skipBackward = () => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || videoError) return;
     video.currentTime = Math.max(0, video.currentTime - 10);
     showSkipIndicatorWithDirection("left");
   };
 
   const skipForward = () => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || videoError) return;
     video.currentTime = Math.min(video.duration, video.currentTime + 10);
     showSkipIndicatorWithDirection("right");
   };
@@ -229,6 +371,7 @@ const VideoPlayer = () => {
   };
 
   const handleTimelineClick = (e) => {
+    if (videoError) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const newTime = (clickX / rect.width) * duration;
@@ -284,6 +427,8 @@ const VideoPlayer = () => {
   };
 
   const handleVideoClick = (e) => {
+    if (videoError) return;
+
     const video = videoRef.current;
     const rect = video.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
@@ -305,6 +450,7 @@ const VideoPlayer = () => {
     lastTapRef.current = now;
   };
 
+  // Caption handling
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -328,7 +474,23 @@ const VideoPlayer = () => {
           className="player__video"
           onClick={handleVideoClick}
           playsInline
+          preload="metadata"
+          crossOrigin="anonymous"
+          controls={false}
         />
+
+        {videoError && (
+          <div className="player__error">
+            <div className="error-message">
+              <h3>Video Error</h3>
+              <p>{videoError}</p>
+              <button onClick={() => window.location.reload()}>
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
+
         <Watermark />
 
         <TitleOverlay title={videoTitle} visible={showControls} />
@@ -341,9 +503,8 @@ const VideoPlayer = () => {
         <SkipIndicator show={showSkipIndicator} direction={skipDirection} />
 
         <div
-          className={`player__controls ${
-            showControls ? "player__controls__visible" : ""
-          }`}
+          className={`player__controls ${showControls ? "player__controls__visible" : ""
+            }`}
         >
           <Timeline
             duration={duration}
@@ -384,10 +545,7 @@ const VideoPlayer = () => {
           availableQualities={availableQualities}
           showCaptions={showCaptions}
           setShowCaptions={setShowCaptions}
-          currentLevelLabel={
-            availableQualities.find((q) => q.index === currentLevel)?.label ||
-            "Auto"
-          }
+          currentLevelLabel={currentLevelLabel}
         />
       </div>
     </div>

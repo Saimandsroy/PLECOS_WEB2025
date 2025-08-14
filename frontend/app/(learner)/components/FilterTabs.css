@@ -1,9 +1,13 @@
 .explore-filters {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: row;
+  overflow-x: scroll;
+  padding: 1rem;
 }
-
+.explore-filters::-webkit-scrollbar{
+  display: none;
+}
 .explore-filters__button {
   padding: 0.75rem 1.5rem;
   border: none;

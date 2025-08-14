@@ -153,7 +153,7 @@
 @media (max-width: 768px) {
   .le-tabs {
     position: fixed;
-    top: 8vh;
+    top: 6.8vh;
     left: 0;
     bottom: 0;
     margin: 0;

@@ -8,7 +8,6 @@ const VideoDetails = ({
   instructor,
   views,
   uploadDate,
-  duration,
   rating,
   description,
   category,
@@ -47,7 +46,6 @@ const VideoDetails = ({
       <div className={styles.videoMeta}>
         <span>{views.toLocaleString()} views</span>
         <span>• {uploadDate}</span>
-        <span>• {duration}</span>
         <span>• ⭐ {rating}</span>
         <span>• {category}</span>
       </div>

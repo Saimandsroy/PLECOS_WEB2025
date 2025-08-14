@@ -227,9 +227,15 @@ body::-webkit-scrollbar {
 
     .pre-live-card {
         padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
     }
 
     .card-header {
         font-size: 1.5rem;
+    }
+     html, body {
+        height: auto;
+        overflow: auto;
     }
 }

@@ -1,8 +1,5 @@
 import React from "react";
 import "./ChannelHeader.css";
-// --- Helper Components & SVGs ---
-
-// Verified Badge SVG
 const VerifiedBadge = () => (
   <svg
     className="channel-header__verified-badge"
@@ -170,42 +167,4 @@ const ChannelHeader = ({
     </header>
   );
 };
-
-// // --- Prop Type Definitions ---
-
-// ChannelHeader.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   username: PropTypes.string.isRequired,
-//   isVerified: PropTypes.bool,
-//   profileImage: PropTypes.string.isRequired,
-//   bannerImage: PropTypes.string.isRequired,
-//   subject: PropTypes.string.isRequired,
-//   level: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-//   qualification: PropTypes.string,
-//   bio: PropTypes.string,
-//   externalLinks: PropTypes.shape({
-//     linkedin: PropTypes.string,
-//     portfolio: PropTypes.string,
-//     github: PropTypes.string,
-//   }),
-//   impactRate: PropTypes.number,
-//   totalViews: PropTypes.number,
-//   totalLearners: PropTypes.number,
-//   achievements: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//     })
-//   ),
-// };
-
-// ChannelHeader.defaultProps = {
-//   isVerified: false,
-//   qualification: "",
-//   bio: "",
-//   externalLinks: {},
-//   impactRate: 0,
-//   totalViews: 0,
-//   totalLearners: 0,
-//   achievements: [],
-// };
 export default ChannelHeader;

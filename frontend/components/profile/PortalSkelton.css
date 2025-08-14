@@ -1,0 +1,144 @@
+/* components/profile/ProfileSkeleton.css */
+.profile-skeleton {
+  width: 100%;
+}
+
+.profile-skeleton__banner {
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.profile-skeleton__content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-skeleton__top {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.profile-skeleton__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  flex-shrink: 0;
+}
+
+.profile-skeleton__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+.skeleton-line {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-line--name {
+  height: 28px;
+  width: 200px;
+}
+
+.skeleton-line--username {
+  height: 20px;
+  width: 150px;
+}
+
+.skeleton-line--role {
+  height: 18px;
+  width: 180px;
+}
+
+.skeleton-line--qualification {
+  height: 16px;
+  width: 220px;
+}
+
+.skeleton-line--bio {
+  height: 16px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.skeleton-line--bio-short {
+  height: 16px;
+  width: 70%;
+}
+
+.profile-skeleton__stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.skeleton-line--stat {
+  height: 20px;
+  width: 120px;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.course-card-skeleton {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-thumbnail-skeleton {
+  height: 180px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.course-info-skeleton {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-line--title {
+  height: 20px;
+  width: 100%;
+}
+
+.skeleton-line--subtitle {
+  height: 16px;
+  width: 80%;
+}
+
+.skeleton-line--price {
+  height: 18px;
+  width: 60px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
