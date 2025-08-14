@@ -14,7 +14,7 @@ import { ArrowRight, Calendar, CheckCircle, PlayCircle } from "lucide-react";
 // educator_id: "fad152c8-0671-483a-8766-d807a2f17697";
 // lecturesCount: 0;
 // level: "intermediate";
-// price: 700;   
+// price: 700;
 // published: false;
 // rating: 0;
 // reviewsCount: 0;
@@ -27,7 +27,8 @@ import { ArrowRight, Calendar, CheckCircle, PlayCircle } from "lucide-react";
 const exampleCourse = {
   course_id: "a939b149-6987-4a58-acd7-1648a14655b3",
   title: "bjcbjkjf",
-  thumbnailUrl: "https://cdn.prod.website-files.com/6424a84a1a908839d5724077/674db4b94f6966c47d740174_video-thumbnails-1.webp",
+  thumbnailUrl:
+    "https://cdn.prod.website-files.com/6424a84a1a908839d5724077/674db4b94f6966c47d740174_video-thumbnails-1.webp",
   educator_id: "fad152c8-0671-483a-8766-d807a2f17697",
   level: "intermediate",
   rating: 0,
@@ -53,7 +54,10 @@ const CourseCard = ({ course }) => {
   // Helper function to format date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
   };
 
   return (
@@ -61,7 +65,7 @@ const CourseCard = ({ course }) => {
       <a href={`/courses/${course.course_id}`} className={styles.card}>
         <div className={styles.cardThumbnail}>
           <img
-            src={course.thumbnailUrl}
+            src={course.thumbnail}
             alt={course.title}
             className={styles.thumbnailImage}
           />
@@ -108,8 +112,7 @@ const CourseCard = ({ course }) => {
             <div className={styles.ratingInfo}>
               <FaStar className={styles.starIcon} />
               <span>
-                <b>{course.rating}</b> ({course.reviewsCount}{" "}
-                reviews)
+                <b>{course.rating}</b> ({course.reviewsCount} reviews)
               </span>
             </div>
             <div className={styles.impactInfo}>
