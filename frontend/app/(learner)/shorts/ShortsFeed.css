@@ -7,6 +7,9 @@
   .le-mc {
     padding: 0 0;
   }
+  .feedback-fab {
+    display: none !important;
+  }
   
 }
 
