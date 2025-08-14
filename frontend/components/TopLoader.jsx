@@ -14,7 +14,7 @@ const TopLoader = () => {
         NProgress.set(0.4);
         NProgress.inc();
         NProgress.done();
-        // Optionally, you can add a small delay for better UX
+        // Optionally, you can` 11  ` add a small delay for better UX
     }, [pathname]);
 
     return null;

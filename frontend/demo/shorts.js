@@ -4,7 +4,7 @@ export const trendingShorts = [
     title: "Quick History Fact",
     views: "2.1K",
     duration: "0:58",
-    thumbnail: "🏛",
+    thumbnail: "/shorts.jpeg",
     category: "History",
   },
   {
@@ -12,7 +12,7 @@ export const trendingShorts = [
     title: "5-Minute Python Tip",
     views: "4.8K",
     duration: "1:32",
-    thumbnail: "💡",
+    thumbnail: "/shorts1.jpeg",
     category: "Programming",
   },
   {
@@ -20,7 +20,7 @@ export const trendingShorts = [
     title: "Math Trick Explained",
     views: "3.2K",
     duration: "1:15",
-    thumbnail: "🔢",
+    thumbnail: "/shorts2.jpeg",
     category: "Mathematics",
   },
   {
@@ -28,7 +28,7 @@ export const trendingShorts = [
     title: "Science in 60 Seconds",
     views: "5.6K",
     duration: "1:00",
-    thumbnail: "🧪",
+    thumbnail: "/shorts.jpeg",
     category: "Science",
   },
   {
@@ -36,7 +36,7 @@ export const trendingShorts = [
     title: "Quick History Fact",
     views: "2.1K",
     duration: "0:58",
-    thumbnail: "🏛",
+    thumbnail: "/shorts1.jpeg",
     category: "History",
   },
   {
@@ -44,7 +44,7 @@ export const trendingShorts = [
     title: "5-Minute Python Tip",
     views: "4.8K",
     duration: "1:32",
-    thumbnail: "💡",
+    thumbnail: "/shorts2.jpeg",
     category: "Programming",
   },
   {
@@ -52,7 +52,7 @@ export const trendingShorts = [
     title: "Math Trick Explained",
     views: "3.2K",
     duration: "1:15",
-    thumbnail: "🔢",
+    thumbnail: "/shorts.jpeg",
     category: "Mathematics",
   },
   {
@@ -60,7 +60,7 @@ export const trendingShorts = [
     title: "Science in 60 Seconds",
     views: "5.6K",
     duration: "1:00",
-    thumbnail: "🧪",
+    thumbnail: "/shorts1.jpeg",
     category: "Science",
   },
 ];

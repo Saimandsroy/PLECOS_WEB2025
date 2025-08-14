@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Video } from "lucide-react";
-import "./HomeShortsGrid.css"; // Updated CSS filename
+import "./HomeShortsGrid.css";
 
 export default function ShortsGrid({ trendingShorts }) {
   const carouselRef = useRef(null);
@@ -73,9 +73,6 @@ export default function ShortsGrid({ trendingShorts }) {
           <Video size={28} />
           Trending Shorts
         </h2>
-        {/* <a href="/TrendingShorts" className="home-see-more">
-          See more &gt;
-        </a> */}
       </div>
 
       <div className="home-carousel-container">
@@ -90,27 +87,14 @@ export default function ShortsGrid({ trendingShorts }) {
         <div className="home-carousel" ref={carouselRef}>
           {trendingShorts.map((short) => (
             <div className="home-carousel-item" key={short.id}>
-              <div className="home-explore-shorts__card">
-                <div className="home-explore-shorts__banner">
-                  <div className="home-explore-shorts__thumbnail">
-                    {short.thumbnail}
-                  </div>
-                  <div className="home-explore-shorts__duration">
-                    {short.duration}
-                  </div>
+              <div className="shorts-card">
+                <div className="shorts-thumbnail">
+                  <img src={short.thumbnail} alt={short.title} />
+                  <div className="shorts-duration">{short.duration}</div>
                 </div>
-                <div className="home-explore-shorts__info">
-                  <div className="home-explore-shorts__meta">
-                    <span className="home-explore-shorts__category">
-                      {short.category}
-                    </span>
-                    <span className="home-explore-shorts__views">
-                      👁 {short.views}
-                    </span>
-                  </div>
-                  <h3 className="home-explore-shorts__title-text">
-                    {short.title}
-                  </h3>
+                <div className="shorts-info">
+                  <h3 className="shorts-title">{short.title}</h3>
+                  <span className="shorts-views">{short.views} views</span>
                 </div>
               </div>
             </div>
