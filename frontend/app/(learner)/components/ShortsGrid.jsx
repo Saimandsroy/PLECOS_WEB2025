@@ -73,9 +73,9 @@ export default function ShortsGrid({ trendingShorts }) {
           <Video size={28} />
           Trending Shorts
         </h2>
-        <a href="/TrendingShorts" className="home-see-more">
+        {/* <a href="/TrendingShorts" className="home-see-more">
           See more &gt;
-        </a>
+        </a> */}
       </div>
 
       <div className="home-carousel-container">

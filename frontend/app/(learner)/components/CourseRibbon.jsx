@@ -76,9 +76,9 @@ export default function CourseRibbon({ title, popularCourses }) {
           <Play size={28} />
           {title || "Popular Courses"}
         </h2>
-        <a href="/PopularCourses" className="see-more">
+        {/* <a href="/PopularCourses" className="see-more">
           See more &gt;
-        </a>
+        </a> */}
       </div>
 
       <div className="carousel-container">

@@ -104,7 +104,7 @@ const CourseCard = ({ course }) => {
             </div>
             <div className={styles.dateInfo}>
               <Calendar size={14} />
-              <span>{formatDate(course.updatedAt)}</span>
+              <span>{formatDate(course.lastUpdated)}</span>
             </div>
           </div>
 
