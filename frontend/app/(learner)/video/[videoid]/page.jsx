@@ -1,13 +1,33 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import VideoPlayer from "./components/VideoPlayer";
 import VideoDetails from "./components/VideoDetails";
 import ActionBar from "./components/ActionBar";
 import CommentsSection from "./components/CommentsSection";
 import RecommendationsList from "./components/RecommendationsList";
-
 import styles from "./page.module.css";
-
+import { useParams } from "next/navigation";
+import { api } from "@/api/axios";
+import VideoDetailsSkeleton from "./components/VideoDetailsSkelton";
+import { formatRelativeTime } from "@/lib/relativeTime";
 const VideoView = () => {
+  const { videoId } = useParams();
+  const [sedio, setSedio] = useState();
+  // const videoUrl = process.env.NEXT_PUBLIC_R2_ENDPOINT + video.videoUrl
+  // console.log(videoUrl)
+  console.log(sedio)
+  useEffect(() => {
+    const data = async () => {
+      try {
+        const response = await api.get(`/videos/${videoId}`);
+        console.log(response.data.data)
+        setSedio(response.data.data);
+      } catch (error) {
+        console.error("Error fetching video data:", error);
+      }
+    }
+    data();
+  }, []);
   const videoData = {
     title: "Mastering React in 30 Minutes",
     src: "https://www.sample-videos.com/video321/mp4/240/big_buck_bunny_240p_2mb.mp4",
@@ -112,20 +132,19 @@ const VideoView = () => {
   return (
     <div className={styles.videoViewContainer}>
       <div className={styles.mainContent}>
-        <VideoPlayer src={videoData.src} />
-        <VideoDetails
-          title={videoData.title}
+        <VideoPlayer src={sedio?.videoUrl} />
+        {sedio ? (<VideoDetails
+          title={sedio.title}
           instructor={videoData.instructor}
-          views={videoData.views}
-          uploadDate={videoData.uploadDate}
-          duration={videoData.duration}
-          rating={videoData.rating}
-          description={videoData.description}
-          category={videoData.category}
-        />
+          views={sedio.views}
+          uploadDate={formatRelativeTime(sedio.createdAt)}
+          rating={sedio.likes}
+          description={sedio.description}
+          category={sedio.category}
+        />) : <VideoDetailsSkeleton />}
 
         <ActionBar likes={248} dislikes={3} />
-        <CommentsSection />
+        {sedio && <CommentsSection videoId={sedio?.video_id} />}
       </div>
       <aside className={styles.sidebar}>
         <RecommendationsList videos={recommendations} />

@@ -3,18 +3,30 @@
 import { useState, useEffect } from "react";
 import styles from "./CoursesSection.module.css";
 import CourseCard from "./CourseCard";
-import { popularCourses } from "@/demo/courses";
+import { api } from "@/api/axios";
+import { useSession } from "next-auth/react";
 
 const CoursesSection = ({ isSe = true, isPro = true, isEnr = true }) => {
+  const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setContent(popularCourses);
+    const fetchData = async () => {
+      console.log("Fetching courses for educator:", session);
+      if(!session || !session.user) {
+        console.log("Session is undefined");
+        setLoading(false);
+        return;
+      }
+      const educatorId =
+        session?.user?.id || "fad152c8-0671-483a-8766-d807a2f17697";
+      const res = await api.get(`/courses/educator/${educatorId}`);
+      console.log("Fetched courses:", res.data.data);
+      setContent(res.data.data);
       setLoading(false);
-    }, 100); // Simulated loading delay
+    };
+    fetchData();
   }, []);
 
   const renderContent = () => {
@@ -22,12 +34,7 @@ const CoursesSection = ({ isSe = true, isPro = true, isEnr = true }) => {
     return (
       <div className={styles.grid}>
         {content.map((course) => (
-          <CourseCard
-            key={course.id}
-            course={course}
-            isPro={isPro}
-            isEnr={isEnr}
-          />
+          <CourseCard key={course.course_id} course={course} />
         ))}
       </div>
     );

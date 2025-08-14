@@ -13,6 +13,9 @@ const reviews = [
     comment: "Good content, could use more projects.",
   },
   { name: "Fatima N.", rating: 5, comment: "Perfect for beginners!" },
+  { name: "Fatima N.", rating: 5, comment: "Perfect for beginners!" },
+  { name: "Fatima N.", rating: 5, comment: "Perfect for beginners!" },
+  { name: "Fatima N.", rating: 5, comment: "Perfect for beginners!" }
 ];
 const CourseReview = () => {
   const [newReview, setNewReview] = useState({

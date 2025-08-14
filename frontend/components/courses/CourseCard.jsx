@@ -5,34 +5,63 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { ArrowRight, Calendar, CheckCircle, PlayCircle } from "lucide-react";
 
-// Final data structure with the 'enrolled' field
+// Example course object with actual data structure
+// category: "business";
+// course_id: "a939b149-6987-4a58-acd7-1648a14655b3";
+// createdAt: "2025-08-11T15:21:32.594Z";
+// description: "bjdkjnnd dhhuud hhuidhuid uhduhud";
+// duration: 20;
+// educator_id: "fad152c8-0671-483a-8766-d807a2f17697";
+// lecturesCount: 0;
+// level: "intermediate";
+// price: 700;   
+// published: false;
+// rating: 0;
+// reviewsCount: 0;
+// studentsEnrolled: 0;
+// tags: [];
+// thumbnailUrl: "https://cdn.prod.website-files.com/6424a84a1a908839d5724077/674db4b94f6966c47d740174_video-thumbnails-1.webp";
+// title: "bjcbjkjf";
+// updatedAt: "2025-08-11T15:21:32.594Z";
+
 const exampleCourse = {
-  id: 1,
-  title: "[NEW] Ultimate AWS Certified Cloud Practitioner CLF-C02 2025",
-  thumbnail: "https://i.imgur.com/Q60y37g.jpeg",
+  course_id: "a939b149-6987-4a58-acd7-1648a14655b3",
+  title: "bjcbjkjf",
+  thumbnailUrl: "https://cdn.prod.website-files.com/6424a84a1a908839d5724077/674db4b94f6966c47d740174_video-thumbnails-1.webp",
+  educator_id: "fad152c8-0671-483a-8766-d807a2f17697",
+  level: "intermediate",
+  rating: 0,
+  reviewsCount: 0,
+  updatedAt: "2025-08-11T15:21:32.594Z",
+  tags: [],
+  description: "bjdkjnnd dhhuud hhuidhuid uhduhud",
+  studentsEnrolled: 0,
+  // Additional properties to maintain UI functionality
   instructorImage: "https://i.imgur.com/user-placeholder.jpeg",
   instructor: "Stephan Mark",
-  level: "Beginner",
-  rating: 4.3,
-  reviews: 2895,
   impactRate: "93%",
-  lastUpdated: "Aug 2025",
-  courseTags: ["Cloud", "AWS", "Certification"],
+  courseTags: ["Business", "Intermediate"],
   features: [
-    "Fully updated for CLF-C02",
-    "Full Practice Exam included",
-    "Learn core AWS Fundamentals",
+    "Duration: 20 minutes",
+    "Business category course",
+    "Learn core fundamentals",
   ],
-  enrolled: true, // <-- FINAL FIELD ADDED
+  enrolled: false,
 };
 
-const CourseCard = ({ course = exampleCourse }) => {
+const CourseCard = ({ course }) => {
+  // Helper function to format date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  };
+
   return (
     <div className={styles.cardWrapper}>
-      <a href={`/courses/${course.id}`} className={styles.card}>
+      <a href={`/courses/${course.course_id}`} className={styles.card}>
         <div className={styles.cardThumbnail}>
           <img
-            src={course.thumbnail}
+            src={course.thumbnailUrl}
             alt={course.title}
             className={styles.thumbnailImage}
           />
@@ -51,7 +80,7 @@ const CourseCard = ({ course = exampleCourse }) => {
           </div>
 
           <div className={styles.tagsContainer}>
-            {course.courseTags.map((tag, index) => (
+            {course.courseTags?.map((tag, index) => (
               <span key={index} className={styles.courseTag}>
                 {tag}
               </span>
@@ -71,7 +100,7 @@ const CourseCard = ({ course = exampleCourse }) => {
             </div>
             <div className={styles.dateInfo}>
               <Calendar size={14} />
-              <span>{course.lastUpdated}</span>
+              <span>{formatDate(course.updatedAt)}</span>
             </div>
           </div>
 
@@ -79,7 +108,7 @@ const CourseCard = ({ course = exampleCourse }) => {
             <div className={styles.ratingInfo}>
               <FaStar className={styles.starIcon} />
               <span>
-                <b>{course.rating}</b> ({course.reviews.toLocaleString()}{" "}
+                <b>{course.rating}</b> ({course.reviewsCount}{" "}
                 reviews)
               </span>
             </div>
@@ -104,7 +133,7 @@ const CourseCard = ({ course = exampleCourse }) => {
             ) : (
               <>
                 <ul className={styles.featuresList}>
-                  {course.features.map((feature, index) => (
+                  {course.features?.map((feature, index) => (
                     <li key={index}>
                       <CheckCircle size={16} className={styles.featureIcon} />
                       <span>{feature}</span>

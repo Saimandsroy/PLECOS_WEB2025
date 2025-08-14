@@ -1,0 +1,176 @@
+.warning-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: overlayFadeIn 0.2s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.warning-modal {
+  background: var(--background-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px var(--shadow-color);
+  max-width: 500px;
+  width: 100%;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.warning-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.warning-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.warning-title {
+  flex: 1;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.warning-modal-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: var(--background-secondary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.warning-modal-close:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+.warning-modal-body {
+  padding: 1.5rem;
+}
+
+.warning-message {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+  font-size: 1rem;
+}
+
+.warning-message strong {
+  color: var(--text-primary);
+}
+
+.warning-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.warning-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 140px;
+}
+
+.warning-btn-cancel {
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.warning-btn-cancel:hover {
+  background: var(--border-color);
+  transform: translateY(-1px);
+}
+
+.warning-btn-continue {
+  background: linear-gradient(135ef, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.warning-btn-continue:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-1px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .warning-modal {
+    margin: 1rem;
+    max-width: none;
+  }
+
+  .warning-actions {
+    flex-direction: column;
+  }
+
+  .warning-btn {
+    min-width: auto;
+  }
+
+  .warning-modal-header {
+    padding: 1.25rem;
+  }
+
+  .warning-modal-body {
+    padding: 1.25rem;
+  }
+}
+
+/* Dark mode adjustments */
+.dark .warning-modal {
+  background: var(--background-glass);
+}
