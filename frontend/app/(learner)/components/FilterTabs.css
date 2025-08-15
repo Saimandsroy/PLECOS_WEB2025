@@ -1,54 +1,136 @@
+.explore-filters-wrapper {
+    --background-body: #f5f7fa;
+    --background-item: #ffffff;
+    --background-item-hover: #f1f5f9;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: rgba(0, 0, 0, 0.06);
+    --shadow-color: rgba(100, 116, 139, 0.12);
+    --gradient-primary: linear-gradient(to right, #1e3a8a, #3b82f6);
+
+
+
+    --shadow-color-active: rgba(37, 99, 235, 0.3);
+    --count-bg: rgba(234, 88, 12, 0.1);
+    --count-bg-active: rgba(255, 255, 255, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+    .explore-filters-wrapper {
+        --background-body: #0f172a;
+        --background-item: rgba(30, 41, 59, 0.55);
+        --background-item-hover: rgba(51, 65, 85, 0.7);
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --border-color: rgba(255, 255, 255, 0.08);
+        --shadow-color: rgba(0, 0, 0, 0.25);
+        --shadow-color-active: rgba(99, 102, 241, 0.3);
+        --count-bg: rgba(20, 184, 166, 0.15);
+    }
+}
+
+.explore-filters-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
 .explore-filters {
-  display: flex;
-  gap: 1rem;
-  flex-direction: row;
-  overflow-x: scroll;
-  padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    overflow-x: scroll;
+    padding: 1rem 1rem 0 1rem;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    white-space: nowrap;
 }
-.explore-filters::-webkit-scrollbar{
-  display: none;
+
+.explore-filters::-webkit-scrollbar {
+    display: none;
 }
+
 .explore-filters__button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 25px;
-  background: var(--background-glass);
-  color: var(--text-secondary);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px var(--shadow-color);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+   
+    border-radius: 25px;
+    background: var(--background-item);
+    color: var(--text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-shrink: 0;
 }
 
 .explore-filters__button--active {
-  background: var(--gradient-primary);
-  color: white;
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3); /* Optional: keep visual highlight */
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 6px 20px var(--shadow-color-active);
+    border-color: transparent;
 }
 
 .explore-filters__button:not(.explore-filters__button--active):hover {
-  background: var(--background-glass-hover);
-  transform: translateY(-2px);
-}
-
-.explore-filters__button:not(.explore-filters__button--active) {
-  transform: translateY(0);
+    background: var(--background-item-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--shadow-color);
 }
 
 .explore-filters__count {
-  font-size: 0.8rem;
-  opacity: 0.8;
-  padding: 0.2rem 0.5rem;
-  border-radius: 10px;
-  background: rgba(59, 130, 246, 0.1); /* fallback for accent tone */
+    font-size: 0.8rem;
+    opacity: 0.9;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    background: var(--count-bg);
+    font-weight: 500;
 }
 
 .explore-filters__button--active .explore-filters__count {
-  background: rgba(255, 255, 255, 0.2);
+    background: var(--count-bg-active);
+}
+
+.scroll-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: var(--background-item);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.scroll-control:hover {
+    background: var(--background-item-hover);
+}
+
+.scroll-control.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#scroll-left {
+    left: -10px;
+}
+
+#scroll-right {
+    right: -10px;
 }
