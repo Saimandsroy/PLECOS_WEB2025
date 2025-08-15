@@ -7,49 +7,48 @@ export async function middleware(request) {
 
   console.log("🔍 Middleware triggered for:", pathname);
 
-  // Define public routes that don't need authentication
-  //const publicPaths = ["/sign-in", "/sign-up"];
+  // Public routes that don't require authentication
+  const publicPaths = ["/sign-in", "/sign-up"];
 
-  // Allow public paths and API routes
-  // if (publicPaths.includes(pathname) || pathname.startsWith("/api/")) {
-  //   console.log("✅ Allowing public/API path:", pathname);
-  //   return NextResponse.next();
-  // }
+  // Allow public paths (with subpaths) & API routes
+  if (
+    publicPaths.some(
+      (path) => pathname === path || pathname.startsWith(`${path}/`)
+    ) ||
+    pathname.startsWith("/api/")
+  ) {
+    console.log("✅ Public/API path, allowing access:", pathname);
+    return NextResponse.next();
+  }
 
-  // Get the token with minimal configuration
-  // const token = await getToken({
-  //   req: request,
-  //   secret: process.env.NEXTAUTH_SECRET,
-  // });
+  // Get the NextAuth token
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
-  // console.log("🔑 Token check for", pathname, ":", {
-  //   hasToken: !!token,
-  //   tokenEmail: token?.user?.email,
-  //   tokenExp: token?.exp,
-  //   currentTime: Math.floor(Date.now() / 1000),
-  // });
+  console.log("🔑 Token check for", pathname, ":", {
+    hasToken: !!token,
+    tokenEmail: token?.user?.email,
+    tokenExp: token?.exp,
+    currentTime: Math.floor(Date.now() / 1000),
+  });
 
-  // Redirect to signin if no token and trying to access protected route
-  // if (!token) {
-  //   console.log("🚫 No token found, redirecting to sign-in");
-  //   const signInUrl = new URL("/sign-in", request.url);
-  //   if (pathname !== "/sign-in") {
-  //     signInUrl.searchParams.set("callbackUrl", request.url);
-  //   }
-  //   return Response.redirect(signInUrl);
-  // }
+  // Redirect if token is missing
+  if (!token) {
+    console.log("🚫 No token found, redirecting to sign-in");
+    const signInUrl = new URL("/sign-in", request.url);
+    signInUrl.searchParams.set("callbackUrl", request.url);
+    return NextResponse.redirect(signInUrl);
+  }
 
-  // console.log("✅ Token valid, allowing access to:", pathname);
+  console.log("✅ Token valid, allowing access to:", pathname);
   return NextResponse.next();
 }
 
+// Only run middleware on protected routes (exclude public pages & static assets)
 export const config = {
   matcher: [
-    // Only match actual routes, not static assets
-    "/",
-    "/dashboard/:path*",
-    "/profile/:path*",
-    "/video/:path*",
-    "/search/:path*",
+    "/((?!sign-in|sign-up|_next|static|favicon.ico|logos|images|uploads).*)",
   ],
 };

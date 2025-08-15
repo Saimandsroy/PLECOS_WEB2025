@@ -7,11 +7,12 @@ import {
   BookmarkFilledIcon,
   StarIcon,
   GridIcon,
-  PlusIcon
-} from '@radix-ui/react-icons';
+  PlusIcon,
+} from "@radix-ui/react-icons";
 import { FaTowerCell } from "react-icons/fa6";
 import GlobalUploadStatus from "@/components/global/GlobalUploadStatus";
 import LayoutContent from "@/components/LayoutContent.jsx";
+import EducatorBreadcrumbs from "./EducatorBreadcrumbs"; // ✅ Import breadcrumbs
 
 export const metadata = {
   title: "Plecos",
@@ -19,31 +20,60 @@ export const metadata = {
 };
 
 const sidebarLinks = [
-  { to: '/educator', icon: <HomeIcon width={20} height={20} />, label: 'Home' },
-  { to: '/educator/courses', icon: <BookmarkFilledIcon width={20} height={20} />, label: 'Courses' },
-  { to: '/educator/live', icon: <FaTowerCell width={20} height={20} />, label: 'Live' },
-  { to: '/educator/analytics', icon: <GridIcon width={20} height={20} />, label: 'Analytics' },
-  { to: '/educator/tools', icon: <StarIcon width={20} height={20} />, label: 'Tools' },
-  { to: '/educator/create', icon: <PlusIcon width={48} height={48} />, label: 'Create' },
+  { to: "/educator", icon: <HomeIcon width={20} height={20} />, label: "Home" },
+  {
+    to: "/educator/courses",
+    icon: <BookmarkFilledIcon width={20} height={20} />,
+    label: "Courses",
+  },
+  {
+    to: "/educator/live",
+    icon: <FaTowerCell width={20} height={20} />,
+    label: "Live",
+  },
+  {
+    to: "/educator/analytics",
+    icon: <GridIcon width={20} height={20} />,
+    label: "Analytics",
+  },
+  {
+    to: "/educator/tools",
+    icon: <StarIcon width={20} height={20} />,
+    label: "Tools",
+  },
+  {
+    to: "/educator/create",
+    icon: <PlusIcon width={48} height={48} />,
+    label: "Create",
+  },
 ];
 
 const iFier = {
   identifier: "edu",
   model: [
-    { to: '/educator/create/video', label: 'Video' },
-    { to: '/educator/create/course', label: 'Course' },
-  ]
-}; // This can be used to conditionally render links
+    { to: "/educator/create/video", label: "Video" },
+    { to: "/educator/create/course", label: "Course" },
+  ],
+};
 
 export default function educatorLayout({ children }) {
   return (
-
     <LayoutContent>
       <div className="le-m">
         <Header roleTarget="/" />
         <div className="le-c">
-          <Tabs sidebarLinks={sidebarLinks} iFier={iFier} homePath="/educator" homeActivePaths={["/videos"]} roleTarget="/" title="Educator" />
-          <main className="le-mc">{children}</main>
+          <Tabs
+            sidebarLinks={sidebarLinks}
+            iFier={iFier}
+            homePath="/educator"
+            homeActivePaths={["/videos"]}
+            roleTarget="/"
+            title="Educator"
+          />
+          <main className="le-mc p-4">
+            <EducatorBreadcrumbs /> {/* ✅ Added here */}
+            {children}
+          </main>
         </div>
         <Footer />
       </div>
