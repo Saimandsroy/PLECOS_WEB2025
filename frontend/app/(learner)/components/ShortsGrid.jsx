@@ -87,14 +87,14 @@ export default function ShortsGrid({ trendingShorts }) {
         <div className="home-carousel" ref={carouselRef}>
           {trendingShorts.map((short) => (
             <div className="home-carousel-item" key={short.id}>
-              <div className="shorts-card">
-                <div className="shorts-thumbnail">
+              <div className="home-shorts-card">
+                <div className="home-shorts-thumbnail">
                   <img src={short.thumbnail} alt={short.title} />
-                  <div className="shorts-duration">{short.duration}</div>
+                  <div className="home-shorts-duration">{short.duration}</div>
                 </div>
-                <div className="shorts-info">
-                  <h3 className="shorts-title">{short.title}</h3>
-                  <span className="shorts-views">{short.views} views</span>
+                <div className="home-shorts-info">
+                  <h3 className="home-shorts-title">{short.title}</h3>
+                  <span className="home-shorts-views">{short.views} views</span>
                 </div>
               </div>
             </div>
