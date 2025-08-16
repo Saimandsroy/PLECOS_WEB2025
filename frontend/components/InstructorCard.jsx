@@ -36,7 +36,6 @@ const InstructorCard = ({ instructor }) => {
         <p className="explore-instructors__title-text">{instructor.title}</p>
         <p className="explore-instructors__specialty">{instructor.specialty}</p>
 
-        {/* 🎯 Follow Button */}
         <button
           className="explore-instructors__follow-btn"
           onClick={handleFollow}
