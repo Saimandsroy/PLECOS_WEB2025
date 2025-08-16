@@ -1,18 +1,23 @@
 "use client";
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Plus, Play } from "lucide-react";
-import "./ExploreVideos.css";
-import "./Carousel.css";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Star,
+  Clock,
+  Eye,
+  BookOpen,
+} from "lucide-react";
+import "./VideosRibbon.css";
 
 export default function VideosRibbon({ videoData }) {
   const carouselRef = useRef(null);
   const wrapperRef = useRef(null);
-  const hoverTimeoutRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [hoveredCardId, setHoveredCardId] = useState(null);
 
   const checkScrollPosition = useCallback(() => {
     const carousel = carouselRef.current;
@@ -21,16 +26,8 @@ export default function VideosRibbon({ videoData }) {
     const { scrollLeft, scrollWidth, clientWidth } = carousel;
     setShowLeftArrow(scrollLeft > 1);
     setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 1);
-    setTotalPages((prev) =>
-      Math.ceil(scrollWidth / clientWidth) !== prev
-        ? Math.ceil(scrollWidth / clientWidth)
-        : prev
-    );
-    setCurrentPage((prev) =>
-      Math.round(scrollLeft / clientWidth) !== prev
-        ? Math.round(scrollLeft / clientWidth)
-        : prev
-    );
+    setTotalPages(Math.ceil(scrollWidth / clientWidth));
+    setCurrentPage(Math.round(scrollLeft / clientWidth));
   }, []);
 
   useEffect(() => {
@@ -67,86 +64,101 @@ export default function VideosRibbon({ videoData }) {
     }
   };
 
-  const handleMouseEnter = (videoId) => {
-    clearTimeout(hoverTimeoutRef.current);
-    hoverTimeoutRef.current = setTimeout(() => setHoveredCardId(videoId), 300);
-  };
-
-  const handleMouseLeave = () => {
-    clearTimeout(hoverTimeoutRef.current);
-    setHoveredCardId(null);
-  };
-
   return (
-    <section className="explore-video-section">
-      <div className="explore-video-section-header">
+    <section className="popular-videos-ribbon">
+      <div className="popular-videos-ribbon-header">
         <h2>Top Learning Videos</h2>
-        {/* <a href="/videos" className="see-more">
-          See more &gt;
-        </a> */}
       </div>
 
-      <div
-        className="carousel-wrapper"
-        ref={wrapperRef}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div className="popular-carousel-wrapper" ref={wrapperRef}>
         <button
-          className={`scroll-btn left ${!showLeftArrow ? "hidden" : ""}`}
+          className={`popular-scroll-btn popular-left ${
+            !showLeftArrow ? "popular-hidden" : ""
+          }`}
           onClick={() => scroll("left")}
         >
-          <ChevronLeft size={28} />
+          <ChevronLeft size={30} />
         </button>
 
-        <div className="carousel" ref={carouselRef}>
+        <div className="popular-carousel" ref={carouselRef}>
           {videoData.map((video) => (
-            <div
-              className={`explore-video-card ${
-                hoveredCardId === video.id ? "active" : ""
-              }`}
-              key={video.id}
-              onMouseEnter={() => handleMouseEnter(video.id)}
-            >
-              <div className="thumbnail-wrapper">
-                <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="video-thumbnail"
-                />
-                <span className="watermark">PLECOS</span>
-              </div>
-              <div className="explore-video-info">
-                <h3 className="video-title">{video.title}</h3>
-                <div className="expanded-content">
-                  <p className="instructor-name">By {video.instructor}</p>
-                  <div className="tag-list">
-                    {video.tags.slice(0, 3).map((tag) => (
-                      <span key={tag} className="tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <button className="watch-now-button">Watch Now</button>
+            <div key={video.id} className="popular-video-card">
+              {/* Thumbnail */}
+              <div className="popular-thumbnail">
+                <img src={video.thumbnail} alt={video.title} />
+                <div className="popular-thumbnail-overlay">
+                  <button className="popular-play-overlay">
+                    <Play size={24} />
+                  </button>
                 </div>
+                <div className="popular-duration">
+                  <Clock size={12} /> {video.duration}
+                </div>
+                <div className="popular-watermark">PLECOS</div>
+              </div>
+
+              {/* Content */}
+              <div className="popular-video-content">
+                <h3>{video.title}</h3>
+                <p className="popular-instructor">By {video.instructor}</p>
+
+                <div className="popular-stats-row">
+                  <div className="popular-stat">
+                    <Eye size={14} /> {video.views} views
+                  </div>
+                  <div className="popular-stat">
+                    <BookOpen size={14} /> {video.level}
+                  </div>
+                  <div className="popular-rating">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={14}
+                        className={i < video.rating ? "popular-filled" : ""}
+                      />
+                    ))}
+                    <span>{video.rating}.0</span>
+                  </div>
+                </div>
+
+                <div className="popular-tags">
+                  {video.tags.slice(0, 3).map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                  {video.tags.length > 3 && (
+                    <span className="popular-more">
+                      +{video.tags.length - 3} more
+                    </span>
+                  )}
+                </div>
+
+                {/* Watch Now button always at bottom */}
+                <button className="popular-watch-btn">
+                  <Play size={18} /> Watch Now
+                </button>
               </div>
             </div>
           ))}
         </div>
 
         <button
-          className={`scroll-btn right ${!showRightArrow ? "hidden" : ""}`}
+          className={`popular-scroll-btn popular-right ${
+            !showRightArrow ? "popular-hidden" : ""
+          }`}
           onClick={() => scroll("right")}
         >
-          <ChevronRight size={28} />
+          <ChevronRight size={30} />
         </button>
       </div>
 
       {totalPages > 1 && (
-        <div className="nav-dots">
+        <div className="popular-dots">
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
-              className={`dot ${currentPage === index ? "active" : ""}`}
+              className={`popular-dot ${
+                currentPage === index ? "popular-active" : ""
+              }`}
               onClick={() => scrollToPage(index)}
             />
           ))}

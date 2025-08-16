@@ -1,5 +1,5 @@
-import React from 'react'
-import VideosRibbon from './VideosRibbon'
+import React from "react";
+import VideosRibbon from "../../components/VideosRibbon";
 export const videoData = [
   {
     id: 1,
@@ -138,13 +138,12 @@ export const videoData = [
   },
 ];
 
-
 function History() {
   return (
     <div>
-        <VideosRibbon videoData={videoData} />
+      <VideosRibbon videoData={videoData} />
     </div>
-  )
+  );
 }
 
-export default History
+export default History;

@@ -1,197 +1,237 @@
-/* src/components/VideosRibbon.css */
-
-/* --- General Section & Carousel Styles --- */
-.home-video-ribbon-section {
+.popular-videos-ribbon {
   width: 100%;
-  margin: 40px auto;
-  box-sizing: border-box;
-  font-family: sans-serif;
+  margin: 0 auto;
+  padding: 0rem 0rem;
 }
-
-.home-video-ribbon-section h2 {
-  font-size: 1.5rem;
-  font-weight: 500;
+.popular-videos-ribbon-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
-  color: #e5e5e5;
-  padding: 0 60px;
+}
+.popular-videos-ribbon-header p {
+  color: var(--text-secondary);
 }
 
-.home-carousel-wrapper {
+.popular-carousel-wrapper {
   position: relative;
+  overflow: hidden;
 }
-.home-carousel {
+.popular-carousel {
   display: flex;
-  gap: 12px;
-  /* This allows horizontal scrolling... */
+  gap: 1.5rem;
   overflow-x: auto;
-  /* Allow hovered card to expand vertically out of this container's bounds */
-  overflow-y: visible;
-  position: relative;
   scroll-behavior: smooth;
-  padding: 20px 60px;
-  margin: -20px -60px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  padding: 0 3rem;
 }
-
-.home-carousel::-webkit-scrollbar {
+.popular-carousel::-webkit-scrollbar {
   display: none;
 }
 
-.home-scroll-btn {
+.popular-scroll-btn {
   position: absolute;
   top: 0;
-  bottom: 0;
-  height: calc(100% - 40px);
-  margin: 20px 0;
-  width: 60px;
-  z-index: 30;
-  background-color: rgba(15, 23, 30, 0.7);
-  color: white;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
-}
-
-.home-carousel-wrapper:hover .home-scroll-btn {
-  opacity: 1;
-}
-
-.home-scroll-btn:hover { background-color: rgba(15, 23, 30, 0.9); }
-.home-scroll-btn.left { left: 0; }
-.home-scroll-btn.right { right: 0; }
-
-/* --- Video Card Styling --- */
-
-.home-video-card-container {
-  flex: 0 0 280px;
-  height: 158px;
-  position: relative;
-}
-
-.home-video-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-radius: 4px;
-  /* overflow: hidden; */
-  cursor: pointer;
-  background-color: #101721;
+  height: 100%;
+  width: 3rem;
   z-index: 10;
+  padding: 0.6rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+.popular-scroll-btn.popular-left {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+}
+.popular-scroll-btn.popular-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+}
+.popular-scroll-btn.popular-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.popular-video-card {
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
-}
-
-.home-video-thumbnail {
-  width: 100%;
-  height: 158px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-/* --- HOVER/ACTIVE STATE --- */
-.home-video-card.active {
-  transform: scale(1.15);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-  z-index: 20000;
-}
-
-.home-video-card-container.is-first .home-video-card.active { transform-origin: left center; }
-.home-video-card-container.is-last .home-video-card.active { transform-origin: right center; }
-.home-video-card-container.is-middle .home-video-card.active { transform-origin: center center; }
-
-/* --- EXPANDED CONTENT AREA --- */
-.home-expanded-content {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
-}
-
-.home-video-card.active .home-expanded-content {
-  max-height: 200px;
-  opacity: 1;
-  transition: max-height 0.3s ease-in, opacity 0.2s ease-in;
-  overflow: visible;
-}
-
-.home-expanded-info {
-  padding: 12px;
-}
-
-.home-action-buttons {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  flex: none;
+  width: 20rem;
+  height: 33rem; /* fixed height for uniformity */
+  background: var(--background-glass);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 6px var(--shadow-color);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.popular-video-card:hover {
+  box-shadow: 0 6px 16px var(--shadow-color);
+  transform: translateY(-2px);
 }
 
-.home-video-title {
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0;
+.popular-thumbnail {
+  position: relative;
+  height: 12rem;
+  background: var(--background-secondary);
 }
-
-.home-button-group .home-add-btn {
-  background: rgba(111, 111, 111, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  color: white;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
+.popular-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.popular-video-card:hover .popular-thumbnail img { transform: scale(1.05); }
+.popular-thumbnail-overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  background: rgba(0,0,0,0);
+  transition: background 0.3s ease;
+}
+.popular-video-card:hover .popular-thumbnail-overlay { background: rgba(0,0,0,0.25); }
+.popular-play-overlay {
+  opacity: 0;
+  transform: scale(0.75);
+  background: var(--background-glass);
+  backdrop-filter: blur(4px);
+  border-radius: 9999px;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+.popular-video-card:hover .popular-play-overlay { opacity: 1; transform: scale(1); }
+
+.popular-duration {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.popular-watermark {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: var(--brand-blue);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
 }
 
-.home-button-group .home-add-btn:hover {
-  background: rgba(255, 255, 255, 0.8);
-  color: #101721;
+.popular-video-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 1.5rem;
+}
+.popular-video-content h3 {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.popular-video-card:hover h3 { color: var(--text-accent); }
+.popular-instructor {
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.home-instructor-info {
-  color: #ccc;
-  font-size: 0.8rem;
-  margin: 0 0 10px 0;
+.popular-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
 }
+.popular-stat { display: flex; align-items: center; gap: 0.25rem; }
+.popular-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.popular-rating .popular-filled { color: #facc15; fill: #facc15; }
+.popular-rating span { margin-left: 0.25rem; }
 
-.home-tag-list {
+.popular-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
-
-.home-tag {
-  color: #aaa;
+.popular-tags span {
+  background: var(--accent);
+  color: var(--accent-foreground);
   font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+}
+.popular-tags span.popular-more {
+  background: var(--background-secondary);
+  color: var(--text-secondary);
 }
 
-.home-watch-now-btn {
+.popular-watch-btn {
+  margin-top: auto; /* ensures it sticks to bottom */
   width: 100%;
-  padding: 8px;
-  background-color: #2f3d4c;
+  background: var(--gradient-primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
   border: none;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  transition: background-color 0.2s ease;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
+.popular-watch-btn:hover { background: var(--gradient-secondary); transform: scale(1.02); }
+.popular-watch-btn:active { transform: scale(0.98); }
 
-.home-watch-now-btn:hover {
-  background-color: #4a5f78;
-  /* Ensure expanded content can overflow carousel vertically */
-  overflow: visible;
+.popular-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 0.5rem;
+}
+.popular-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background: var(--muted);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+.popular-dot.popular-active {
+  background: var(--text-accent);
+  width: 2rem;
 }
