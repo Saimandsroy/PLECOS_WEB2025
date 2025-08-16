@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from "react";
+import { useEffect } from "react";
 import CourseTitle from "./CourseTitle";
 import CourseBanner from "./CourseBanner";
 import CourseOverview from "./CourseOverview";
@@ -7,6 +8,7 @@ import CourseContent from "./CourseContent";
 import AboutInstructor from "./AboutInstructor";
 import CourseReview from "./CourseReview";
 import "./CourseClient.css";
+import { api } from "@/api/axios";
 
 
 const tabs = [
@@ -16,45 +18,20 @@ const tabs = [
   { key: "reviews", label: "Reviews" },
 ];
 
-const courseData = {
-  "1": {
-    thumbnail: "/course-thumb.jpg",
-    title: "Python Programming Essentials",
-    summary: "Master Python basics, syntax, and real-world scripting.",
-    level: "Beginner",
-    duration: "8 hours",
-    views: "42K",
-  },
-  "2": {
-    thumbnail: "/course-thumb.jpg",
-    title: "Machine Learning with Scikit-Learn",
-    summary: "Build models and understand core ML concepts using Python.",
-    level: "Intermediate",
-    duration: "12 hours",
-    views: "35K",
-  },
-  "3": {
-    thumbnail: "/course-thumb.jpg",
-    title: "Full Stack Web Development",
-    summary: "HTML, CSS, JS, React, Node & MongoDB from scratch.",
-    level: "Advanced",
-    duration: "18 hours",
-    views: "70K",
-  },
-  "4": {
-    thumbnail: '/course-thumb.jpg',
-    title: 'Machine Learning Basics (Level 0)',
-    summary: 'Learn the fundamentals of machine learning including supervised and unsupervised learning.',
-    level: 'Beginner',
-    duration: '6 hours',
-    views: '21K'
-  },
-};
 
 export default function CourseClient({ courseID }) {
   const [tab, setTab] = useState("overview");
-  const course = courseData[courseID];
-  if (!course) return <h2>Course not found!</h2>;
+  const [course, setCourse] = useState(null);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      const response = await api.get(`/courses/${courseID}`);
+      setCourse(response.data.data);
+    };
+    fetchCourse();
+  }, [courseID]);
+
+  if (!course) return <div style={{ textAlign: "center", marginTop: 50 }}>Loading...</div>;
   return (
     <div>
       {/* <CourseTitle title={course.title} /> */}

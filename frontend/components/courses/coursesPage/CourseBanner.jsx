@@ -27,19 +27,19 @@ const CourseBanner = ({ course }) => {
   return (
     <div className="course-banner glass-card">
       <img
-        src={course.thumbnail}
+        src={`${process.env.NEXT_PUBLIC_R2_ENDPOINT}${course.thumbnailUrl}`}
         alt="Course Thumbnail"
         className="course-thumbnail"
       />
 
       <div className="course-info">
         <h2 className="course-title">{course.title}</h2>
-        <p className="course-summary">{course.summary}</p>
+        <p className="course-summary">{course.description}</p>
 
         <div className="course-meta">
           <span>Level: {course.level}</span>
-          <span>Duration: {course.duration}</span>
-          <span>Views: {course.views}</span>
+          <span>Duration: {course.duration} {course.duration==1?"hour":"hours"}</span>
+          <span>Enrolled: {course.studentsEnrolled}</span>
         </div>
 
         {!enrolled ? (

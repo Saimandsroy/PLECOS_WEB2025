@@ -16,6 +16,8 @@ import EducatorRibbon from "./components/EducatorRibbon";
 import CourseGrid from './components/CourseGrid';
 import EducatorGrid from './components/EducatorGrid';
 import VideoGrid from './components/VideoGrid';
+import { useEffect } from "react";
+import { api } from "@/api/axios";
 
 const filters = [
     { id: 'all', label: 'All', count: '1.2K+' },
@@ -26,6 +28,15 @@ const filters = [
 
 export default function ExplorePage() {
     const [activeFilter, setActiveFilter] = useState('all');
+    const [popularCourses, setPopularCourses] = useState([]);
+    useEffect(()=> {
+        async function fetchPopularCourses() {
+            const res = await api.get('/courses');
+            setPopularCourses(res.data.data);
+        }
+        fetchPopularCourses();
+    }, [])
+
     return (
         <div className="explore-page">
             <FilterTabs filters={filters} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />

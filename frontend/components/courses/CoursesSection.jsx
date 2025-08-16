@@ -6,7 +6,7 @@ import CourseCard from "./CourseCard";
 import { api } from "@/api/axios";
 import { useSession } from "next-auth/react";
 
-const CoursesSection = ({ isSe = true, isPro = true, isEnr = true }) => {
+const CoursesSection = () => {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
@@ -20,7 +20,7 @@ const CoursesSection = ({ isSe = true, isPro = true, isEnr = true }) => {
         return;
       }
       const educatorId =
-        session?.user?.id || "fad152c8-0671-483a-8766-d807a2f17697";
+        session?.user?.id;
       const res = await api.get(`/courses/educator/${educatorId}`);
       console.log("Fetched courses:", res.data.data);
       setContent(res.data.data);
