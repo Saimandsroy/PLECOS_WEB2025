@@ -10,6 +10,7 @@ const authApi = axios.create({
 });
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       name: "Credentials",

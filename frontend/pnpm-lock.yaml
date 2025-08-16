@@ -71,6 +71,9 @@ importers:
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.1.0)
+      react-slot:
+        specifier: ^0.1.2
+        version: 0.1.2(react@19.1.0)
       recharts:
         specifier: ^3.0.2
         version: 3.0.2(@types/react@19.1.9)(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(redux@5.0.1)
@@ -1347,6 +1350,11 @@ packages:
         optional: true
       redux:
         optional: true
+
+  react-slot@0.1.2:
+    resolution: {integrity: sha512-smexOAGO7WyXMXlFgvzBjELeA9BYWKYdONI0vUmzSXYDEhxEG+FrpSPDaSdlc2fi2cKRJQa0q3NSD14hhCrdmw==}
+    peerDependencies:
+      react: ^15
 
   react@19.1.0:
     resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
@@ -3014,6 +3022,11 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.1.9
       redux: 5.0.1
+
+  react-slot@0.1.2(react@19.1.0):
+    dependencies:
+      prop-types: 15.8.1
+      react: 19.1.0
 
   react@19.1.0: {}
 

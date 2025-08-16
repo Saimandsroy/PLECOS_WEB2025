@@ -64,7 +64,7 @@ const ProfilePage = () => {
         setProfileLoading(true);
         const response = await api.get(`/portal/${portalId}`);
         const data = response.data.data[0];
-        console.log("Profile response:", response);
+        console.log("Profile response:", data);
         if (!data) throw new Error('Failed to fetch profile');
         setProfileData(data);
       } catch (error) {
@@ -234,7 +234,7 @@ const ProfilePage = () => {
   if (!profileData) {
     return <div className="error-message">Failed to load profile data</div>;
   }
-
+  console.log("this is the profile data", profileData)
   return (
     <div className="instructor-home">
       <ChannelHeader {...profileData} />

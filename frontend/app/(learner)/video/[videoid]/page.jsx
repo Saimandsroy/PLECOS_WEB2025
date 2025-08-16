@@ -28,86 +28,6 @@ const VideoView = () => {
     }
     data();
   }, []);
-  const videoData = {
-    title: "Mastering React in 30 Minutes",
-    src: "https://www.sample-videos.com/video321/mp4/240/big_buck_bunny_240p_2mb.mp4",
-    instructor: {
-      name: "Jane Doe",
-      avatar:
-        "https://i.pinimg.com/474x/81/76/3e/81763edbda7fa57b57f36bfc0c05840b.jpg",
-      badge: "Top Instructor",
-    },
-    views: 12456,
-    uploadDate: "July 1, 2025",
-    duration: "30:15",
-    rating: 4.8,
-    category: "Web Development",
-    description: `In this crash course, you'll learn the core fundamentals of React, including components, state, props, hooks, and more. Whether you're a beginner or refreshing your skills, this guide will help you grasp the concepts fast and efficiently. We cover JSX, component structure, conditional rendering, and real project insights. Dive into hands-on coding and practical tips that accelerate your journey as a React developer.`,
-  };
-
-  const commentsList = [
-    {
-      id: 1,
-      user: {
-        name: "Sarah Johnson",
-        avatar:
-          "https://images.unsplash.com/photo-1494790108755-2616b612b1d4?w=40&h=40&fit=crop&crop=face",
-        isVerified: false,
-      },
-      content:
-        "This explanation really helped me understand the concept! The examples were particularly clear.",
-      timestamp: "2 hours ago",
-      likes: 12,
-      isLiked: false,
-      replies: [
-        {
-          id: 11,
-          user: {
-            name: "Mike Chen",
-            avatar:
-              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
-            isVerified: false,
-          },
-          content:
-            "I agree! The visual demonstrations made it so much easier to grasp.",
-          timestamp: "1 hour ago",
-          likes: 3,
-          isLiked: true,
-        },
-      ],
-    },
-    {
-      id: 2,
-      user: {
-        name: "Alex Rodriguez",
-        avatar:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
-        isVerified: true,
-      },
-      content:
-        "Could you make a follow-up video covering the advanced applications of this topic?",
-      timestamp: "4 hours ago",
-      likes: 8,
-      isLiked: true,
-      replies: [],
-    },
-    {
-      id: 3,
-      user: {
-        name: "Emma Davis",
-        avatar:
-          "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
-        isVerified: false,
-      },
-      content:
-        "Thank you for breaking this down step by step. It's exactly what I needed for my assignment!",
-      timestamp: "6 hours ago",
-      likes: 15,
-      isLiked: false,
-      replies: [],
-    },
-  ];
-
   const recommendations = [
     {
       id: "r1",
@@ -135,7 +55,7 @@ const VideoView = () => {
         <VideoPlayer src={sedio?.videoUrl} />
         {sedio ? (<VideoDetails
           title={sedio.title}
-          instructor={videoData.instructor}
+          instructor={"rahul"}
           views={sedio.views}
           uploadDate={formatRelativeTime(sedio.createdAt)}
           rating={sedio.likes}
