@@ -1,6 +1,7 @@
 import React from "react";
 import { CommentItem } from "./CommentItem";
 import CommentSkeleton from "./CommentSkeleton";
+import "./CommentsList.css"
 
 export const CommentList = ({
     comments,

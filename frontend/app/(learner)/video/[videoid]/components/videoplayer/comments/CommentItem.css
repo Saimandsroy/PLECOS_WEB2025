@@ -1,0 +1,45 @@
+.replies-info {
+  margin-top: 8px;
+  margin-left: 40px; /* indent under the comment */
+}
+
+.toggle-replies-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.toggle-replies-btn:hover {
+  text-decoration: underline;
+  color: var(--color-primary-hover);
+}
+
+.replies-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: 20px;
+}
+
+.reply-item {
+  background: var(--color-surface);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.loading-text {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.error-replies {
+  font-size: 13px;
+  color: #cf222e; /* keep error as danger red or map to --color-danger if you have */
+}

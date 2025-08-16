@@ -23,7 +23,7 @@ const CommentSection = ({ videoId }) => {
     addComment,
     updateComment,
     removeComment,
-  } = useCommentsPagination(videoId); // Hook in parent
+  } = useCommentsPagination(videoId);
 
   const { isMobile } = useMobileDetection();
   const [isCollapsed, setIsCollapsed] = useState(true);
