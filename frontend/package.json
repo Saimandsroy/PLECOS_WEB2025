@@ -12,8 +12,10 @@
     "@aws-sdk/client-s3": "^3.864.0",
     "@aws-sdk/s3-request-presigner": "^3.864.0",
     "@radix-ui/react-icons": "^1.3.2",
+    "@radix-ui/react-slot": "^1.2.3",
     "@tanstack/react-query": "^5.84.2",
     "axios": "^1.10.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "hls.js": "^1.6.7",
@@ -30,12 +32,14 @@
     "react-hook-form": "^7.60.0",
     "react-icons": "^5.5.0",
     "recharts": "^3.0.2",
+    "tailwind-merge": "^3.3.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "24.2.1",
     "@types/react": "19.1.9",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.6"
   }
 }

@@ -2,26 +2,20 @@ import React from "react";
 import { Heart, MessageCircle, MoreVertical } from "lucide-react";
 import { formatRelativeTime } from "@/lib/relativeTime";
 import { ReplyInput } from "./ReplyInput";
+import { useState } from "react";
 
 export const CommentItem = ({
     comment,
-    replyInputs,
-    setReplyInputs,
     handleLike,
-    handleAddReply,
 }) => {
-    const toggleReplyInput = () => {
-        setReplyInputs((prev) =>
-            prev.hasOwnProperty(comment.comment_id)
-                ? (() => {
-                    const updated = { ...prev };
-                    delete updated[comment.comment_id];
-                    return updated;
-                })()
-                : { ...prev, [comment.comment_id]: "" }
-        );
-    };
+    const [isOpenReply, setIsOpenReply] = useState(false);
+    const handleAddReply = (reply) => {
+        console.log("helo", reply)
+    }
 
+    const toggleReplyInput = () => {
+        setIsOpenReply(!isOpenReply);
+    }
     return (
         <div className="comment-item">
             <div className="comment-main">
@@ -35,8 +29,8 @@ export const CommentItem = ({
                         <span className="username">
                             Rahul
                             {/* {comment.user.isVerified && (
-                <span className="verified">✓</span>
-              )} */}
+                                <span className="verified">✓</span>
+                            )} */}
                         </span>
                         <span className="timestamp">
                             {formatRelativeTime(comment.createdAt)}
@@ -63,11 +57,9 @@ export const CommentItem = ({
                         </button>
                     </div>
 
-                    {replyInputs.hasOwnProperty(comment.comment_id) && (
+                    {isOpenReply && (
                         <ReplyInput
                             comment={comment}
-                            replyInputs={replyInputs}
-                            setReplyInputs={setReplyInputs}
                             handleAddReply={handleAddReply}
                         />
                     )}

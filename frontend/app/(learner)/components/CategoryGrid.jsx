@@ -24,9 +24,9 @@ export default function CategoryGrid({ categories }) {
           <BookOpen size={28} />
           Popular Categories
         </h2>
-        <a href="/PopularCategories" className="see-more">
+        {/* <a href="/PopularCategories" className="see-more">
           See more &gt;
-        </a>
+        </a> */}
       </div>
 
       <div className="carousel-wrapper">

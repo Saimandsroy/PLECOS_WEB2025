@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Video } from "lucide-react";
-import "./ShortsGrid.css"; // Using the new dedicated CSS file
+import "./HomeShortsGrid.css";
 
 export default function ShortsGrid({ trendingShorts }) {
   const carouselRef = useRef(null);
@@ -67,48 +67,34 @@ export default function ShortsGrid({ trendingShorts }) {
   };
 
   return (
-    <section className="shorts-grid">
-      <div className="shorts-grid-header">
-        <h2 className="shorts-grid__title">
+    <section className="home-shorts-grid">
+      <div className="home-shorts-grid-header">
+        <h2 className="home-shorts-grid__title">
           <Video size={28} />
           Trending Shorts
         </h2>
-        <a href="/TrendingShorts" className="see-more">
-          See more &gt;
-        </a>
       </div>
 
-      <div className="carousel-container">
+      <div className="home-carousel-container">
         <button
-          className={`carousel-arrow left ${isAtStart ? "hidden" : ""}`}
+          className={`home-carousel-arrow left ${isAtStart ? "hidden" : ""}`}
           onClick={() => scroll("left")}
           aria-label="Scroll Left"
         >
           &#10094;
         </button>
 
-        <div className="carousel" ref={carouselRef}>
+        <div className="home-carousel" ref={carouselRef}>
           {trendingShorts.map((short) => (
-            <div className="carousel-item" key={short.id}>
-              <div className="explore-shorts__card">
-                <div className="explore-shorts__banner">
-                  <div className="explore-shorts__thumbnail">
-                    {short.thumbnail}
-                  </div>
-                  <div className="explore-shorts__duration">
-                    {short.duration}
-                  </div>
+            <div className="home-carousel-item" key={short.id}>
+              <div className="home-shorts-card">
+                <div className="home-shorts-thumbnail">
+                  <img src={short.thumbnail} alt={short.title} />
+                  <div className="home-shorts-duration">{short.duration}</div>
                 </div>
-                <div className="explore-shorts__info">
-                  <div className="explore-shorts__meta">
-                    <span className="explore-shorts__category">
-                      {short.category}
-                    </span>
-                    <span className="explore-shorts__views">
-                      👁 {short.views}
-                    </span>
-                  </div>
-                  <h3 className="explore-shorts__title-text">{short.title}</h3>
+                <div className="home-shorts-info">
+                  <h3 className="home-shorts-title">{short.title}</h3>
+                  <span className="home-shorts-views">{short.views} views</span>
                 </div>
               </div>
             </div>
@@ -116,7 +102,7 @@ export default function ShortsGrid({ trendingShorts }) {
         </div>
 
         <button
-          className={`carousel-arrow right ${isAtEnd ? "hidden" : ""}`}
+          className={`home-carousel-arrow right ${isAtEnd ? "hidden" : ""}`}
           onClick={() => scroll("right")}
           aria-label="Scroll Right"
         >
@@ -125,11 +111,11 @@ export default function ShortsGrid({ trendingShorts }) {
       </div>
 
       {totalPages > 1 && (
-        <div className="carousel-dots">
+        <div className="home-carousel-dots">
           {Array.from({ length: totalPages }).map((_, idx) => (
             <button
               key={idx}
-              className={`dot ${currentPage === idx ? "active" : ""}`}
+              className={`home-dot ${currentPage === idx ? "active" : ""}`}
               onClick={() => goToPage(idx)}
               aria-label={`Go to page ${idx + 1}`}
             />

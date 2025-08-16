@@ -90,9 +90,9 @@ export default function EducatorRibbon({
     <section className="educator-ribbon">
       <div className="educator-ribbon-header">
         <h2>{title}</h2>
-        <a href="/FeaturedInstructors" className="see-more">
+        {/* <a href="/FeaturedInstructors" className="see-more">
           See more &gt;
-        </a>
+        </a> */}
       </div>
 
       <div className="carousel-container">

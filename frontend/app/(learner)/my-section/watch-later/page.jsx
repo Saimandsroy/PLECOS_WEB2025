@@ -1,73 +1,19 @@
 "use client";
 import React, { useState } from "react";
-import VideoCard from "./components/VideoCard";
-import ShortsRow from "./components/ShortsRow";
-import thumb from "@/public/logo.png";
 import Link from "next/link";
 import { ArrowLeftIcon } from "lucide-react";
+
+import VideoCard from "@/components/profile/VideoCard";
+import ShortsRow from "./components/ShortsRow";
 import Tabs from "./components/Tabs";
 
-const videoData = [
-  {
-    thumbnail: thumb,
-    title: "Learn Langchain in 1 hours | Langchain Latest Crash Course 2024",
-    views: "20K",
-    timeAgo: "1 year ago",
-    duration: "1:04:54",
-  },
-  {
-    thumbnail: thumb,
-    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
-    views: "2.3K",
-    timeAgo: "1 year ago",
-    duration: "2:01:00",
-  },
-  {
-    thumbnail: thumb,
-    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
-    views: "2.3K",
-    timeAgo: "1 year ago",
-    duration: "2:01:00",
-  },
-  {
-    thumbnail: thumb,
-    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
-    views: "2.3K",
-    timeAgo: "1 year ago",
-    duration: "2:01:00",
-  },
-  {
-    thumbnail: thumb,
-    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
-    views: "2.3K",
-    timeAgo: "1 year ago",
-    duration: "2:01:00",
-  },
-  {
-    thumbnail: thumb,
-    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
-    views: "2.3K",
-    timeAgo: "1 year ago",
-    duration: "2:01:00",
-  },
-  {
-    thumbnail: thumb,
-    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
-    views: "2.3K",
-    timeAgo: "1 year ago",
-    duration: "2:01:00",
-  },
-  {
-    thumbnail: thumb,
-    title: "Machine Learning Fundamentals | Harward CS101 | Chapter 1",
-    views: "2.3K",
-    timeAgo: "1 year ago",
-    duration: "2:01:00",
-  },
-];
+import { videoDataPage } from "@/demo/videoPage";
+
+import thumb from "@/public/logo.png";
 
 const shortsData = [
   {
+    id: "s1",
     title: "React useState in 60s",
     views: "120K",
     timeAgo: "2 weeks ago",
@@ -75,6 +21,7 @@ const shortsData = [
     thumbnail: thumb,
   },
   {
+    id: "s2",
     title: "JS Arrow Functions Explained",
     views: "98K",
     timeAgo: "1 month ago",
@@ -87,7 +34,8 @@ const WatchLater = () => {
   const [activeTab, setActiveTab] = useState("videos");
 
   return (
-    <div style={{ padding: "2rem 0" }}>
+    <div style={{ padding: "2rem 1rem" }}>
+      {" "}
       <div
         style={{
           display: "flex",
@@ -97,30 +45,43 @@ const WatchLater = () => {
         }}
       >
         <Link href={"/my-section"}>
-          <ArrowLeftIcon />
+          <ArrowLeftIcon />{" "}
         </Link>
-        <h2 style={{ fontWeight: 600, fontSize: 24 }}>Watch Later</h2>
+
+        <h2
+          style={{
+            fontWeight: 600,
+            fontSize: 24,
+            color: "var(--text-primary)",
+          }}
+        >
+          Watch Later
+        </h2>
       </div>
-      <Tabs active={activeTab} setActive={setActiveTab} />
+      <Tabs active={activeTab} setActive={setActiveTab} />     {" "}
       {activeTab === "videos" && (
         <div
           style={{
             marginTop: "2rem",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: 10,
+            gap: "2rem",
           }}
         >
-          {videoData.map((video, idx) => (
-            <VideoCard key={idx} {...video} logo={thumb} />
-          ))}
+          {" "}
+          {/* Using the imported 'videoDataPage' and the reusable VideoCard component */}{" "}
+          {videoDataPage.map((video) => (
+            <VideoCard key={video.id} video={video} />
+          ))}{" "}
         </div>
-      )}
+      )}{" "}
       <div style={{ marginTop: "2rem" }}>
-        {activeTab === "shorts" && (
+        {" "}
+        {activeTab ===
+          "shorts" /* Using the locally defined 'shortsData' */ && (
           <ShortsRow shorts={shortsData} logo={thumb} />
-        )}
-      </div>
+        )}{" "}
+      </div>{" "}
     </div>
   );
 };
