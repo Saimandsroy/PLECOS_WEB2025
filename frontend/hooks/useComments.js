@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { api } from "@/api/axios";
 
-export const useCommentsPagination = (videoId) => {
+export const useCommentsPagination = (typeId, comment) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -9,22 +9,25 @@ export const useCommentsPagination = (videoId) => {
   const [lastEvaluatedKey, setLastEvaluatedKey] = useState(null);
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState("newest");
+  const params = new URLSearchParams({
+    limit: "20",
+    sort: sortBy,
+    ...(lastEvaluatedKey && !reset && { lastEvaluatedKey }),
+  });
+  let url = `/comments/video/${typeId}?${params}`;
+  if (comment) {
+    url = `/comments/${typeId}/replies?${params}`;
+  }
 
   const fetchComments = useCallback(
     async (reset = false) => {
-      if (loading || !videoId) return;
+      if (loading || !typeId) return;
 
       setLoading(true);
       setError(null);
 
       try {
-        const params = new URLSearchParams({
-          limit: "20",
-          sort: sortBy,
-          ...(lastEvaluatedKey && !reset && { lastEvaluatedKey }),
-        });
-
-        const response = await api.get(`/comments/video/${videoId}?${params}`);
+        const response = await api.get(url);
 
         if (response.data.success) {
           const newComments = response.data.data;
@@ -53,7 +56,7 @@ export const useCommentsPagination = (videoId) => {
         }
       }
     },
-    [videoId, lastEvaluatedKey, loading, sortBy]
+    [typeId, lastEvaluatedKey, loading, sortBy]
   );
 
   const loadMore = useCallback(() => {
@@ -88,10 +91,10 @@ export const useCommentsPagination = (videoId) => {
 
   // Initial load
   useEffect(() => {
-    if (videoId) {
+    if (typeId) {
       refresh();
     }
-  }, [videoId, sortBy]);
+  }, [typeId, sortBy]);
 
   // Add new comment optimistically
   const addComment = useCallback((newComment) => {
