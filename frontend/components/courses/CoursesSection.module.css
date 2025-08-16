@@ -19,7 +19,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, 330px);
-  justify-content: center; /* This centers the grid items */
+  justify-content: start;
   gap: 4rem;
   margin-top: 1rem;
   align-items: stretch;

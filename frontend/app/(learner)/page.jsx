@@ -13,9 +13,13 @@ import "./page.css";
 import FilterTabs from "./components/FilterTabs";
 import VideosRibbon from "./components/VideosRibbon";
 import EducatorRibbon from "./components/EducatorRibbon";
-import CourseGrid from "./components/CourseGrid";
-import EducatorGrid from "./components/EducatorGrid";
-import VideoGrid from "./components/VideoGrid";
+
+import CourseGrid from './components/CourseGrid';
+import EducatorGrid from './components/EducatorGrid';
+import VideoGrid from './components/VideoGrid';
+import { useEffect } from "react";
+import { api } from "@/api/axios";
+
 
 const filters = [
   { id: "all", label: "All", count: "1.2K+" },
@@ -25,33 +29,36 @@ const filters = [
 ];
 
 export default function ExplorePage() {
-  const [activeFilter, setActiveFilter] = useState("all");
+    const [activeFilter, setActiveFilter] = useState('all');
+    const [popularCourses, setPopularCourses] = useState([]);
+    useEffect(()=> {
+        async function fetchPopularCourses() {
+            const res = await api.get('/courses');
+            setPopularCourses(res.data.data);
+        }
+        fetchPopularCourses();
+    }, [])
 
-  return (
-    <div className="explore-page">
-      <FilterTabs
-        filters={filters}
-        activeFilter={activeFilter}
-        setActiveFilter={setActiveFilter}
-      />
-      {activeFilter === "all" && (
-        <>
-          <ShortsGrid trendingShorts={trendingShorts} />
-          <VideosRibbon videoData={videoData} />
-          <EducatorRibbon
-            featuredInstructors={featuredInstructors}
-            title="Featured Educators"
-          />
-          <CourseRibbon popularCourses={popularCourses} />
-        </>
-      )}
-      {activeFilter === "courses" && (
-        <CourseGrid popularCourses={popularCourses} />
-      )}
-      {activeFilter === "educators" && (
-        <EducatorGrid featuredInstructors={featuredInstructors} />
-      )}
-      {activeFilter === "tutorials" && <VideoGrid videos={videoDataPage} />}
-    </div>
-  );
+    return (
+        <div className="explore-page">
+            <FilterTabs filters={filters} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+            {activeFilter === 'all' && (
+                <>
+                    <ShortsGrid trendingShorts={trendingShorts} />
+                    <VideosRibbon videoData={videoData} />
+                    <EducatorRibbon featuredInstructors={featuredInstructors} title="Featured Educators" />
+                    <CourseRibbon popularCourses={popularCourses} />
+                </>
+            )}
+            {activeFilter === 'courses' && (
+                <CourseGrid popularCourses={popularCourses} />
+            )}
+            {activeFilter === 'educators' && (
+                <EducatorGrid featuredInstructors={featuredInstructors} />
+            )}
+            {activeFilter === 'tutorials' && (
+                <VideoGrid videos={videoDataPage} />
+            )}
+        </div>
+    );
 }

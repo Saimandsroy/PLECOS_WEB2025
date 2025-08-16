@@ -1,9 +1,11 @@
-import React from 'react'
+import ComingSoon from "@/components/lottie/ComingSoon"
 
-const GoLive = () => {
-    return (
-        <div>Nope</div>
-    )
+function Page() {
+  return (
+    <div>
+      <ComingSoon />
+    </div>
+  )
 }
 
-export default GoLive
+export default Page

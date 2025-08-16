@@ -3,18 +3,23 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "@/api/axios";
 import "./CourseCreation.css";
+import Link from "next/link";
+
+const MAX_THUMB_SIZE = 5 * 1024 * 1024;
 
 const CourseCreation = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [thumbnailUploading, setThumbnailUploading] = useState(false);
+  const [thumbnailKey, setThumbnailKey] = useState(null);
+  const [successMsg, setSuccessMsg] = useState("");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
-    getValues,
   } = useForm({
     defaultValues: {
       thumbnailUrl: null,
@@ -22,12 +27,53 @@ const CourseCreation = () => {
       description: "",
       category: "",
       level: "",
-      price: "29.99",
-      duration: "", 
+      price: "",
+      duration: "",
     },
   });
 
-  const handleImageUpload = (e) => {
+  const uploadThumbnailToR2 = async (file) => {
+    setThumbnailUploading(true);
+
+    try {
+      console.log("this is file name", file.name);
+      const response = await fetch(
+        `/api/course-thumbnail?filename=${encodeURIComponent(
+          file.name
+        )}&contentType=${encodeURIComponent(file.type)}&fileSize=${file.size}`
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to get signed URL");
+      }
+
+      const { signedUrl, key } = await response.json();
+      console.log("this is signed url", signedUrl);
+
+      const uploadResponse = await fetch(signedUrl, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type,
+        },
+      });
+
+      if (uploadResponse.ok) {
+        console.log("✅ Thumbnail upload successful!");
+        setThumbnailKey(key);
+      } else {
+        throw new Error(`Upload failed with status: ${uploadResponse.status}`);
+      }
+    } catch (error) {
+      console.error("Thumbnail upload error:", error);
+      throw error;
+    } finally {
+      setThumbnailUploading(false);
+    }
+  };
+
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (
       file &&
@@ -36,30 +82,17 @@ const CourseCreation = () => {
         file.type === "image/jpeg" ||
         file.type === "image/gif")
     ) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      if (file.size < MAX_THUMB_SIZE) {
+        setImagePreview(URL.createObjectURL(file));
+        await uploadThumbnailToR2(file);
+      } else {
+        console.log(`File size exceeds ${MAX_THUMB_SIZE / 1024 / 1024} MB`);
+      }
     }
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (
-      file &&
-      (file.type === "image/svg+xml" ||
-        file.type === "image/png" ||
-        file.type === "image/jpeg" ||
-        file.type === "image/gif")
-    ) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   const handleDragOver = (e) => {
@@ -81,21 +114,13 @@ const CourseCreation = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  // Function to submit form data using your axios API
-  const submitCourseData = async (data, isDraft = true) => {
+  const submitCourseData = async (data) => {
     setIsSubmitting(true);
 
     try {
-      const response = await api.post("/courses", data);
-      console.log("Course created successfully:", response.data);
-
-      // Show success message
-      alert(
-        isDraft ? "Course saved as draft!" : "Course published successfully!"
-      );
-
-      // Optionally reset form or redirect
-      // window.location.href = '/courses'; // Uncomment to redirect
+      data.thumbnailUrl = thumbnailKey;
+      await api.post("/courses", data);
+      setSuccessMsg("Course created successfully!");
     } catch (error) {
       console.error("Error submitting course:", error);
 
@@ -124,12 +149,7 @@ const CourseCreation = () => {
 
   const onSubmit = (data) => {
     console.log("Form submitted:", data);
-    submitCourseData(data, true); // Save as draft
-  };
-
-  const onPublish = (data) => {
-    console.log("Publishing course:", data);
-    submitCourseData(data, false); // Publish immediately
+    submitCourseData(data, true);
   };
 
   return (
@@ -178,8 +198,8 @@ const CourseCreation = () => {
                     {imagePreview ? (
                       <img
                         src={imagePreview}
-                        alt="Preview"
-                        className="course-preview-image"
+                        alt="Thumbnail Preview"
+                        className="course-upload-preview"
                       />
                     ) : (
                       <>
@@ -320,8 +340,9 @@ const CourseCreation = () => {
                 <div className="course-price-input-wrapper">
                   <span className="course-currency">₹</span>
                   <input
+                    placeholder="Enter 0 to make it free."
                     type="number"
-                    step="0.01"
+                    step="1"
                     className={`course-input course-price-input ${
                       errors.price ? "error" : ""
                     }`}
@@ -337,7 +358,17 @@ const CourseCreation = () => {
               </div>
             </div>
           )}
-
+          {successMsg && (
+            <div style={{ color: "#2EFF2E", textAlign: "center" }}>
+              {successMsg}
+              <Link
+                style={{ color: "#fff", textDecoration: "underline" }}
+                href="/educator/courses"
+              >
+                Go to Courses
+              </Link>
+            </div>
+          )}
           <div className="course-actions">
             {currentStep > 1 && (
               <button
@@ -361,16 +392,8 @@ const CourseCreation = () => {
             ) : (
               <div className="course-submit-actions">
                 <button
-                  type="button"
-                  onClick={handleSubmit(onPublish)}
-                  className="course-btn course-btn-publish"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Publishing..." : "Publish Now"}
-                </button>
-                <button
                   type="submit"
-                  className="course-btn course-btn-create"
+                  className="course-btn course-btn-publish"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Creating..." : "Create"}

@@ -92,7 +92,7 @@ export default function CourseRibbon({ title, popularCourses }) {
 
         <div className="carousel" ref={carouselRef}>
           {popularCourses.map((course) => (
-            <div className="carousel-item" key={course.id}>
+            <div className="carousel-item" key={course.course_id}>
               <CourseCard course={course} isPro={true} />
             </div>
           ))}
