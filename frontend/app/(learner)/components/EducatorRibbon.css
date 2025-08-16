@@ -1,3 +1,16 @@
+/* Light mode (default) */
+:root {
+  --card-bottom: #f0f4f8; /* light gray-blue */
+  --card-top: #06b6d4;    /* cyan/teal */
+  --card-text: #0a1a2f;   /* dark text */
+}
+
+/* Dark mode */
+.dark {
+  --card-bottom: #0a1a2f; /* dark navy */
+  --card-top: #06b6d4;    /* cyan/teal */
+  --card-text: #ffffff;   /* light text */
+}
 /* Main section container */
 .educator-ribbon {
   margin-top: 3rem;
@@ -133,23 +146,39 @@
 
 /* --- Instructor Card Styles --- */
 .explore-instructors__card {
-  width: 100%; /* Make card fill the carousel item */
-  background: var(--background-glass, rgba(40, 40, 40, 0.5));
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  width: 100%;
   border-radius: 20px;
   padding: 2rem;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid #06b6d4;
+
+  /* 🎨 Background using theme vars */
+  background: linear-gradient(
+    -20deg,
+    var(--card-bottom) 55%,
+    var(--card-top) 55%
+    );
+    color: var(--card-text);
+
+  /* Glass effect */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  position: relative;
-  overflow: hidden;
-  color: var(--text-primary, #fff);
-  box-sizing: border-box; /* Ensure padding is included in width */
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
-
+/* Hover effect */
 .explore-instructors__card:hover {
-  background: var(--background-glass-hover, rgba(50, 50, 50, 0.7));
+  box-shadow: 0 12px 24px var(--shadow-color);
+  transform: translateY(-4px);
 }
+/* .explore-instructors__card:hover {
+  background: var(--background-glass-hover, rgba(50, 50, 50, 0.7));
+} */
+
+
 
 .explore-instructors__badge {
   position: absolute;
@@ -164,6 +193,10 @@
 }
 
 .explore-instructors__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   text-align: center;
   margin-bottom: 1.5rem;
 }
@@ -171,6 +204,14 @@
 .explore-instructors__emoji {
   font-size: 4rem;
   margin-bottom: 1rem;
+}
+.explore-instructors__img {
+  width: 100px;       /* adjust size */
+  height: 100px;      /* keep equal for circle */
+  border-radius: 50%; /* makes it circular */
+  object-fit: cover;  /* ensures image covers circle */
+  border: 3px solid #fff; /* optional border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* optional shadow */
 }
 
 .explore-instructors__name {
@@ -218,4 +259,25 @@
 .explore-instructors__stat-label {
   font-size: 0.8rem;
   color: var(--text-secondary, #ccc);
+}
+
+.explore-instructors__follow-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.explore-instructors__follow-btn:hover {
+  background: var(--gradient-secondary);
+  transform: scale(1.05);
+}
+
+.explore-instructors__follow-btn:active {
+  transform: scale(0.95);
 }
