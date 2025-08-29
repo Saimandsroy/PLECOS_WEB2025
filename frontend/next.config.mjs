@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: "export", // 👈 This is the key for Amplify static hosting
+  // ❌ remove: output: "export"
 };
 
 export default nextConfig;
