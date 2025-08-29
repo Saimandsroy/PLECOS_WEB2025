@@ -13,6 +13,7 @@ import { formatRelativeTime } from "@/lib/relativeTime";
 const VideoView = () => {
   const { videoId } = useParams();
   const [sedio, setSedio] = useState();
+  console.log(videoId)
   // const videoUrl = process.env.NEXT_PUBLIC_R2_ENDPOINT + video.videoUrl
   // console.log(videoUrl)
   console.log(sedio)
