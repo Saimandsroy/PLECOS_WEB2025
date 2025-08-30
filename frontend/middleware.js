@@ -36,9 +36,12 @@ export async function middleware(request) {
 
   // Redirect if token is missing
   if (!token) {
-    console.log("🚫 No token found, redirecting to sign-in");
     const signInUrl = new URL("/sign-in", request.url);
-    signInUrl.searchParams.set("callbackUrl", request.url);
+
+    // Only include pathname + search, not the full host
+    const relativeUrl = request.nextUrl.pathname + request.nextUrl.search;
+    signInUrl.searchParams.set("callbackUrl", relativeUrl);
+
     return NextResponse.redirect(signInUrl);
   }
 

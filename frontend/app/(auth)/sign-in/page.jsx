@@ -2,61 +2,65 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import "./sign-in.css";
-import { signIn } from "next-auth/react";
 
 export default function SignIn() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   // Check for auth errors from URL params
   useEffect(() => {
-    const error = searchParams.get('error');
-    if (error === 'CredentialsSignin') {
-      setError('Invalid credentials. Please check your email and password.');
+    const errorParam = searchParams.get("error");
+    if (errorParam === "CredentialsSignin") {
+      setError("Invalid credentials. Please check your email and password.");
     }
   }, [searchParams]);
 
   // Redirect if already authenticated
   useEffect(() => {
     if (status === "authenticated") {
-      const callbackUrl = searchParams.get('callbackUrl') || '/';
+      const callbackUrl = searchParams.get("callbackUrl") || "/";
       router.replace(callbackUrl);
+      // Clean the URL so callbackUrl doesn't keep nesting
+      window.history.replaceState({}, "", "/sign-in");
     }
   }, [status, router, searchParams]);
 
   const onSubmit = async (formData) => {
     setLoading(true);
     setError("");
-    console.log("Submitting form:", formData);
 
     try {
-      const result = await signIn('credentials', {
+      const callbackUrl = searchParams.get("callbackUrl") || "/";
+
+      const result = await signIn("credentials", {
         ...formData,
-        redirect: false, // Handle redirect manually
+        redirect: false, // handle redirect manually
+        callbackUrl, // only send once
       });
-      console.log("Sign in result:", result);
+
       if (result?.error) {
-        setError('Invalid credentials. Please check your email and password.');
+        setError("Invalid credentials. Please check your email and password.");
       } else if (result?.ok) {
-        // Success - redirect will happen via useEffect
-        const callbackUrl = searchParams.get('callbackUrl') || '/';
         router.replace(callbackUrl);
+        window.history.replaceState({}, "", "/sign-in"); // clean URL
       }
     } catch (err) {
-      console.error('Sign in error:', err);
-      setError('An unexpected error occurred. Please try again.');
+      console.error("Sign in error:", err);
+      setError("An unexpected error occurred. Please try again.");
     }
 
     setLoading(false);
@@ -84,15 +88,18 @@ export default function SignIn() {
         <h2 className="signin-title">Sign in to Plecos</h2>
 
         {error && (
-          <div className="signin-error-banner" style={{
-            background: '#fee2e2',
-            color: '#dc2626',
-            padding: '12px',
-            borderRadius: '8px',
-            marginBottom: '16px',
-            textAlign: 'center',
-            fontSize: '14px'
-          }}>
+          <div
+            className="signin-error-banner"
+            style={{
+              background: "#fee2e2",
+              color: "#dc2626",
+              padding: "12px",
+              borderRadius: "8px",
+              marginBottom: "16px",
+              textAlign: "center",
+              fontSize: "14px",
+            }}
+          >
             {error}
           </div>
         )}
@@ -184,11 +191,7 @@ export default function SignIn() {
             )}
           </div>
 
-          <button
-            type="submit"
-            className="signin-btn"
-            disabled={loading}
-          >
+          <button type="submit" className="signin-btn" disabled={loading}>
             {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
